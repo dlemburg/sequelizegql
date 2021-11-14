@@ -1,6 +1,6 @@
 import { BaseService } from '../../services';
-import { getResolverFieldMap } from '..';
 import { GeneratedResolverField } from '../../types/types';
+import { getResolverFieldMap } from '../mappers';
 import { QueryAttributesBuilder } from './query-attribute';
 
 type BaseResolverInput<T> = {
@@ -18,50 +18,70 @@ const resolveQuery =
 
     return serviceMethod(where ?? {}, { attributes, include });
   };
+class Resolver<T> {
+  private name;
+  private model;
+  private service;
+  private resolverFieldMap;
 
-export const ResolverBuilder = <T>({ model, name }: BaseResolverInput<T>) => {
-  const service = BaseService(model);
+  constructor({ name, model }: BaseResolverInput<T>) {
+    this.model = model;
+    this.service = BaseService(this.model);
+    this.name = name ?? this.service.getModelName();
+    this.resolverFieldMap = getResolverFieldMap(this.name);
 
-  name = name ?? service.getModelName();
-  const resolverFieldMap = getResolverFieldMap(name);
+    return this;
+  }
 
-  const mutation = {
-    [resolverFieldMap[GeneratedResolverField.CREATE_MUTATION].name]: (_, { input }, context) =>
-      service.create(input),
-    [resolverFieldMap[GeneratedResolverField.UPDATE_MUTATION].name]: async (
-      _,
-      { input, where },
-      context
-    ) => service.update(input, where),
-    [resolverFieldMap[GeneratedResolverField.DELETE_MUTATION].name]: (
-      _,
-      { where, options = {} },
-      context
-    ) => service.destroy(where, options),
-    [resolverFieldMap[GeneratedResolverField.UPSERT_MUTATION].name]: (
-      _,
-      { where, input },
-      context
-    ) => service.upsert(input, where),
-  };
+  public mutation() {
+    return {
+      [this.resolverFieldMap[GeneratedResolverField.CREATE_MUTATION].name]: (
+        _,
+        { input },
+        context
+      ) => this.service.create(input),
+      [this.resolverFieldMap[GeneratedResolverField.UPDATE_MUTATION].name]: async (
+        _,
+        { input, where },
+        context
+      ) => this.service.update(input, where),
+      [this.resolverFieldMap[GeneratedResolverField.DELETE_MUTATION].name]: (
+        _,
+        { where, options = {} },
+        context
+      ) => this.service.destroy(where, options),
+      [this.resolverFieldMap[GeneratedResolverField.UPSERT_MUTATION].name]: (
+        _,
+        { where, input },
+        context
+      ) => this.service.upsert(input, where),
+    };
+  }
 
-  const query = {
-    [resolverFieldMap[GeneratedResolverField.FIND_ALL].name]: resolveQuery(
-      service.getModel(),
-      service.findAll
-    ),
-    [resolverFieldMap[GeneratedResolverField.FIND_MANY].name]: resolveQuery(
-      service.getModel(),
-      service.findAll
-    ),
-    [resolverFieldMap[GeneratedResolverField.FIND_ONE].name]: resolveQuery(
-      service.getModel(),
-      service.findOne
-    ),
-  };
+  public query() {
+    return {
+      [this.resolverFieldMap[GeneratedResolverField.FIND_ALL].name]: resolveQuery(
+        this.service.getModel(),
+        this.service.findAll
+      ),
+      [this.resolverFieldMap[GeneratedResolverField.FIND_MANY].name]: resolveQuery(
+        this.service.getModel(),
+        this.service.findAll
+      ),
+      [this.resolverFieldMap[GeneratedResolverField.FIND_ONE].name]: resolveQuery(
+        this.service.getModel(),
+        this.service.findOne
+      ),
+    };
+  }
 
-  return {
-    Mutation: mutation,
-    Query: query,
-  };
-};
+  public resolvers() {
+    return {
+      Query: this.query(),
+      Mutation: this.mutation(),
+    };
+  }
+}
+
+export const ResolverFactory = <T>({ name, model }: BaseResolverInput<T>) =>
+  new Resolver<T>({ name, model });
