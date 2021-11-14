@@ -1,4 +1,4 @@
-import { InitializationOptions } from './types';
+import { InitializationOptions } from '../types/types';
 
 const query = `
   type Query {

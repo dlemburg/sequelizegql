@@ -1,27 +1,10 @@
-import BaseService from './base-service';
+import BaseService from './services/base-service';
 import { buildEnums } from './util/array-util';
-import { buildRootTypedefs } from './root-typedefs';
-import { buildSchema, generateEnumsGql } from './util';
-
-// stateful
-let Enums;
-let Models;
-let sequelize;
-
-export const loadEnums = (enums) => {
-  Enums = enums;
-};
-export const getEnums = () => Enums;
-
-export const loadModels = (models) => {
-  Models = models;
-};
-export const getModels = () => Models;
-
-export const loadSequelize = (sequelizeInstance) => {
-  sequelize = sequelizeInstance;
-};
-export const getSequelize = () => sequelize;
+import { buildRootTypedefs } from './typedefs/root-typedefs';
+import { buildSchema, generateEnumsGql } from './core/util';
+import { loadEnums } from './state/enums';
+import { loadModels } from './state/models';
+import { loadSequelize } from './state/sequelize';
 
 export const initialize = ({
   enums,
@@ -36,7 +19,7 @@ export const initialize = ({
   if (sequelize) loadSequelize(sequelize);
 
   const { typedefs, resolvers } = buildSchema(models, { schemaMap, baseDirective });
-  const enumGql = generateEnumsGql(buildEnums(Enums));
+  const enumGql = generateEnumsGql(buildEnums(enums));
   const generatedGql = typedefs + enumGql + buildRootTypedefs(options);
 
   return { BaseService, typedefs: generatedGql, resolvers };

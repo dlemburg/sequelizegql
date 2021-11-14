@@ -1,9 +1,9 @@
 import faker from 'faker';
 import merge from 'lodash/merge';
-import { ResolverFactory } from './resolver-factory';
-import { TypedefFactory } from './typedef-factory';
-import { ModelAttributes } from './base-service';
-import { GeneratedResolverField } from './types';
+import { ResolverFactory } from '../factories/resolver-factory';
+import { TypedefFactory } from '../factories/typedef-factory';
+import { ModelAttributes } from '../services/base-service';
+import { GeneratedResolverField } from '../types/types';
 
 export const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
 

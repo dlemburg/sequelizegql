@@ -1,4 +1,4 @@
-import { BaseServiceInterface } from './base-service';
+import { BaseServiceInterface } from '../services/base-service';
 
 export enum GeneratedResolverField {
   CREATE_MUTATION = 'create',

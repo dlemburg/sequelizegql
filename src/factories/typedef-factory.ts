@@ -6,9 +6,9 @@ import {
   buildQuery,
   OMIT_ATTRIBUTES,
   buildWhereAttributes,
-} from './util';
-import { BaseTypedefInput } from './types';
-import BaseService from './base-service';
+} from '../core/util';
+import { BaseTypedefInput } from '../types/types';
+import BaseService from '../services/base-service';
 
 export const TypedefFactory = ({
   name: serviceName,

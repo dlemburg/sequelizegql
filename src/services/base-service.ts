@@ -8,8 +8,8 @@ import {
   UpdateOptions,
   DestroyOptions,
 } from 'sequelize';
-import { getEnums, getModels, getSequelize } from './';
-import { buildSortDesc } from './util/sequelize-util';
+import { getEnums, getModels, getSequelize } from '..';
+import { buildSortDesc } from '../util/sequelize-util';
 
 type BaseAttributes<T> = {
   [key: string]: {
