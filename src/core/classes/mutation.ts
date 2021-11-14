@@ -15,7 +15,7 @@ class Mutation {
   }
 
   public gql() {
-    const resolverMap = getResolverFieldMap(name);
+    const resolverMap = getResolverFieldMap(this.name);
 
     const operations = Object.entries(resolverMap).reduce((acc, [key, value]) => {
       const argsValue = argsGraphql(value.args);

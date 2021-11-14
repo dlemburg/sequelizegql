@@ -1,6 +1,6 @@
 import { GeneratedResolverField } from '../../types';
 import { getResolverFieldMap } from '../mappers';
-import { OperationArgsBuilder } from '../classes';
+import { OperationArgsFactory } from '../classes';
 import { buildFakerData } from './faker-util';
 
 const buildNonArrayAttributes = (attributes) =>
@@ -46,7 +46,10 @@ export const buildTests = ({
       return { ...acc, [field]: value };
     }, {} as any);
 
-    const { operationNameArgs, operationArgs } = OperationArgsBuilder(value.args);
+    const operation = OperationArgsFactory(value.args);
+    const operationNameArgs = operation.operationNameArgs();
+    const operationArgs = operation.operationArgs();
+
     const body = `
       ${operationType} ${name}Monitor${operationNameArgs} {
         ${name}${operationArgs} { ${

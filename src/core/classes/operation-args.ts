@@ -1,21 +1,33 @@
-export const OperationArgsBuilder = (args) => {
-  const operationNameArgs = args.length
-    ? `(${args
-        .map((x) => {
-          const [value] = Object.entries(x);
-          return `$${value[0]}: ${value[1]}`;
-        })
-        .join(', ')})`
-    : '';
+class OperationArgs {
+  private args;
 
-  const operationArgs = args.length
-    ? `(${args
-        .map((x) => {
-          const [value] = Object.entries(x);
-          return `${value[0]}: $${value[0]}`;
-        })
-        .join(', ')})`
-    : '';
+  constructor(args) {
+    this.args = args;
 
-  return { operationNameArgs, operationArgs };
-};
+    return this;
+  }
+
+  public operationNameArgs() {
+    return this.args.length
+      ? `(${this.args
+          .map((x) => {
+            const [value] = Object.entries(x);
+            return `$${value[0]}: ${value[1]}`;
+          })
+          .join(', ')})`
+      : '';
+  }
+
+  public operationArgs() {
+    return this.args.length
+      ? `(${this.args
+          .map((x) => {
+            const [value] = Object.entries(x);
+            return `${value[0]}: $${value[0]}`;
+          })
+          .join(', ')})`
+      : '';
+  }
+}
+
+export const OperationArgsFactory = (args) => new OperationArgs(args);
