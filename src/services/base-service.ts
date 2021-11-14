@@ -8,7 +8,7 @@ import {
   UpdateOptions,
   DestroyOptions,
 } from 'sequelize';
-import { getEnums, getModels, getSequelize } from '..';
+import { getEnums, getModels, getSequelize } from '../state';
 import { buildSortDesc } from '../util/sequelize-util';
 
 type BaseAttributes<T> = {
@@ -284,7 +284,9 @@ export type BaseServiceInterface<T> = {
   restore: (filter: BaseServiceFilter<T>, options?: Omit<UpdateOptions<T>, 'where'>) => Promise<T>;
 };
 
-const BaseService = <T>(model: T extends Model<any, any> ? any : any): BaseServiceInterface<T> => ({
+export const BaseService = <T>(
+  model: T extends Model<any, any> ? any : any
+): BaseServiceInterface<T> => ({
   getModelName: () => model.name,
   getModel: model,
   getAttributes: getAttributes(model),

@@ -1,4 +1,4 @@
-import { getEnums } from '..';
+import { getEnums } from '../state';
 import { buildEnums } from '../util/array-util';
 import { generateEnumsGql } from '../core/util';
 

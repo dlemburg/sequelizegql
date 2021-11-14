@@ -2,7 +2,7 @@ import {
   parseResolveInfo,
   simplifyParsedResolveInfoFragmentWithType,
 } from 'graphql-parse-resolve-info';
-import { getModels } from '../';
+import { getModels } from '..';
 import { getAttributes } from '../services/base-service';
 
 const recurseFields = (fieldEntries, modelAttributes) => {

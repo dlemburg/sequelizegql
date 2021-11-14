@@ -8,7 +8,7 @@ import {
   buildWhereAttributes,
 } from '../core/util';
 import { BaseTypedefInput } from '../types/types';
-import BaseService from '../services/base-service';
+import { BaseService } from '../services';
 
 export const TypedefFactory = ({
   name: serviceName,
