@@ -6,7 +6,7 @@ import { buildTests } from '../util/test-util';
 
 export const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
 
-export const TestFactory = ({ name, model, resolvers, variables = {} }: BaseTestFactoryInput) => {
+export const TestBuilder = ({ name, model, resolvers, variables = {} }: BaseTestFactoryInput) => {
   const service = BaseService(model);
   const attributes = service?.getAttributes();
   const inputAttributes = omit(attributes, OMIT_ATTRIBUTES);

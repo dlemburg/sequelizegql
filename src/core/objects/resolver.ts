@@ -19,7 +19,7 @@ const resolveQuery =
     return serviceMethod(where ?? {}, { attributes, include });
   };
 
-export const ResolverFactory = <T>({ model, name }: BaseResolverInput<T>) => {
+export const ResolverBuilder = <T>({ model, name }: BaseResolverInput<T>) => {
   const service = BaseService(model);
 
   name = name ?? service.getModelName();

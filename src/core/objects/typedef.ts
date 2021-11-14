@@ -7,9 +7,9 @@ import { whereInput } from '../graphql/where-input';
 import { types } from '../graphql/types';
 import { WhereAttributesBuilder } from './where-attributes';
 
-export const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
+const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
 
-export const TypedefFactory = ({
+export const TypedefBuilder = ({
   name: serviceName,
   model,
   resolvers,
