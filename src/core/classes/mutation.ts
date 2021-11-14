@@ -5,19 +5,19 @@ class Mutation {
   private name;
   private resolvers;
   private options;
+  private resolverMap;
 
   constructor({ name, resolvers = {}, options = {} as any }) {
     this.name = name;
     this.resolvers = resolvers;
     this.options = options;
+    this.resolverMap = getResolverFieldMap(this.name);
 
     return this;
   }
 
   public gql() {
-    const resolverMap = getResolverFieldMap(this.name);
-
-    const operations = Object.entries(resolverMap).reduce((acc, [key, value]) => {
+    const operations = Object.entries(this.resolverMap).reduce((acc, [key, value]: any) => {
       const argsValue = argsGraphql(value.args);
 
       const result = `${
