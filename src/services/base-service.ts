@@ -1,43 +1,16 @@
 import _ from 'lodash';
-import {
-  DataTypes,
-  Model,
-  FindOptions,
-  WhereOptions,
-  CreateOptions,
-  UpdateOptions,
-  DestroyOptions,
-} from 'sequelize';
+import { Model, CreateOptions, UpdateOptions, DestroyOptions } from 'sequelize';
 import { getEnums, getModels, getSequelize } from '../state';
 import { buildSortDesc } from '../util/sequelize-util';
-
-type BaseAttributes<T> = {
-  [key: string]: {
-    allowNull?: boolean;
-    sequelizeType?: typeof DataTypes;
-    type?: T;
-  };
-};
-
-type AssociationAttributes = {
-  isArray?: boolean;
-};
-
-export type ModelAttributes = BaseAttributes<string> & {
-  associations?: BaseAttributes<string> & AssociationAttributes;
-};
+import { BaseServiceFilter, BaseServiceOptions, ModelAttributes } from '../types/types';
 
 const getEnumType = (values) => {
   const result = Object.entries(getEnums()).find(
-    ([key, aEnum]: any) => _.difference(values, Object.values(aEnum))?.length === 0
+    ([, aEnum]: any) => _.difference(values, Object.values(aEnum))?.length === 0
   );
 
   return result?.[0];
 };
-
-export type BaseServiceFilter<T> = WhereOptions<T>;
-
-export type BaseServiceOptions<T> = FindOptions<T>;
 
 const buildModelAttributes = (rawAttributes) => {
   return Object.entries(rawAttributes ?? {}).reduce((acc, [property, value]: any) => {

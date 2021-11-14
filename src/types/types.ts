@@ -1,4 +1,4 @@
-import { BaseServiceInterface } from '../services/base-service';
+import { DataTypes, FindOptions, WhereOptions } from 'sequelize';
 
 export enum GeneratedResolverField {
   CREATE_MUTATION = 'create',
@@ -46,3 +46,23 @@ export type InitializationOptions = {
   includeDeleteResponse?: boolean;
   includeDeleteOptions?: boolean;
 };
+
+export type BaseAttributes<T> = {
+  [key: string]: {
+    allowNull?: boolean;
+    sequelizeType?: typeof DataTypes;
+    type?: T;
+  };
+};
+
+export type AssociationAttributes = {
+  isArray?: boolean;
+};
+
+export type ModelAttributes = BaseAttributes<string> & {
+  associations?: BaseAttributes<string> & AssociationAttributes;
+};
+
+export type BaseServiceFilter<T> = WhereOptions<T>;
+
+export type BaseServiceOptions<T> = FindOptions<T>;

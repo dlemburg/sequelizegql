@@ -1,19 +1,19 @@
 import { BaseService } from '../services';
 import { getResolverFieldMap } from '../core/util';
 import { GeneratedResolverField } from '../types/types';
-import { buildQueryAttributes } from '../core/resolver-field-util';
+import { QueryAttributesBuilder } from '../core/objects/query-attribute';
 
 type BaseResolverInput<T> = {
   model;
   name?: string;
 };
 
-const resolveQueryAttributes =
+const resolveQuery =
   (model, serviceMethod) =>
   (_, { where }, context, resolveInfo) => {
     let include, attributes;
     if (resolveInfo) {
-      ({ include, attributes } = buildQueryAttributes(model)(resolveInfo));
+      ({ include, attributes } = QueryAttributesBuilder(model)(resolveInfo));
     }
 
     return serviceMethod(where ?? {}, { attributes, include });
@@ -46,24 +46,18 @@ export const ResolverFactory = <T>({ model, name }: BaseResolverInput<T>) => {
   };
 
   const query = {
-    [resolverFieldMap[GeneratedResolverField.FIND_ALL].name]: resolveQueryAttributes(
+    [resolverFieldMap[GeneratedResolverField.FIND_ALL].name]: resolveQuery(
       service.getModel(),
       service.findAll
     ),
-    [resolverFieldMap[GeneratedResolverField.FIND_MANY].name]: resolveQueryAttributes(
+    [resolverFieldMap[GeneratedResolverField.FIND_MANY].name]: resolveQuery(
       service.getModel(),
       service.findAll
     ),
-    [resolverFieldMap[GeneratedResolverField.FIND_ONE].name]: resolveQueryAttributes(
+    [resolverFieldMap[GeneratedResolverField.FIND_ONE].name]: resolveQuery(
       service.getModel(),
       service.findOne
     ),
-    [resolverFieldMap[GeneratedResolverField.FIND_ALL_WITH_ASSOCIATIONS].name]: () =>
-      service.findAllWithAssociations(),
-    [resolverFieldMap[GeneratedResolverField.FIND_MANY_WITH_ASSOCIATIONS].name]: (_, { where }) =>
-      service.findAllWithAssociations(where),
-    [resolverFieldMap[GeneratedResolverField.FIND_ONE_WITH_ASSOCIATIONS].name]: (_, { where }) =>
-      service.findOneWithAssociations(where),
   };
 
   return {

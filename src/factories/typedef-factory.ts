@@ -1,14 +1,12 @@
 import omit from 'lodash/omit';
-import {
-  buildGraphqlSequelizeMappings,
-  buildWhereInput,
-  buildMutations,
-  buildQuery,
-  OMIT_ATTRIBUTES,
-  buildWhereAttributes,
-} from '../core/util';
+import { OMIT_ATTRIBUTES } from '../core/util';
 import { BaseTypedefInput } from '../types/types';
 import { BaseService } from '../services';
+import { QueryBuilder } from '../core/objects/query';
+import { MutationBuilder } from '../core/objects/mutation';
+import { whereInput } from '../core/graphql/where-input';
+import { types } from '../core/graphql/types';
+import { WhereAttributesBuilder } from '../core/objects/where-attributes';
 
 export const TypedefFactory = ({
   name: serviceName,
@@ -21,24 +19,20 @@ export const TypedefFactory = ({
   const attributes = service?.getAttributes();
   const inputAttributes = omit(attributes, OMIT_ATTRIBUTES);
 
-  const baseType = buildGraphqlSequelizeMappings('type', name, attributes);
-  const baseInput = buildGraphqlSequelizeMappings('input', `${name}Input`, inputAttributes);
-  const baseUpdateInput = buildGraphqlSequelizeMappings(
-    'input',
-    `Update${name}Input`,
-    inputAttributes
-  );
+  const baseType = types('type', name, attributes);
+  const baseInput = types('input', `${name}Input`, inputAttributes);
+  const baseUpdateInput = types('input', `Update${name}Input`, inputAttributes);
 
-  const whereAttributes = buildWhereAttributes(options?.whereAttributes, attributes);
-  const baseWhereInput = buildWhereInput(name, whereAttributes);
+  const whereAttributes = WhereAttributesBuilder(options?.whereAttributes, attributes);
+  const baseWhereInput = whereInput(name, whereAttributes);
 
-  const { mutationGql } = buildMutations({ name, resolvers, options });
-  const { queryGql } = buildQuery({ name, resolvers, options });
+  const { gql: baseMutation } = MutationBuilder({ name, resolvers, options });
+  const { gql: baseQuery } = QueryBuilder({ name, resolvers, options });
 
   return {
     baseWhereInput,
-    baseMutation: mutationGql,
-    baseQuery: queryGql,
+    baseMutation,
+    baseQuery,
     baseType,
     baseInput,
     baseUpdateInput,
@@ -50,8 +44,8 @@ export const TypedefFactory = ({
     `,
     generatedGql: `
       ${baseWhereInput}
-      ${mutationGql}
-      ${queryGql}
+      ${baseMutation}
+      ${baseQuery}
       ${baseType}
       ${baseInput}
       ${baseUpdateInput}

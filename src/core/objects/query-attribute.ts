@@ -2,8 +2,8 @@ import {
   parseResolveInfo,
   simplifyParsedResolveInfoFragmentWithType,
 } from 'graphql-parse-resolve-info';
-import { getModels } from '..';
-import { getAttributes } from '../services/base-service';
+import { getModels } from '../../state';
+import { getAttributes } from '../../services/base-service';
 
 const recurseFields = (fieldEntries, modelAttributes) => {
   const Models = getModels();
@@ -60,7 +60,7 @@ const recurseFields = (fieldEntries, modelAttributes) => {
   return result;
 };
 
-export const buildQueryAttributes = (model) => (resolveInfo) => {
+export const QueryAttributesBuilder = (model) => (resolveInfo) => {
   try {
     const modelAttributes = getAttributes(model)();
     const parsedResolveInfoFragment = parseResolveInfo(resolveInfo) as any;
