@@ -1,12 +1,13 @@
 import omit from 'lodash/omit';
-import { OMIT_ATTRIBUTES } from '../core/util';
-import { BaseTypedefInput } from '../types/types';
-import { BaseService } from '../services';
-import { QueryBuilder } from '../core/objects/query';
-import { MutationBuilder } from '../core/objects/mutation';
-import { whereInput } from '../core/graphql/where-input';
-import { types } from '../core/graphql/types';
-import { WhereAttributesBuilder } from '../core/objects/where-attributes';
+import { BaseTypedefInput } from '../../types/types';
+import { BaseService } from '../../services';
+import { QueryBuilder } from './query';
+import { MutationBuilder } from './mutation';
+import { whereInput } from '../graphql/where-input';
+import { types } from '../graphql/types';
+import { WhereAttributesBuilder } from './where-attributes';
+
+export const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
 
 export const TypedefFactory = ({
   name: serviceName,

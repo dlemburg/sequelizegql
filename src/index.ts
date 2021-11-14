@@ -1,7 +1,7 @@
 import BaseService from './services/base-service';
 import { buildEnums } from './util/array-util';
 import { buildRootTypedefs } from './typedefs/root-typedefs';
-import { buildSchema, generateEnumsGql } from './core/util';
+import { buildSchema, generateEnumsGql } from './core';
 import { loadEnums } from './state/enums';
 import { loadModels } from './state/models';
 import { loadSequelize } from './state/sequelize';

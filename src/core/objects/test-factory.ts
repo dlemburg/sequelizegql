@@ -1,17 +1,10 @@
 import omit from 'lodash/omit';
 import Bluebird from 'bluebird';
-import { OMIT_ATTRIBUTES, buildTests } from '../core/util';
-import { BaseInput, GeneratedResolverField } from '../types/types';
-import { BaseService } from '../services';
+import { BaseTestFactoryInput, GeneratedResolverField } from '../../types/types';
+import { BaseService } from '../../services';
+import { buildTests } from '../util/test-util';
 
-export type TestFactoryResolver = {
-  [key: string]: { variables?: Record<string, any>; generate?: boolean };
-};
-
-type BaseTestFactoryInput = BaseInput & {
-  variables?: Record<string, any>;
-  resolvers?: TestFactoryResolver;
-};
+export const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
 
 export const TestFactory = ({ name, model, resolvers, variables = {} }: BaseTestFactoryInput) => {
   const service = BaseService(model);

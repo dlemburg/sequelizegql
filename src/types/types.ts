@@ -66,3 +66,12 @@ export type ModelAttributes = BaseAttributes<string> & {
 export type BaseServiceFilter<T> = WhereOptions<T>;
 
 export type BaseServiceOptions<T> = FindOptions<T>;
+
+export type TestFactoryResolver = {
+  [key: string]: { variables?: Record<string, any>; generate?: boolean };
+};
+
+export type BaseTestFactoryInput = BaseInput & {
+  variables?: Record<string, any>;
+  resolvers?: TestFactoryResolver;
+};

@@ -1,12 +1,7 @@
-import faker from 'faker';
-import merge from 'lodash/merge';
-import { ResolverFactory } from '../factories/resolver-factory';
-import { TypedefFactory } from '../factories/typedef-factory';
-import { GeneratedResolverField } from '../types';
-import { SEQUELIZE_GRAPHQL_TYPE_MAP, getResolverFieldMap } from './mappers';
-import { OperationArgsBuilder } from './objects/operation-args';
-
-export const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
+import { GeneratedResolverField } from '../../types';
+import { getResolverFieldMap } from '../mappers';
+import { OperationArgsBuilder } from '../objects/operation-args';
+import { buildFakerData } from './faker-util';
 
 const buildNonArrayAttributes = (attributes) =>
   Object.entries(attributes)
@@ -14,18 +9,6 @@ const buildNonArrayAttributes = (attributes) =>
       return !value?.isArray;
     })
     .map(([key]) => key);
-
-const buildFakerData = (data) => {
-  return Object.entries(data).reduce((acc, [key, typeInfo]: any) => {
-    // TODO: this should be improved
-    if (['ARRAY', 'ENUM', 'ASSOCIATION'].includes(typeInfo.sequelizeType)) return acc;
-
-    const fakerType = SEQUELIZE_GRAPHQL_TYPE_MAP[typeInfo.sequelizeType]?.();
-    const value = faker.datatype?.[fakerType]?.();
-
-    return { ...acc, ...(value && { [key]: value }) };
-  }, {});
-};
 
 export const buildTests = ({
   name,
@@ -87,29 +70,4 @@ export const buildTests = ({
   }, []);
 
   return operations;
-};
-
-export const buildSchema = (models, { schemaMap, baseDirective }) => {
-  const result: any = Object.values(models as any).reduce(
-    (acc: any, model: any): any => {
-      const overrides = schemaMap?.[model.name] ?? {};
-
-      if (overrides?.generate === false) return acc;
-
-      const { generatedGql } = TypedefFactory({
-        model,
-        ...overrides,
-        options: { ...overrides?.options, baseDirective },
-      });
-      const resolvers = ResolverFactory({ model });
-
-      acc.typedefs = acc.typedefs + generatedGql;
-      acc.resolvers = merge(acc.resolvers, resolvers);
-
-      return acc;
-    },
-    { typedefs: '', resolvers: {} } as any
-  );
-
-  return result;
 };

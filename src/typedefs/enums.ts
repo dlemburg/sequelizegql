@@ -1,6 +1,6 @@
 import { getEnums } from '../state';
 import { buildEnums } from '../util/array-util';
-import { generateEnumsGql } from '../core/util';
+import { generateEnumsGql } from '../core';
 
 const result = generateEnumsGql(buildEnums(getEnums()));
 

@@ -1,7 +1,7 @@
-import { BaseService } from '../services';
-import { getResolverFieldMap } from '../core/util';
-import { GeneratedResolverField } from '../types/types';
-import { QueryAttributesBuilder } from '../core/objects/query-attribute';
+import { BaseService } from '../../services';
+import { getResolverFieldMap } from '..';
+import { GeneratedResolverField } from '../../types/types';
+import { QueryAttributesBuilder } from './query-attribute';
 
 type BaseResolverInput<T> = {
   model;
