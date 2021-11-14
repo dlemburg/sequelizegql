@@ -1,0 +1,21 @@
+{
+  "name": "sequelize-graphql",
+  "main": "lib/index.js",
+  "files": [
+    "lib/**/*"
+  ],
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "faker": "^5.5.3",
+    "graphql-parse-resolve-info": "^4.12.0",
+    "lodash": "^4.17.21",
+    "sequelize": "^6.9.0"
+  }
+}
