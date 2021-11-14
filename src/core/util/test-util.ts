@@ -1,6 +1,6 @@
 import { GeneratedResolverField } from '../../types';
 import { getResolverFieldMap } from '../mappers';
-import { OperationArgsBuilder } from '../objects';
+import { OperationArgsBuilder } from '../classes';
 import { buildFakerData } from './faker-util';
 
 const buildNonArrayAttributes = (attributes) =>

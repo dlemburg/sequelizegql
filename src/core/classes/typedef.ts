@@ -1,11 +1,11 @@
 import omit from 'lodash/omit';
 import { BaseTypedefInput } from '../../types/types';
 import { BaseService } from '../../services';
-import { QueryBuilder } from './query';
-import { MutationBuilder } from './mutation';
+import { MutationFactory } from './mutation';
 import { whereInput } from '../graphql/where-input';
 import { types } from '../graphql/types';
 import { WhereAttributesBuilder } from './where-attributes';
+import { QueryFactory } from './query';
 
 const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
 
@@ -27,8 +27,8 @@ export const TypedefBuilder = ({
   const whereAttributes = WhereAttributesBuilder(options?.whereAttributes, attributes);
   const baseWhereInput = whereInput(name, whereAttributes);
 
-  const { gql: baseMutation } = MutationBuilder({ name, resolvers, options });
-  const { gql: baseQuery } = QueryBuilder({ name, resolvers, options });
+  const baseMutation = MutationFactory({ name, resolvers, options }).gql();
+  const baseQuery = QueryFactory({ name, resolvers, options }).gql();
 
   return {
     baseWhereInput,

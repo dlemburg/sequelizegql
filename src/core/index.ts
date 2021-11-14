@@ -1,5 +1,5 @@
 import merge from 'lodash/merge';
-import { ResolverBuilder, TypedefBuilder } from './objects';
+import { ResolverBuilder, TypedefBuilder } from './classes';
 
 export const buildSchema = (models, { schemaMap, baseDirective }) => {
   const result: any = Object.values(models as any).reduce(
