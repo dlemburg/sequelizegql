@@ -14,7 +14,7 @@ export const buildRootTypedefs = (options: InitializationOptions) => {
   }
 
   if (options.includeMutationDefinition === true) {
-    rootTypedefs += defaultMutationGql;
+    rootTypedefs += defaultMutationGql();
   }
 
   if (options.includeDeleteResponse !== false) {
