@@ -3,7 +3,7 @@ import { BaseTypedefInput } from '../../types/types';
 import { BaseService } from '../../services';
 import { MutationFactory } from './mutation';
 import { whereInputGql } from '../graphql/where-input';
-import { typesGql } from '../graphql/types';
+import { typesGql, typeGql, inputGql } from '../graphql/types';
 import { WhereAttributeFactory } from './where-attributes';
 import { QueryFactory } from './query';
 
@@ -33,23 +33,19 @@ class Typedef {
   }
 
   public typeGql() {
-    return typesGql('type', this.name, this.attributes);
+    return typesGql(typeGql(), this.name, this.attributes);
   }
 
   public inputGql() {
-    return typesGql('input', `${this.name}Input`, this.inputAttributes());
+    return typesGql(inputGql(), `${this.name}Input`, this.inputAttributes());
   }
 
   public updateInputGql() {
-    return typesGql('input', `Update${this.name}Input`, this.inputAttributes());
+    return typesGql(inputGql(), `Update${this.name}Input`, this.inputAttributes());
   }
 
   public whereInputGql() {
     return whereInputGql(this.name, this.whereAttributes());
-  }
-
-  public whereAttributes() {
-    return WhereAttributeFactory(this.options?.whereAttributes, this.attributes).keyValuePairs();
   }
 
   public queryGql() {
@@ -66,6 +62,10 @@ class Typedef {
       resolvers: this.resolvers,
       options: this.options,
     }).gql();
+  }
+
+  public whereAttributes() {
+    return WhereAttributeFactory(this.options?.whereAttributes, this.attributes).keyValuePairs();
   }
 
   public typedefMap() {

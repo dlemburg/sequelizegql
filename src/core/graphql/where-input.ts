@@ -1,6 +1,8 @@
+import { inputGql } from './types';
+
 export const whereInputGql = (name, whereAttributes) =>
   `
-  input ${name}WhereInput {
+  ${inputGql()} ${name}WhereInput {
     ${whereAttributes.map((x) => `${x.key}: ${x.value}`).join('\n')}
   }
 `;
