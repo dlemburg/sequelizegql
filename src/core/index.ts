@@ -1,5 +1,5 @@
 import merge from 'lodash/merge';
-import { ResolverFactory, TypedefBuilder } from './classes';
+import { ResolverFactory, TypedefFactory } from './classes';
 
 export const buildSchema = (models, { schemaMap, baseDirective }) => {
   const result: any = Object.values(models as any).reduce(
@@ -8,11 +8,11 @@ export const buildSchema = (models, { schemaMap, baseDirective }) => {
 
       if (overrides?.generate === false) return acc;
 
-      const { generatedGql } = TypedefBuilder({
+      const { generatedGql } = TypedefFactory({
         model,
         ...overrides,
         options: { ...overrides?.options, baseDirective },
-      });
+      }).typedefMap();
       const resolvers = ResolverFactory({ model }).resolvers();
 
       acc.typedefs = acc.typedefs + generatedGql;

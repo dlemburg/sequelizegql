@@ -9,50 +9,107 @@ import { QueryFactory } from './query';
 
 const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
 
-export const TypedefBuilder = ({
+class Typedef {
+  private name;
+  private resolvers;
+  private options;
+  private model;
+  private service;
+  private attributes;
+
+  constructor({ name, model, resolvers, options }: BaseTypedefInput) {
+    this.model = model;
+    this.service = BaseService(this.model);
+    this.name = name ?? this.service?.getModelName();
+    this.resolvers = resolvers;
+    this.options = options;
+    this.attributes = this.service?.getAttributes();
+
+    return this;
+  }
+
+  public inputAttributes() {
+    return omit(this.attributes, OMIT_ATTRIBUTES);
+  }
+
+  public typeGql() {
+    return types('type', this.name, this.attributes);
+  }
+
+  public inputGql() {
+    return types('input', `${this.name}Input`, this.inputAttributes());
+  }
+
+  public updateInputGql() {
+    return types('input', `Update${this.name}Input`, this.inputAttributes());
+  }
+
+  public whereInputGql() {
+    return whereInput(this.name, this.whereAttributes());
+  }
+
+  public whereAttributes() {
+    return WhereAttributeFactory(this.options?.whereAttributes, this.attributes).keyValuePairs();
+  }
+
+  public queryGql() {
+    return QueryFactory({
+      name: this.name,
+      resolvers: this.resolvers,
+      options: this.options,
+    }).gql();
+  }
+
+  public mutationGql() {
+    return MutationFactory({
+      name: this.name,
+      resolvers: this.resolvers,
+      options: this.options,
+    }).gql();
+  }
+
+  public typedefMap() {
+    const baseType = this.typeGql();
+    const baseInput = this.inputGql();
+    const baseUpdateInput = this.updateInputGql();
+    const baseWhereInput = this.whereInputGql();
+    const baseMutation = this.mutationGql();
+    const baseQuery = this.queryGql();
+
+    return {
+      baseWhereInput,
+      baseMutation,
+      baseQuery,
+      baseType,
+      baseInput,
+      baseUpdateInput,
+      generatedGqlTypesAndInputs: `
+        ${baseType}
+        ${baseInput}
+        ${baseUpdateInput}
+        ${baseWhereInput}
+      `,
+      generatedGql: `
+        ${baseWhereInput}
+        ${baseMutation}
+        ${baseQuery}
+        ${baseType}
+        ${baseInput}
+        ${baseUpdateInput}
+      `,
+    };
+  }
+}
+
+export const TypedefFactory = ({
   name: serviceName,
   model,
   resolvers,
   options,
-}: BaseTypedefInput) => {
-  const service = BaseService(model);
-  const name = serviceName ?? service?.getModelName();
-  const attributes = service?.getAttributes();
-  const inputAttributes = omit(attributes, OMIT_ATTRIBUTES);
-
-  const baseType = types('type', name, attributes);
-  const baseInput = types('input', `${name}Input`, inputAttributes);
-  const baseUpdateInput = types('input', `Update${name}Input`, inputAttributes);
-
-  const whereAttributes = WhereAttributeFactory(
-    options?.whereAttributes,
-    attributes
-  ).keyValuePairs();
-  const baseWhereInput = whereInput(name, whereAttributes);
-
-  const baseMutation = MutationFactory({ name, resolvers, options }).gql();
-  const baseQuery = QueryFactory({ name, resolvers, options }).gql();
-
-  return {
-    baseWhereInput,
-    baseMutation,
-    baseQuery,
-    baseType,
-    baseInput,
-    baseUpdateInput,
-    generatedGqlTypesAndInputs: `
-      ${baseType}
-      ${baseInput}
-      ${baseUpdateInput}
-      ${baseWhereInput}
-    `,
-    generatedGql: `
-      ${baseWhereInput}
-      ${baseMutation}
-      ${baseQuery}
-      ${baseType}
-      ${baseInput}
-      ${baseUpdateInput}
-    `,
-  };
-};
+}: BaseTypedefInput) =>
+  new Typedef({
+    name: serviceName,
+    model,
+    resolvers,
+    options,
+  });
