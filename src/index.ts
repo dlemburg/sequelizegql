@@ -1,10 +1,11 @@
 import BaseService from './services/base-service';
 import { buildEnums } from './util/array-util';
 import { buildRootTypedefs } from './core/util/root-typedefs-util';
-import { buildSchema, generateEnumsGql } from './core';
+import { buildSchema } from './core';
 import { loadEnums } from './state/enums';
 import { loadModels } from './state/models';
 import { loadSequelize } from './state/sequelize';
+import { generateEnumsGql } from './core/util/enum-util';
 
 export const initialize = ({
   enums,

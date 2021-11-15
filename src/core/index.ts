@@ -1,7 +1,10 @@
 import merge from 'lodash/merge';
+import { buildEnums } from '../util/array-util';
 import { ResolverFactory, TypedefFactory } from './classes';
+import { generateEnumsGql } from './util/enum-util';
 
-export const buildSchema = (models, { schemaMap, baseDirective }) => {
+export const buildSchema = (models, enums, { schemaMap, baseDirective }) => {
+  const enumGql = generateEnumsGql(buildEnums(enums));
   const result: any = Object.values(models as any).reduce(
     (acc: any, model: any): any => {
       const overrides = schemaMap?.[model.name] ?? {};
@@ -22,6 +25,8 @@ export const buildSchema = (models, { schemaMap, baseDirective }) => {
     },
     { typedefs: '', resolvers: {} } as any
   );
+
+  result.typedefs = result.typedefs + enumGql;
 
   return result;
 };
