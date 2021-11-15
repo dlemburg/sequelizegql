@@ -1,5 +1,5 @@
-export const queryGraphql = (operations) => `
-  extend type Mutation {
+export const queryGql = (operations) => `
+  extend type Query {
     ${operations}
   }
 `;

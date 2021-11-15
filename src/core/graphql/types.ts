@@ -8,21 +8,21 @@ const mapTypes = (attributes, options) =>
     })
     .join(' \n ');
 
-export const types = (
+export const typesGql = (
   gqlKeyword,
   name,
   { associations = {}, ...attributes } = {} as ModelAttributes
 ) => {
   const generateNullable = gqlKeyword !== 'input';
   const result = `
-        ${gqlKeyword} ${name} {
-          ${mapTypes(attributes, { generateNullable })}
-          ${mapTypes(associations, {
-            generateNullable,
-            suffix: gqlKeyword === 'input' ? 'Input' : '',
-          })}
-        }
-      `;
+    ${gqlKeyword} ${name} {
+      ${mapTypes(attributes, { generateNullable })}
+      ${mapTypes(associations, {
+        generateNullable,
+        suffix: gqlKeyword === 'input' ? 'Input' : '',
+      })}
+    }
+  `;
 
   return result;
 };

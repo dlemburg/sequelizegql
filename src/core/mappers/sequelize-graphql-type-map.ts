@@ -1,4 +1,4 @@
-import { nullable } from '../graphql/nullable';
+import { nullableGql } from '../graphql/nullable';
 
 export const SEQUELIZE_GRAPHQL_TYPE_MAP = {
   DECIMAL: () => 'Float',
@@ -26,5 +26,5 @@ export const mapSequelizeToGraphql = (
 
   if (!result) throw new Error(`Sequelize type <${sequelizeType} not mapped yet!`);
 
-  return `${result}${generateNullable ? nullable(allowNull) : ''}`;
+  return `${result}${generateNullable ? nullableGql(allowNull) : ''}`;
 };

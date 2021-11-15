@@ -1,5 +1,5 @@
 import { getResolverFieldMap } from '../mappers';
-import { argsGraphql, mutationGraphql } from '../graphql';
+import { argsGql, mutationGql } from '../graphql';
 
 class Mutation {
   private name;
@@ -18,7 +18,7 @@ class Mutation {
 
   public gql() {
     const operations = Object.entries(this.resolverMap).reduce((acc, [key, value]: any) => {
-      const argsValue = argsGraphql(value.args);
+      const argsValue = argsGql(value.args);
 
       const result = `${
         this.resolvers[value.name]?.generate !== false
@@ -30,7 +30,7 @@ class Mutation {
       return acc + result + `\n`;
     }, '');
 
-    return mutationGraphql(operations);
+    return mutationGql(operations);
   }
 }
 

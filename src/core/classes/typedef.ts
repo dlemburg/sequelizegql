@@ -2,8 +2,8 @@ import omit from 'lodash/omit';
 import { BaseTypedefInput } from '../../types/types';
 import { BaseService } from '../../services';
 import { MutationFactory } from './mutation';
-import { whereInput } from '../graphql/where-input';
-import { types } from '../graphql/types';
+import { whereInputGql } from '../graphql/where-input';
+import { typesGql } from '../graphql/types';
 import { WhereAttributeFactory } from './where-attributes';
 import { QueryFactory } from './query';
 
@@ -33,19 +33,19 @@ class Typedef {
   }
 
   public typeGql() {
-    return types('type', this.name, this.attributes);
+    return typesGql('type', this.name, this.attributes);
   }
 
   public inputGql() {
-    return types('input', `${this.name}Input`, this.inputAttributes());
+    return typesGql('input', `${this.name}Input`, this.inputAttributes());
   }
 
   public updateInputGql() {
-    return types('input', `Update${this.name}Input`, this.inputAttributes());
+    return typesGql('input', `Update${this.name}Input`, this.inputAttributes());
   }
 
   public whereInputGql() {
-    return whereInput(this.name, this.whereAttributes());
+    return whereInputGql(this.name, this.whereAttributes());
   }
 
   public whereAttributes() {

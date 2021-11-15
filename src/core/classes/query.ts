@@ -1,5 +1,5 @@
 import { getResolverFieldMap } from '../mappers';
-import { argsGraphql, queryGraphql } from '../graphql';
+import { argsGql, queryGql } from '../graphql';
 
 class Query {
   private name;
@@ -18,7 +18,7 @@ class Query {
 
   public gql() {
     const operations = Object.entries(this.resolverMap).reduce((acc, [key, value]: any) => {
-      const argsValue = argsGraphql(value.args);
+      const argsValue = argsGql(value.args);
       const result = `${
         this.resolvers[value.name]?.generate !== false
           ? `${value.name}${argsValue}: ${value.returnType} ${
@@ -30,7 +30,7 @@ class Query {
       return acc + result + `\n`;
     }, '');
 
-    return queryGraphql(operations);
+    return queryGql(operations);
   }
 }
 

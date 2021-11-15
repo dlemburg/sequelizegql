@@ -1,1 +1,1 @@
-export const nullable = (allowNull) => `${allowNull ? '' : '!'}`;
+export const nullableGql = (allowNull) => `${allowNull ? '' : '!'}`;
