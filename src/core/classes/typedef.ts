@@ -4,7 +4,7 @@ import { BaseService } from '../../services';
 import { MutationFactory } from './mutation';
 import { whereInput } from '../graphql/where-input';
 import { types } from '../graphql/types';
-import { WhereAttributesBuilder } from './where-attributes';
+import { WhereAttributeFactory } from './where-attributes';
 import { QueryFactory } from './query';
 
 const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
@@ -24,7 +24,10 @@ export const TypedefBuilder = ({
   const baseInput = types('input', `${name}Input`, inputAttributes);
   const baseUpdateInput = types('input', `Update${name}Input`, inputAttributes);
 
-  const whereAttributes = WhereAttributesBuilder(options?.whereAttributes, attributes);
+  const whereAttributes = WhereAttributeFactory(
+    options?.whereAttributes,
+    attributes
+  ).keyValuePairs();
   const baseWhereInput = whereInput(name, whereAttributes);
 
   const baseMutation = MutationFactory({ name, resolvers, options }).gql();
