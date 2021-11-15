@@ -5,7 +5,7 @@ import {
 import { getModels } from '../../state';
 import { getAttributes } from '../../services/base-service';
 
-const recurseFields = (fieldEntries, modelAttributes) => {
+const recurseQueryFields = (fieldEntries, modelAttributes) => {
   const Models = getModels();
 
   const result = (fieldEntries ?? [])?.reduce(
@@ -27,7 +27,7 @@ const recurseFields = (fieldEntries, modelAttributes) => {
               (acc: any, x: any) => {
                 const fields = x[1];
                 const modelName = Object.keys(x[1]?.fieldsByTypeName ?? {})?.[0];
-                const { attributes, include: associatedInclude } = recurseFields(
+                const { attributes, include: associatedInclude } = recurseQueryFields(
                   [[fields.name, fields]],
                   getAttributes(Models[modelName])()
                 );
@@ -60,20 +60,22 @@ const recurseFields = (fieldEntries, modelAttributes) => {
   return result;
 };
 
-export const QueryAttributesBuilder = (model) => (resolveInfo) => {
-  try {
-    const modelAttributes = getAttributes(model)();
-    const parsedResolveInfoFragment = parseResolveInfo(resolveInfo) as any;
-    const info = simplifyParsedResolveInfoFragmentWithType(
-      parsedResolveInfoFragment,
-      resolveInfo.returnType
-    );
+export class QueryAttributeBuilder {
+  public static build(model, resolveInfo) {
+    try {
+      const modelAttributes = getAttributes(model)();
+      const parsedResolveInfoFragment = parseResolveInfo(resolveInfo) as any;
+      const info = simplifyParsedResolveInfoFragmentWithType(
+        parsedResolveInfoFragment,
+        resolveInfo.returnType
+      );
 
-    const fields = Object.entries(info.fields);
-    const { attributes, include } = recurseFields(fields, modelAttributes);
+      const fields = Object.entries(info.fields);
+      const { attributes, include } = recurseQueryFields(fields, modelAttributes);
 
-    return { attributes, include };
-  } catch (err) {
-    return {};
+      return { attributes, include };
+    } catch (err) {
+      return {};
+    }
   }
-};
+}

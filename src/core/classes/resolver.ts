@@ -1,7 +1,7 @@
 import { BaseService } from '../../services';
 import { GeneratedResolverField } from '../../types/types';
 import { getResolverFieldMap } from '../mappers';
-import { QueryAttributesBuilder } from './query-attribute';
+import { QueryAttributeBuilder } from './query-attribute';
 
 type BaseResolverInput<T> = {
   model;
@@ -13,7 +13,7 @@ const resolveQuery =
   (_, { where }, context, resolveInfo) => {
     let include, attributes;
     if (resolveInfo) {
-      ({ include, attributes } = QueryAttributesBuilder(model)(resolveInfo));
+      ({ include, attributes } = QueryAttributeBuilder.build(model, resolveInfo));
     }
 
     return serviceMethod(where ?? {}, { attributes, include });
