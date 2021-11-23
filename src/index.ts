@@ -4,19 +4,12 @@ import { loadEnums } from './state/enums';
 import { loadModels } from './state/models';
 import { loadSequelize } from './state/sequelize';
 
-export const initialize = ({
-  enums,
-  models,
-  sequelize,
-  schemaMap = {},
-  options = {},
-  baseDirective,
-}) => {
+export const initialize = ({ enums, models, sequelize, schemaMap = {}, options = {} }) => {
   if (enums) loadEnums(enums);
   if (models) loadModels(models);
   if (sequelize) loadSequelize(sequelize);
 
-  const { typedefs, resolvers } = buildSchema(models, enums, { schemaMap, baseDirective });
+  const { typedefs, resolvers } = buildSchema(models, enums, { schemaMap, options });
   const generatedGql = typedefs + buildRootTypedefs(options);
 
   return { typedefs: generatedGql, resolvers };

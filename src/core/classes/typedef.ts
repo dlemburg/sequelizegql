@@ -1,28 +1,20 @@
 import omit from 'lodash/omit';
 import { BaseInput } from '../../types/types';
-import { BaseService } from '../../services';
 import { MutationFactory } from './mutation';
 import { whereInputGql } from '../graphql/where-input';
 import { typesGql, typeGql, inputGql } from '../graphql/types';
 import { WhereAttributeFactory } from './where-attributes';
 import { QueryFactory } from './query';
+import { BaseClass } from './base-class';
 
 const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
 
-class Typedef {
-  private name;
-  private resolvers;
-  private options;
-  private model;
-  private service;
-  private attributes;
+class Typedef extends BaseClass {
+  attributes;
 
-  constructor({ model, resolvers, options }: BaseInput) {
-    this.model = model;
-    this.service = BaseService(this.model);
-    this.name = this.service?.getModelName();
-    this.resolvers = resolvers;
-    this.options = options;
+  constructor(input: BaseInput) {
+    super(input);
+
     this.attributes = this.service?.getAttributes();
 
     return this;

@@ -1,21 +1,10 @@
-import { getResolverFieldMap } from '../mappers';
 import { argsGql, queryGql } from '../graphql';
 import { BaseInput } from '../../types';
-import { BaseService } from '../../services';
+import { BaseClass } from './base-class';
 
-class Query {
-  private name;
-  private resolvers;
-  private options;
-  private resolverMap;
-  private service;
-
-  constructor({ model, resolvers = {}, options = {} }: BaseInput) {
-    this.service = BaseService(model);
-    this.name = this.service.getModelName();
-    this.resolvers = resolvers;
-    this.options = options;
-    this.resolverMap = getResolverFieldMap(this.name);
+class Query extends BaseClass {
+  constructor(input: BaseInput) {
+    super(input);
 
     return this;
   }
