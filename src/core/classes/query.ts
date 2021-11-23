@@ -16,7 +16,7 @@ class Query {
     return this;
   }
 
-  public gql() {
+  public gql(): string {
     const operations = Object.entries(this.resolverMap).reduce((acc, [key, value]: any) => {
       const argsValue = argsGql(value.args);
       const result = `${

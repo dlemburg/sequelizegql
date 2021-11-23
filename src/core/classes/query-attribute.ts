@@ -5,7 +5,17 @@ import {
 import { getModels } from '../../state';
 import { getAttributes } from '../../services/base-service';
 
-const recurseQueryFields = (fieldEntries, modelAttributes) => {
+type RecursiveInclude = {
+  association: string;
+  include: RecursiveInclude[];
+};
+
+type QueryAttributes = {
+  include?: RecursiveInclude;
+  attributes?: string[];
+};
+
+const recurseQueryFields = (fieldEntries, modelAttributes): QueryAttributes => {
   const Models = getModels();
 
   const result = (fieldEntries ?? [])?.reduce(
@@ -61,7 +71,7 @@ const recurseQueryFields = (fieldEntries, modelAttributes) => {
 };
 
 export class QueryAttributeBuilder {
-  public static build(model, resolveInfo) {
+  public static build(model, resolveInfo): QueryAttributes {
     try {
       const modelAttributes = getAttributes(model)();
       const parsedResolveInfoFragment = parseResolveInfo(resolveInfo) as any;

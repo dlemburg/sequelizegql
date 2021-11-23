@@ -7,26 +7,23 @@ class OperationArgs {
     return this;
   }
 
-  public operationNameArgs() {
+  private buildArgs({ adornKey = false, adornValue = false }): string {
     return this.args.length
       ? `(${this.args
           .map((x) => {
             const [value] = Object.entries(x);
-            return `$${value[0]}: ${value[1]}`;
+            return `${adornKey ? '$' : ''}${value[0]}: ${adornValue ? '$' : ''}${value[0]}`;
           })
           .join(', ')})`
       : '';
   }
 
-  public operationArgs() {
-    return this.args.length
-      ? `(${this.args
-          .map((x) => {
-            const [value] = Object.entries(x);
-            return `${value[0]}: $${value[0]}`;
-          })
-          .join(', ')})`
-      : '';
+  public operationNameArgs(): string {
+    return this.buildArgs({ adornValue: true });
+  }
+
+  public operationArgs(): string {
+    return this.buildArgs({ adornKey: true });
   }
 }
 
