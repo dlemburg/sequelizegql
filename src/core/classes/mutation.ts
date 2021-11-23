@@ -1,14 +1,18 @@
 import { getResolverFieldMap } from '../mappers';
 import { argsGql, mutationGql } from '../graphql';
+import { BaseService } from '../../services';
+import { BaseInput } from '../../types';
 
 class Mutation {
   private name;
   private resolvers;
   private options;
   private resolverMap;
+  private service;
 
-  constructor({ name, resolvers = {}, options = {} as any }) {
-    this.name = name;
+  constructor({ model, resolvers = {}, options = {} }: BaseInput) {
+    this.service = BaseService(model);
+    this.name = this.service.getModelName();
     this.resolvers = resolvers;
     this.options = options;
     this.resolverMap = getResolverFieldMap(this.name);
@@ -34,5 +38,4 @@ class Mutation {
   }
 }
 
-export const MutationFactory = ({ name, resolvers = {}, options = {} as any }) =>
-  new Mutation({ name, resolvers, options });
+export const MutationFactory = (input: BaseInput) => new Mutation(input);

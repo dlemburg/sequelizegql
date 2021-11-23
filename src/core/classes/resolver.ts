@@ -1,12 +1,7 @@
 import { BaseService } from '../../services';
-import { GeneratedResolverField } from '../../types/types';
+import { BaseInput, GeneratedResolverField } from '../../types/types';
 import { getResolverFieldMap } from '../mappers';
 import { QueryAttributeBuilder } from './query-attribute';
-
-type BaseResolverInput<T> = {
-  model;
-  name?: string;
-};
 
 const resolveQuery =
   (model, serviceMethod) =>
@@ -18,16 +13,16 @@ const resolveQuery =
 
     return serviceMethod(where ?? {}, { attributes, include });
   };
-class Resolver<T> {
+class Resolver<T = any> {
   private name;
   private model;
   private service;
   private resolverFieldMap;
 
-  constructor({ name, model }: BaseResolverInput<T>) {
+  constructor({ model }: BaseInput<T>) {
     this.model = model;
     this.service = BaseService(this.model);
-    this.name = name ?? this.service.getModelName();
+    this.name = this.service.getModelName();
     this.resolverFieldMap = getResolverFieldMap(this.name);
 
     return this;
@@ -83,5 +78,4 @@ class Resolver<T> {
   }
 }
 
-export const ResolverFactory = <T>({ name, model }: BaseResolverInput<T>) =>
-  new Resolver<T>({ name, model });
+export const ResolverFactory = <T = any>(input: BaseInput) => new Resolver<T>(input);

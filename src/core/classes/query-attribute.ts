@@ -6,8 +6,8 @@ import { getModels } from '../../state';
 import { getAttributes } from '../../services/base-service';
 
 type RecursiveInclude = {
-  association: string;
   include: RecursiveInclude[];
+  association: string;
 };
 
 type QueryAttributes = {

@@ -1,5 +1,5 @@
 import omit from 'lodash/omit';
-import { BaseTypedefInput } from '../../types/types';
+import { BaseInput } from '../../types/types';
 import { BaseService } from '../../services';
 import { MutationFactory } from './mutation';
 import { whereInputGql } from '../graphql/where-input';
@@ -17,10 +17,10 @@ class Typedef {
   private service;
   private attributes;
 
-  constructor({ name, model, resolvers, options }: BaseTypedefInput) {
+  constructor({ model, resolvers, options }: BaseInput) {
     this.model = model;
     this.service = BaseService(this.model);
-    this.name = name ?? this.service?.getModelName();
+    this.name = this.service?.getModelName();
     this.resolvers = resolvers;
     this.options = options;
     this.attributes = this.service?.getAttributes();
@@ -50,7 +50,7 @@ class Typedef {
 
   public queryGql() {
     return QueryFactory({
-      name: this.name,
+      model: this.model,
       resolvers: this.resolvers,
       options: this.options,
     }).gql();
@@ -58,7 +58,7 @@ class Typedef {
 
   public mutationGql() {
     return MutationFactory({
-      name: this.name,
+      model: this.model,
       resolvers: this.resolvers,
       options: this.options,
     }).gql();
@@ -101,15 +101,4 @@ class Typedef {
   }
 }
 
-export const TypedefFactory = ({
-  name: serviceName,
-  model,
-  resolvers,
-  options,
-}: BaseTypedefInput) =>
-  new Typedef({
-    name: serviceName,
-    model,
-    resolvers,
-    options,
-  });
+export const TypedefFactory = (input: BaseInput) => new Typedef(input);

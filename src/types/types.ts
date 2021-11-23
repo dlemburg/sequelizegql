@@ -56,9 +56,6 @@ export type BuildQueryMutation = {
 export type BaseInput<T = any> = {
   model: T;
   options?: ResolverOptions;
-};
-
-export type BaseTypedefInput<T = any> = BaseInput<T> & {
   resolvers?: Resolver;
 };
 

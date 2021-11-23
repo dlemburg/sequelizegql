@@ -1,14 +1,18 @@
 import { getResolverFieldMap } from '../mappers';
 import { argsGql, queryGql } from '../graphql';
+import { BaseInput } from '../../types';
+import { BaseService } from '../../services';
 
 class Query {
   private name;
   private resolvers;
   private options;
   private resolverMap;
+  private service;
 
-  constructor({ name, resolvers = {}, options = {} as any }) {
-    this.name = name;
+  constructor({ model, resolvers = {}, options = {} }: BaseInput) {
+    this.service = BaseService(model);
+    this.name = this.service.getModelName();
     this.resolvers = resolvers;
     this.options = options;
     this.resolverMap = getResolverFieldMap(this.name);
@@ -34,5 +38,4 @@ class Query {
   }
 }
 
-export const QueryFactory = ({ name, resolvers = {}, options = {} as any }) =>
-  new Query({ name, resolvers, options });
+export const QueryFactory = (input: BaseInput) => new Query(input);
