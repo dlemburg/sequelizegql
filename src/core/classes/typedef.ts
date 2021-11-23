@@ -7,21 +7,21 @@ import { WhereAttributeFactory } from './where-attributes';
 import { QueryFactory } from './query';
 import { BaseClass } from './base-class';
 
-const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
-
 class Typedef extends BaseClass {
   attributes;
+  omitAttributes;
 
   constructor(input: BaseInput) {
     super(input);
 
     this.attributes = this.service?.getAttributes();
+    this.omitAttributes = input.options?.omitAttributes;
 
     return this;
   }
 
   public inputAttributes() {
-    return omit(this.attributes, OMIT_ATTRIBUTES);
+    return omit(this.attributes, this.omitAttributes);
   }
 
   public typeGql() {
