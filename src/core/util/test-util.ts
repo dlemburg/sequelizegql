@@ -2,6 +2,7 @@ import { GeneratedResolverField } from '../../types';
 import { getResolverFieldMap } from '../mappers';
 import { OperationArgsFactory } from '../classes';
 import { buildFakerData } from './faker-util';
+import { newLine } from '../graphql/new-line';
 
 const buildNonArrayAttributes = (attributes) =>
   Object.entries(attributes)
@@ -28,7 +29,7 @@ export const buildTests = ({
     const bodyRaw = `${value.name}${args(value.args)} { ${
       resolverKey === GeneratedResolverField.DELETE_MUTATION
         ? ['id']
-        : [...returnAttributes, ...pickedReturnAttributes].join('\n')
+        : [...returnAttributes, ...pickedReturnAttributes].join(` ${newLine()} `)
     } }`;
 
     const vars = args.reduce((acc, x) => {
@@ -55,7 +56,7 @@ export const buildTests = ({
         ${name}${operationArgs} { ${
       resolverKey === GeneratedResolverField.DELETE_MUTATION
         ? ['id']
-        : [...returnAttributes, ...pickedReturnAttributes].join('\n')
+        : [...returnAttributes, ...pickedReturnAttributes].join(` ${newLine()} `)
     } }
       }
     `;

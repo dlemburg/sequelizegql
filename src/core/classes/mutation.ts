@@ -1,6 +1,7 @@
 import { argsGql, mutationGql } from '../graphql';
 import { BaseInput } from '../../types';
 import { BaseClass } from './base-class';
+import { newLine } from '../graphql/new-line';
 
 class Mutation extends BaseClass {
   constructor(input: BaseInput) {
@@ -21,7 +22,7 @@ class Mutation extends BaseClass {
             }`
           : ''
       }`;
-      return acc + result + `\n`;
+      return acc + result + newLine();
     }, '');
 
     return mutationGql(operations);

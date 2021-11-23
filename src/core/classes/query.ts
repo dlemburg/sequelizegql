@@ -1,6 +1,7 @@
 import { argsGql, queryGql } from '../graphql';
 import { BaseInput } from '../../types';
 import { BaseClass } from './base-class';
+import { newLine } from '../graphql/new-line';
 
 class Query extends BaseClass {
   constructor(input: BaseInput) {
@@ -22,7 +23,7 @@ class Query extends BaseClass {
           : ''
       }`;
 
-      return acc + result + `\n`;
+      return acc + result + newLine();
     }, '');
 
     return queryGql(operations);

@@ -1,12 +1,13 @@
 import { ModelAttributes } from '../../types';
 import { mapSequelizeToGraphql } from '../mappers';
+import { newLine } from './new-line';
 
 const mapTypes = (attributes, options) =>
   Object.entries(attributes)
     .map(([key, value]) => {
       return `${key}: ${mapSequelizeToGraphql(value, options)}`;
     })
-    .join(' \n ');
+    .join(` ${newLine()} `);
 
 export const typeGql = () => 'type';
 export const inputGql = () => 'input';
