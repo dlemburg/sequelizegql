@@ -3,6 +3,7 @@ import { getResolverFieldMap } from '../mappers';
 import { OperationArgsFactory } from '../classes';
 import { buildFakerData } from './faker-util';
 import { newLine } from '../graphql/new-line';
+import { inputGql } from '../graphql';
 
 const buildNonArrayAttributes = (attributes) =>
   Object.entries(attributes)
@@ -35,7 +36,7 @@ export const buildTests = ({
     const vars = args.reduce((acc, x) => {
       const field = Object.keys(x)[0];
       const value =
-        field === 'input'
+        field === inputGql()
           ? {
               ...buildFakerData(inputAttributes),
               ...variables[field],

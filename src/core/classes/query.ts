@@ -15,12 +15,12 @@ class Query extends BaseClass {
       const argsValue = argsGql(value.args);
       const resolverKey = value.key;
 
-      const result = `${
-        this.resolvers[resolverKey]?.generate !== false
-          ? `${resolverKey}${argsValue}: ${value.returnType} ${
-              this.resolvers[resolverKey]?.directive ?? this.options?.baseDirective ?? ''
-            }`
-          : ''
+      if (this.resolvers[resolverKey]?.generate === false) {
+        return acc;
+      }
+
+      const result = `${resolverKey}${argsValue}: ${value.returnType} ${
+        this.resolvers[resolverKey]?.directive ?? this.options?.baseDirective ?? ''
       }`;
 
       return acc + result + newLine();
