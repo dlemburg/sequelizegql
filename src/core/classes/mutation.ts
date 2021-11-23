@@ -22,6 +22,7 @@ class Mutation extends BaseClass {
             }`
           : ''
       }`;
+
       return acc + result + newLine();
     }, '');
 

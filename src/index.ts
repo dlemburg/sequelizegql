@@ -1,13 +1,9 @@
 import { buildRootTypedefs } from './core/util/root-typedefs-util';
 import { buildSchema } from './core';
-import { loadEnums } from './state/enums';
-import { loadModels } from './state/models';
-import { loadSequelize } from './state/sequelize';
+import { StateFactory } from './core/classes/state';
 
 export const initialize = ({ enums, models, sequelize, schemaMap = {}, options = {} }) => {
-  if (enums) loadEnums(enums);
-  if (models) loadModels(models);
-  if (sequelize) loadSequelize(sequelize);
+  StateFactory({ enums, models, sequelize });
 
   const { typedefs, resolvers } = buildSchema(models, enums, { schemaMap, options });
   const generatedGql = typedefs + buildRootTypedefs(options);

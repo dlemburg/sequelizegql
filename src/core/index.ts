@@ -14,6 +14,49 @@ type BuildSchemaResponse = {
   resolvers: any;
 };
 
+// const base = {
+//   find: {
+//     generate: false
+//   },
+//   findAll: {
+//     generate: false
+//   },
+// }
+// const schemaMap = {
+//   Book: {
+//     options: {
+//       omitAttributes: ['removedAt', 'cost']
+//     },
+//     resolvers: {
+//       ...base,
+//       create: {
+
+//       },
+//       update: {
+
+//       }
+//     }
+//   },
+//   Author: {
+//     resolvers: {
+//       ...base,
+//       create: {
+//         generate: false
+//       },
+//       update: {
+
+//       }
+//     }
+//   }
+// }
+
+// const input = {
+//   schemaMap,
+//   options: {
+//     omitAttributes: ['removedAt']
+//   }
+// }
+
 const STARTER_ACC = { typedefs: '', resolvers: {} };
 
 export const buildSchema = (
@@ -30,12 +73,16 @@ export const buildSchema = (
 
     const { generatedGql } = TypedefFactory({
       model,
-      ...options,
+      options,
     }).typedefMap();
-    const resolvers = ResolverFactory({ model }).resolvers();
+    const resolvers = ResolverFactory({ model, options }).resolvers();
 
     acc.typedefs = acc.typedefs + generatedGql;
     acc.resolvers = merge(acc.resolvers, resolvers);
+
+    // for (let x of options?.omitResolvers ?? []) {
+    //   delete acc.resolvers[x];
+    // }
 
     return acc;
   }, STARTER_ACC);

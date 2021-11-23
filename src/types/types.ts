@@ -30,6 +30,7 @@ export type ResolverOptions = {
   directive?: string;
   whereAttributes?: string[];
   omitAttributes?: string[];
+  omitResolvers?: string[];
 };
 
 export type SchemaMapResolverOptions = Omit<ResolverOptions, 'generate'>;
