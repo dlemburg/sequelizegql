@@ -12,10 +12,12 @@ class Query extends BaseClass {
   public gql(): string {
     const operations = Object.entries(this.resolverMap).reduce((acc, [key, value]: any) => {
       const argsValue = argsGql(value.args);
+      const resolverKey = value.key;
+
       const result = `${
-        this.resolvers[value.name]?.generate !== false
-          ? `${value.name}${argsValue}: ${value.returnType} ${
-              this.resolvers[value.name]?.directive ?? this.options?.baseDirective ?? ''
+        this.resolvers[resolverKey]?.generate !== false
+          ? `${resolverKey}${argsValue}: ${value.returnType} ${
+              this.resolvers[resolverKey]?.directive ?? this.options?.baseDirective ?? ''
             }`
           : ''
       }`;
