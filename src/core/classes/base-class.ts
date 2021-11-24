@@ -16,7 +16,7 @@ export class BaseClass {
     this.name = this.service.getModelName();
     this.resolvers = resolvers;
     this.options = options;
-    this.resolverMap = getResolverFieldMap(this.name);
+    this.resolverMap = getResolverFieldMap(this.name, this.options);
 
     return this;
   }

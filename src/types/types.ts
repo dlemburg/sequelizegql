@@ -26,7 +26,8 @@ export enum BaseWhereInputType {
 }
 
 export type ResolverOptions = {
-  generate?: boolean;
+  generate?: boolean; // defaults true
+  pluralize?: boolean; // defaults true
   directive?: string;
   whereAttributes?: string[];
   omitAttributes?: string[];

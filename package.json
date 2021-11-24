@@ -16,6 +16,7 @@
     "faker": "^5.5.3",
     "graphql-parse-resolve-info": "^4.12.0",
     "lodash": "^4.17.21",
+    "pluralize": "^8.0.0",
     "sequelize": "^6.9.0"
   }
 }
