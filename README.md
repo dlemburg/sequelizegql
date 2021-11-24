@@ -22,7 +22,7 @@ https://www.omdbapi.com/
   4.) Build out the default sequelize options, i.e - paging - order
   5.) Print/Export Schema
   6.) Clean up all types
-  7.) 'omitResolvers' option
+  7.) 'omitResolvers' option [DONE]
   8.) merge utility: 'customSchemaPath', 'customTypes'
   9.) Recursive creates - currently 1 level deep
   10.) README (lightweight docs)

@@ -80,10 +80,6 @@ export const buildSchema = (
     acc.typedefs = acc.typedefs + generatedGql;
     acc.resolvers = merge(acc.resolvers, resolvers);
 
-    // for (let x of options?.omitResolvers ?? []) {
-    //   delete acc.resolvers[x];
-    // }
-
     return acc;
   }, STARTER_ACC);
 

@@ -15,7 +15,10 @@ class Query extends BaseClass {
       const argsValue = argsGql(value.args);
       const resolverKey = value.key;
 
-      if (this.resolvers[resolverKey]?.generate === false) {
+      if (
+        this.resolvers[resolverKey]?.generate === false ||
+        this.options?.omitResolvers?.includes(resolverKey)
+      ) {
         return acc;
       }
 
