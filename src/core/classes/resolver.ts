@@ -13,6 +13,18 @@ const resolveQuery =
     return serviceMethod(where ?? {}, { attributes, include });
   };
 
+const middleware =
+  (options, resolve) =>
+  async (...args) => {
+    await options?.onBeforeResolve(...args);
+
+    const result = await resolve(...args);
+
+    await options?.onAfterResolve(result, ...args);
+
+    return result;
+  };
+
 class Resolver extends BaseClass {
   constructor(input: BaseInput) {
     super(input);
@@ -22,39 +34,38 @@ class Resolver extends BaseClass {
 
   public mutation() {
     return {
-      [this.resolverMap[GeneratedResolverField.CREATE_MUTATION].name]: (_, { input }, context) =>
-        this.service.create(input),
-      [this.resolverMap[GeneratedResolverField.UPDATE_MUTATION].name]: async (
-        _,
-        { input, where },
-        context
-      ) => this.service.update(input, where),
-      [this.resolverMap[GeneratedResolverField.DELETE_MUTATION].name]: (
-        _,
-        { where, options = {} },
-        context
-      ) => this.service.destroy(where, options),
-      [this.resolverMap[GeneratedResolverField.UPSERT_MUTATION].name]: (
-        _,
-        { where, input },
-        context
-      ) => this.service.upsert(input, where),
+      [this.resolverMap[GeneratedResolverField.CREATE_MUTATION].name]: middleware(
+        this.options,
+        (_, { input }) => this.service.create(input)
+      ),
+      [this.resolverMap[GeneratedResolverField.UPDATE_MUTATION].name]: middleware(
+        this.options,
+        (_, { input, where }) => this.service.update(input, where)
+      ),
+      [this.resolverMap[GeneratedResolverField.DELETE_MUTATION].name]: middleware(
+        this.options,
+        (_, { where, options = {} }) => this.service.destroy(where, options)
+      ),
+      [this.resolverMap[GeneratedResolverField.UPSERT_MUTATION].name]: middleware(
+        this.options,
+        (_, { where, input }) => this.service.upsert(where, input)
+      ),
     };
   }
 
   public query() {
     return {
-      [this.resolverMap[GeneratedResolverField.FIND_ALL].name]: resolveQuery(
-        this.service.getModel(),
-        this.service.findAll
+      [this.resolverMap[GeneratedResolverField.FIND_ALL].name]: middleware(
+        this.options,
+        resolveQuery(this.service.getModel(), this.service.findAll)
       ),
-      [this.resolverMap[GeneratedResolverField.FIND_MANY].name]: resolveQuery(
-        this.service.getModel(),
-        this.service.findAll
+      [this.resolverMap[GeneratedResolverField.FIND_MANY].name]: middleware(
+        this.options,
+        resolveQuery(this.service.getModel(), this.service.findAll)
       ),
-      [this.resolverMap[GeneratedResolverField.FIND_ONE].name]: resolveQuery(
-        this.service.getModel(),
-        this.service.findOne
+      [this.resolverMap[GeneratedResolverField.FIND_ONE].name]: middleware(
+        this.options,
+        resolveQuery(this.service.getModel(), this.service.findOne)
       ),
     };
   }

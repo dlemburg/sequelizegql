@@ -31,6 +31,8 @@ export type ResolverOptions = {
   whereAttributes?: string[];
   omitAttributes?: string[];
   omitResolvers?: string[];
+  onBeforeResolve?;
+  onBAfterResolve?;
 };
 
 export type SchemaMapResolverOptions = Omit<ResolverOptions, 'generate'>;

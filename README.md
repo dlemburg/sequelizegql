@@ -26,6 +26,7 @@ https://www.omdbapi.com/
   8.) merge utility: 'customSchemaPath', 'customTypes'
   9.) Recursive creates - currently 1 level deep
   10.) README (lightweight docs)
+  11.) onBeforeResolve, onAfterResolve [DONE]
 
 future support (v2)
 
