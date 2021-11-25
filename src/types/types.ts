@@ -35,7 +35,7 @@ export type ResolverOptions = {
   omitAttributes?: string[];
   omitResolvers?: string[];
   onBeforeResolve?;
-  onBAfterResolve?;
+  onAfterResolve?;
   fieldMappers?: {
     FILTERS: string; // defaults 'FILTERS'
   };
