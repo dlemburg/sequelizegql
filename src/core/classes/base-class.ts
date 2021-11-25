@@ -1,4 +1,4 @@
-import { BaseService } from '../../services';
+import { BaseService, BaseServiceInterface } from '../../services';
 import { BaseInput } from '../../types';
 import { getResolverFieldMap } from '../mappers';
 
@@ -8,7 +8,7 @@ export class BaseClass {
   public options;
   public resolverMap;
   public model;
-  public service;
+  public service: BaseServiceInterface<any>;
 
   constructor({ model, resolvers = {}, options = {} }: BaseInput) {
     this.model = model;

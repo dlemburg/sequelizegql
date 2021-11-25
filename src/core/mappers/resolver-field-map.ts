@@ -47,6 +47,14 @@ export const getResolverFieldMap = (name: string, options: ResolverOptions) => {
       pickedReturnAttributes: ['id'],
       key: GeneratedResolverField.CREATE_MUTATION,
     },
+    [GeneratedResolverField.CREATE_MANY_MUTATION]: {
+      operationType: 'mutation',
+      name: `createMany${name}`,
+      args: [{ input: `[${name}Input!]!` }],
+      returnType: `[${name}!]!`,
+      pickedReturnAttributes: ['id'],
+      key: GeneratedResolverField.CREATE_MANY_MUTATION,
+    },
     [GeneratedResolverField.UPDATE_MUTATION]: {
       operationType: 'mutation',
       name: `update${name}`,

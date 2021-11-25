@@ -59,17 +59,21 @@ class Resolver extends BaseClass {
         this.options,
         (_, { input }) => this.service.create(input)
       ),
+      [this.resolverMap[GeneratedResolverField.CREATE_MANY_MUTATION].name]: middleware(
+        this.options,
+        (_, { input }) => this.service.bulkCreate(input)
+      ),
       [this.resolverMap[GeneratedResolverField.UPDATE_MUTATION].name]: middleware(
         this.options,
         (_, { input, where }) => this.service.update(input, where)
       ),
-      [this.resolverMap[GeneratedResolverField.DELETE_MUTATION].name]: middleware(
-        this.options,
-        (_, { where, options = {} }) => this.service.destroy(where, options)
-      ),
       [this.resolverMap[GeneratedResolverField.UPSERT_MUTATION].name]: middleware(
         this.options,
         (_, { where, input }) => this.service.upsert(where, input)
+      ),
+      [this.resolverMap[GeneratedResolverField.DELETE_MUTATION].name]: middleware(
+        this.options,
+        (_, { where, options = {} }) => this.service.destroy(where, options)
       ),
     };
   }

@@ -17,7 +17,7 @@ https://www.omdbapi.com/
 - User
 - UserBook
 
-  2.) Extend the Sequelize DataTypes, make db-client-specific data type mappings (requires a 'client' input)
+  2.) Extend the Sequelize DataTypes, make db-client-specific data type mappings (requires a 'client' input) [DONE_KINDA]
   3.) Pluralization (optional) [DONE]
   4.) Build out the default sequelize options, i.e - paging - order [DONE]
   5.) Print/Export Schema

@@ -2,6 +2,7 @@ import { DataTypes, FindOptions, WhereOptions } from 'sequelize';
 
 const RESOLVER_MAP_KEYS = {
   create: '',
+  createMany: '',
   update: '',
   upsert: '',
   delete: '',
@@ -12,6 +13,7 @@ const RESOLVER_MAP_KEYS = {
 
 export enum GeneratedResolverField {
   CREATE_MUTATION = 'create',
+  CREATE_MANY_MUTATION = 'createMany',
   UPDATE_MUTATION = 'update',
   UPSERT_MUTATION = 'upsert',
   DELETE_MUTATION = 'delete',
