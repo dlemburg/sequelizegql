@@ -50,7 +50,7 @@ export const OPERATORS_FILTERS_MAP = {
   IS_NULL: () => ({
     gql: () => 'String!',
     op: 'is',
-    getValue: (value) => value,
+    getValue: (value) => null,
   }),
   NOT: () => ({
     gql: () => 'JSON!',
