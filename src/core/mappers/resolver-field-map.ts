@@ -1,6 +1,7 @@
 import pluralize from 'pluralize';
 import { GeneratedResolverField, ResolverOptions } from '../../types';
 import { lowercaseFirstLetter } from '../../util/general-util';
+import { optionsQueryInputGql } from '../graphql/options';
 
 const sanitize = (value: string, options: ResolverOptions) => {
   const result = options?.pluralize !== false ? pluralize(value) : value;
@@ -14,6 +15,22 @@ export const getResolverFieldMap = (name: string, options: ResolverOptions) => {
   const pluralizedLoweredName = sanitize(loweredName, options);
 
   return {
+    [GeneratedResolverField.FIND_ONE]: {
+      operationType: 'query',
+      name: `${loweredName}`,
+      args: [{ where: `${name}WhereInput!` }, { options: optionsQueryInputGql() }],
+      returnType: `${name}`,
+      pickedReturnAttributes: ['id'],
+      key: GeneratedResolverField.FIND_ONE,
+    },
+    [GeneratedResolverField.FIND_MANY]: {
+      operationType: 'query',
+      name: `${pluralizedLoweredName}`,
+      args: [{ where: `${name}WhereInput!` }, { options: optionsQueryInputGql() }],
+      returnType: `[${name}]!`,
+      pickedReturnAttributes: ['id'],
+      key: GeneratedResolverField.FIND_MANY,
+    },
     [GeneratedResolverField.FIND_ALL]: {
       operationType: 'query',
       name: `all${pluralizedName}`,
@@ -21,22 +38,6 @@ export const getResolverFieldMap = (name: string, options: ResolverOptions) => {
       returnType: `[${name}]!`,
       pickedReturnAttributes: ['id'],
       key: GeneratedResolverField.FIND_ALL,
-    },
-    [GeneratedResolverField.FIND_MANY]: {
-      operationType: 'query',
-      name: `${pluralizedLoweredName}`,
-      args: [{ where: `${name}WhereInput!` }],
-      returnType: `[${name}]!`,
-      pickedReturnAttributes: ['id'],
-      key: GeneratedResolverField.FIND_MANY,
-    },
-    [GeneratedResolverField.FIND_ONE]: {
-      operationType: 'query',
-      name: `${loweredName}`,
-      args: [{ where: `${name}WhereInput!` }],
-      returnType: `${name}`,
-      pickedReturnAttributes: ['id'],
-      key: GeneratedResolverField.FIND_ONE,
     },
     [GeneratedResolverField.CREATE_MUTATION]: {
       operationType: 'mutation',

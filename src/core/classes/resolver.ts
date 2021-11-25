@@ -4,13 +4,13 @@ import { BaseClass } from './base-class';
 
 const resolveQuery =
   (model, serviceMethod) =>
-  (_, { where }, context, resolveInfo) => {
+  (_, { where, options }, context, resolveInfo) => {
     let include, attributes;
     if (resolveInfo) {
       ({ include, attributes } = QueryAttributeBuilder.build(model, resolveInfo));
     }
 
-    return serviceMethod(where ?? {}, { attributes, include });
+    return serviceMethod(where ?? {}, { attributes, include, ...options });
   };
 
 const middleware =
@@ -32,6 +32,23 @@ class Resolver extends BaseClass {
     return this;
   }
 
+  public query() {
+    return {
+      [this.resolverMap[GeneratedResolverField.FIND_ONE].name]: middleware(
+        this.options,
+        resolveQuery(this.service.getModel(), this.service.findOne)
+      ),
+      [this.resolverMap[GeneratedResolverField.FIND_MANY].name]: middleware(
+        this.options,
+        resolveQuery(this.service.getModel(), this.service.findAll)
+      ),
+      [this.resolverMap[GeneratedResolverField.FIND_ALL].name]: middleware(
+        this.options,
+        resolveQuery(this.service.getModel(), this.service.findAll)
+      ),
+    };
+  }
+
   public mutation() {
     return {
       [this.resolverMap[GeneratedResolverField.CREATE_MUTATION].name]: middleware(
@@ -49,23 +66,6 @@ class Resolver extends BaseClass {
       [this.resolverMap[GeneratedResolverField.UPSERT_MUTATION].name]: middleware(
         this.options,
         (_, { where, input }) => this.service.upsert(where, input)
-      ),
-    };
-  }
-
-  public query() {
-    return {
-      [this.resolverMap[GeneratedResolverField.FIND_ALL].name]: middleware(
-        this.options,
-        resolveQuery(this.service.getModel(), this.service.findAll)
-      ),
-      [this.resolverMap[GeneratedResolverField.FIND_MANY].name]: middleware(
-        this.options,
-        resolveQuery(this.service.getModel(), this.service.findAll)
-      ),
-      [this.resolverMap[GeneratedResolverField.FIND_ONE].name]: middleware(
-        this.options,
-        resolveQuery(this.service.getModel(), this.service.findOne)
       ),
     };
   }

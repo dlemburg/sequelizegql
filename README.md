@@ -27,6 +27,7 @@ https://www.omdbapi.com/
   9.) Recursive creates - currently 1 level deep
   10.) README (lightweight docs)
   11.) onBeforeResolve, onAfterResolve [DONE]
+  12.) createMany resolver/typedef
 
 future support (v2)
 
