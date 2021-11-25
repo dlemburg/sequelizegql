@@ -1,16 +1,20 @@
 import { BaseInput, GeneratedResolverField } from '../../types/types';
 import { QueryAttributeBuilder } from './query-attribute';
 import { BaseClass } from './base-class';
+import { buildSort } from '../../util/sequelize-util';
 
 const resolveQuery =
   (model, serviceMethod) =>
   (_, { where, options }, context, resolveInfo) => {
     let include, attributes;
+    const order =
+      options?.order?.length ?? options?.order.map(({ field, dir }) => buildSort(field, dir));
+
     if (resolveInfo) {
       ({ include, attributes } = QueryAttributeBuilder.build(model, resolveInfo));
     }
 
-    return serviceMethod(where ?? {}, { attributes, include, ...options });
+    return serviceMethod(where ?? {}, { attributes, include, ...(order && { order }), ...options });
   };
 
 const middleware =

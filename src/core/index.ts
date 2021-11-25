@@ -2,6 +2,7 @@ import merge from 'lodash/merge';
 import { SchemaMap, ResolverOptions } from '../types';
 import { buildEnums } from '../util/array-util';
 import { ResolverFactory, TypedefFactory } from './classes';
+import { optionsQueryGql } from './graphql/options';
 import { generateEnumsGql } from './util/enum-util';
 
 type BuildSchemaOptions = {
@@ -14,49 +15,6 @@ type BuildSchemaResponse = {
   resolvers: any;
 };
 
-// const base = {
-//   find: {
-//     generate: false
-//   },
-//   findAll: {
-//     generate: false
-//   },
-// }
-// const schemaMap = {
-//   Book: {
-//     options: {
-//       omitAttributes: ['removedAt', 'cost']
-//     },
-//     resolvers: {
-//       ...base,
-//       create: {
-
-//       },
-//       update: {
-
-//       }
-//     }
-//   },
-//   Author: {
-//     resolvers: {
-//       ...base,
-//       create: {
-//         generate: false
-//       },
-//       update: {
-
-//       }
-//     }
-//   }
-// }
-
-// const input = {
-//   schemaMap,
-//   options: {
-//     omitAttributes: ['removedAt']
-//   }
-// }
-
 const STARTER_ACC = { typedefs: '', resolvers: {} };
 
 export const buildSchema = (
@@ -65,6 +23,7 @@ export const buildSchema = (
   schemaOptions: BuildSchemaOptions
 ): BuildSchemaResponse => {
   const enumGql = generateEnumsGql(buildEnums(enums));
+  const orderGql = optionsQueryGql();
   const result: any = Object.values(models as any).reduce((acc: any, model: any): any => {
     const modelOverrides = schemaOptions?.schemaMap?.[model.name];
     const options = { ...schemaOptions?.options, ...modelOverrides?.options };
@@ -83,7 +42,7 @@ export const buildSchema = (
     return acc;
   }, STARTER_ACC);
 
-  result.typedefs = result.typedefs + enumGql;
+  result.typedefs = result.typedefs + enumGql + orderGql;
 
   return result;
 };
