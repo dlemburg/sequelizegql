@@ -5,7 +5,7 @@ import { whereInputFilterEnumGql } from './where-attributes-input-filter-enum';
 
 export const whereInputGql = (name, whereAttributes) => {
   const whereInputName = `${name}WhereInput`;
-  const { enumGql, enumName } = whereInputFilterEnumGql(name, whereAttributes());
+  const { enumGql, enumName } = whereInputFilterEnumGql(name, whereAttributes);
 
   const whereAttributeOperatorsGql = Object.entries(TOP_LEVEL_OPERATORS_GQL_MAP)
     .map(([opName, opFn]) => `${opName}: ${opFn(whereInputName).gql}`)
