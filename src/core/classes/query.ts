@@ -1,9 +1,10 @@
-import { argsGql, queryGql } from '../graphql';
+import { queryGql } from '../graphql';
 import { BaseInput } from '../../types';
-import { BaseClass } from './base-class';
-import { newLine } from '../graphql/new-line';
+import { BaseGql } from './base-gql';
 
-class Query extends BaseClass {
+const generateGql = () => {};
+
+class Query extends BaseGql {
   constructor(input: BaseInput) {
     super(input);
 
@@ -11,23 +12,7 @@ class Query extends BaseClass {
   }
 
   public gql(): string {
-    const operations = Object.entries(this.resolverMap).reduce((acc, [key, value]: any) => {
-      const argsValue = argsGql(value.args);
-      const resolverKey = value.key;
-
-      if (
-        this.resolvers[resolverKey]?.generate === false ||
-        this.options?.omitResolvers?.includes(resolverKey)
-      ) {
-        return acc;
-      }
-
-      const result = `${resolverKey}${argsValue}: ${value.returnType} ${
-        this.resolvers[resolverKey]?.directive ?? this.options?.baseDirective ?? ''
-      }`;
-
-      return acc + result + newLine();
-    }, '');
+    const operations = this.getOperations();
 
     return queryGql(operations);
   }

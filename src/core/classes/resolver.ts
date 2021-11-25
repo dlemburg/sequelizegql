@@ -1,6 +1,6 @@
 import { BaseInput, GeneratedResolverField } from '../../types/types';
 import { QueryAttributeBuilder } from './query-attribute';
-import { BaseClass } from './base-class';
+import { BaseGql } from './base-gql';
 import { buildSort } from '../../util/sequelize-util';
 
 const resolveQuery =
@@ -29,7 +29,7 @@ const middleware =
     return result;
   };
 
-class Resolver extends BaseClass {
+class ResolverService extends BaseGql {
   constructor(input: BaseInput) {
     super(input);
 
@@ -86,4 +86,4 @@ class Resolver extends BaseClass {
   }
 }
 
-export const ResolverFactory = <T = any>(input: BaseInput) => new Resolver(input);
+export const ResolverFactory = <T = any>(input: BaseInput) => new ResolverService(input);

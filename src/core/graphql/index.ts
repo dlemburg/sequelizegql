@@ -6,3 +6,5 @@ export * from './types';
 export * from './where-input';
 export * from './delete-options';
 export * from './delete-response';
+export * from './new-line';
+export * from './options';

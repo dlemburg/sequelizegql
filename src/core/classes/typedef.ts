@@ -11,9 +11,9 @@ import {
 } from '../graphql/types';
 import { WhereAttributeFactory } from './where-attributes';
 import { QueryFactory } from './query';
-import { BaseClass } from './base-class';
+import { BaseGql } from './base-gql';
 
-class Typedef extends BaseClass {
+class Typedef extends BaseGql {
   attributes;
   omitAttributes;
 
