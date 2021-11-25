@@ -26,8 +26,10 @@ https://www.omdbapi.com/
   8.) merge utility: 'customSchemaPath', 'customTypes'
   9.) Recursive creates - currently 1 level deep
   10.) README (lightweight docs)
-  11.) onBeforeResolve, onAfterResolve [DONE]
+  11.) onBeforeResolve, onAfterResolve middlewares [DONE]
   12.) createMany resolver/typedef [DONE]
+  13.) add AND, OR operator filters [DONE]
+  14.) add sequelize-mapped operator FILTERS [IN_PROGRESS]
 
 future support (v2)
 
