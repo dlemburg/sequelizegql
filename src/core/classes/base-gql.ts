@@ -1,12 +1,12 @@
 import { BaseService, BaseServiceInterface } from '../../services';
-import { BaseInput } from '../../types';
+import { BaseInput, ResolverOptions } from '../../types';
 import { argsGql, newLine } from '../graphql';
 import { getResolverFieldMap } from '../mappers';
 
 export class BaseGql {
-  public name;
+  public name: string;
   public resolvers;
-  public options;
+  public options: ResolverOptions;
   public resolverMap;
   public model;
   public service: BaseServiceInterface<any>;
@@ -35,7 +35,7 @@ export class BaseGql {
       }
 
       const result = `${resolverKey}${argsValue}: ${value.returnType} ${
-        this.resolvers[resolverKey]?.directive ?? this.options?.baseDirective ?? ''
+        this.resolvers[resolverKey]?.directive ?? this.options?.directive ?? ''
       }`;
 
       return acc + result + newLine();
