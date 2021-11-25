@@ -33,7 +33,7 @@ export type ResolverOptions = {
   directive?: string;
   whereAttributes?: string[];
   omitAttributes?: string[];
-  omitResolvers?: string[];
+  omitResolvers?: GeneratedResolverField[];
   onBeforeResolve?;
   onAfterResolve?;
   fieldMappers?: {
