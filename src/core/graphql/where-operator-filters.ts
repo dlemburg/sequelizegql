@@ -5,19 +5,6 @@ import {
 import { newLine } from './new-line';
 import Constants from '../constants';
 
-export const whereInputFilterEnumGql = (name, whereAttributes) => {
-  const enumName = `${name}WhereInputFilterEnum`;
-
-  return {
-    enumGql: `
-      enum ${enumName} {
-        ${whereAttributes.map((x) => x.key).join(`${newLine()}`)}
-      }
-    `,
-    enumName,
-  };
-};
-
 export const whereOperatorFiltersInputGql = (name, whereInputName, whereAttributes, options) => {
   const filterInputName = `${name}WhereFilterInput`;
   const filterOperatorMapInputName = `${name}WhereFilterOperatorMapInput`;
