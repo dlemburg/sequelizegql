@@ -22,4 +22,14 @@ class State {
   }
 }
 
-export const StateFactory = (input) => new State(input);
+let stateSingleton: State;
+
+export const StateFactory = (input?) => {
+  if (stateSingleton) {
+    return stateSingleton;
+  }
+
+  stateSingleton = new State(input);
+
+  return stateSingleton;
+};
