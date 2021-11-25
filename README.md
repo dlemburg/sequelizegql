@@ -29,9 +29,10 @@ https://www.omdbapi.com/
   11.) onBeforeResolve, onAfterResolve middlewares [DONE]
   12.) createMany resolver/typedef [DONE]
   13.) add AND, OR operator filters to whereInput [DONE]
-  14.) add sequelize-mapped operator FILTERS to whereInput [IN_PROGRESS]
+  14.) add sequelize-mapped operator FILTERS to whereInput [DONE]
   15.) operators: gql [DONE]
   16.) operators: undo JSON! type for multivariant type
+  17.) parse operator FILTERS on associated query fields
 
 future support (v2)
 
