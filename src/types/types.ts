@@ -102,3 +102,7 @@ export type BaseTestFactoryInput<T = any> = BaseInput<T> & {
   variables?: Record<string, any>;
   resolvers?: TestFactoryResolver;
 };
+
+export type EnumMap = Record<string, string>;
+
+export type ModelMap = Record<string, any>;

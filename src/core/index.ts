@@ -1,9 +1,9 @@
 import merge from 'lodash/merge';
-import { SchemaMap, ResolverOptions } from '../types';
+import { SchemaMap, ResolverOptions, ModelMap, EnumMap } from '../types';
 import { buildEnums } from '../util/array-util';
 import { ResolverFactory, TypedefFactory } from './classes';
+import { generateEnumsGql } from './graphql/enums';
 import { optionsQueryGql } from './graphql/options';
-import { generateEnumsGql } from './util/enum-util';
 
 type BuildSchemaOptions = {
   schemaMap?: SchemaMap;
@@ -15,32 +15,35 @@ type BuildSchemaResponse = {
   resolvers: any;
 };
 
-const STARTER_ACC = { typedefs: '', resolvers: {} };
+const STARTER_ACC: BuildSchemaResponse = { typedefs: '', resolvers: {} };
 
 export const buildSchema = (
-  models: any,
-  enums: any,
+  models: ModelMap | undefined,
+  enums: EnumMap | undefined,
   schemaOptions: BuildSchemaOptions
 ): BuildSchemaResponse => {
   const enumGql = generateEnumsGql(buildEnums(enums));
   const orderGql = optionsQueryGql();
-  const result: any = Object.values(models as any).reduce((acc: any, model: any): any => {
-    const modelOverrides = schemaOptions?.schemaMap?.[model.name];
-    const options = { ...schemaOptions?.options, ...modelOverrides?.options };
+  const result: any = Object.values(models as any).reduce(
+    (acc: BuildSchemaResponse, model: any): BuildSchemaResponse => {
+      const modelOverrides = schemaOptions?.schemaMap?.[model.name];
+      const options = { ...schemaOptions?.options, ...modelOverrides?.options };
 
-    if (options?.generate === false) return acc;
+      if (options?.generate === false) return acc;
 
-    const { generatedGql } = TypedefFactory({
-      model,
-      options,
-    }).typedefMap();
-    const resolvers = ResolverFactory({ model, options }).resolvers();
+      const { generatedGql } = TypedefFactory({
+        model,
+        options,
+      }).typedefMap();
+      const resolvers = ResolverFactory({ model, options }).resolvers();
 
-    acc.typedefs = acc.typedefs + generatedGql;
-    acc.resolvers = merge(acc.resolvers, resolvers);
+      acc.typedefs = acc.typedefs + generatedGql;
+      acc.resolvers = merge(acc.resolvers, resolvers);
 
-    return acc;
-  }, STARTER_ACC);
+      return acc;
+    },
+    STARTER_ACC
+  );
 
   result.typedefs = result.typedefs + enumGql + orderGql;
 
