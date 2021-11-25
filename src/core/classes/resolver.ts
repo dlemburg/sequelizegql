@@ -1,17 +1,25 @@
-import { BaseInput, GeneratedResolverField } from '../../types/types';
+import { BaseInput, GeneratedResolverField, ResolverOptions } from '../../types/types';
 import { QueryAttributeBuilder } from './query-attribute';
 import { BaseGql } from './base-gql';
 import { buildSort } from '../../util/sequelize-util';
-import { TOP_LEVEL_OPERATORS_GQL_MAP } from '../mappers/sequelize-gql-operators-map';
+import {
+  OPERATORS_FILTERS_MAP,
+  TOP_LEVEL_OPERATORS_GQL_MAP,
+} from '../mappers/sequelize-gql-operators-map';
 import { Op } from 'sequelize/types';
+import Constants from '../constants';
 
-// Example API
+// // Example API
 // const input = {
 //   where: {
 //     id: 7,
 //     AND: [{ id: 1 }, { id: 3 }],
 //     OR: [{ id: 1 }, { id: 3 }],
-//     FILTERS: [{ field: 'email', EQ: 'foo@bar.com' }], // TODO
+//     FILTERS: {
+//       name: { LIKE: 'da' },
+//       sortOrder: { GTE: 1 },
+//       createdAt: { BETWEEN: ['11-01-2021', '11-30-2021'] },
+//     }, // TODO
 //   },
 //   options: {
 //     limit: 10,
@@ -19,22 +27,45 @@ import { Op } from 'sequelize/types';
 //   },
 // };
 
-const parseWhere = (where = {}) => {
+const buildWhereFilters = (entries) => {
+  const whereFilters = Object.entries(entries).reduce((acc2, [key, value]: any) => {
+    const ops = Object.entries(value).reduce((acc3, [opKey, opValue]: any) => {
+      const filterOperatorResult = OPERATORS_FILTERS_MAP[opKey]?.();
+      const { op: opName, getValue } = filterOperatorResult;
+
+      return { ...acc3, [Op[opName]]: getValue(opValue) };
+    }, {});
+
+    acc2[key] = ops;
+
+    return acc2;
+  }, {});
+
+  return whereFilters;
+};
+
+const parseWhere = (where, resolverOptions: ResolverOptions) => {
   const whereEntries = Object.entries(where);
 
   if (!whereEntries?.length) return where;
 
   const filter = whereEntries.reduce((acc, [key, value]) => {
-    const operatorResult = TOP_LEVEL_OPERATORS_GQL_MAP[key]?.();
+    const topLevelOperatorResult = TOP_LEVEL_OPERATORS_GQL_MAP[key]?.();
 
-    if (key === 'FILTERS') {
-      return acc; // TODO
+    if (topLevelOperatorResult) {
+      const { op: opName, getValue } = topLevelOperatorResult;
+
+      return { ...acc, [Op[opName]]: getValue(value) };
     }
 
-    if (operatorResult) {
-      const { name, getValue } = operatorResult;
+    // TODO: recursive
+    if (
+      key === (resolverOptions?.fieldMappers?.FILTERS || Constants.FILTERS) &&
+      Object.keys(whereEntries[key])?.length
+    ) {
+      const whereFilters = buildWhereFilters(whereEntries[key]);
 
-      return { ...acc, [Op[name]]: getValue(value) };
+      return { ...acc, ...whereFilters };
     }
 
     acc[key] = value;
@@ -46,12 +77,12 @@ const parseWhere = (where = {}) => {
 };
 
 const resolveQuery =
-  (model, serviceMethod) =>
+  (model, serviceMethod, resolverOptions: ResolverOptions) =>
   (_, { where, options }, context, resolveInfo) => {
     let include, attributes;
     const order =
       options?.order?.length ?? options?.order.map(({ field, dir }) => buildSort(field, dir));
-    const filter = parseWhere(where);
+    const filter = parseWhere(where, resolverOptions);
 
     if (resolveInfo) {
       ({ include, attributes } = QueryAttributeBuilder.build(model, resolveInfo));
@@ -88,15 +119,15 @@ class ResolverService extends BaseGql {
     return {
       [this.resolverMap[GeneratedResolverField.FIND_ONE].name]: middleware(
         this.options,
-        resolveQuery(this.service.getModel(), this.service.findOne)
+        resolveQuery(this.service.getModel(), this.service.findOne, this.options)
       ),
       [this.resolverMap[GeneratedResolverField.FIND_MANY].name]: middleware(
         this.options,
-        resolveQuery(this.service.getModel(), this.service.findAll)
+        resolveQuery(this.service.getModel(), this.service.findAll, this.options)
       ),
       [this.resolverMap[GeneratedResolverField.FIND_ALL].name]: middleware(
         this.options,
-        resolveQuery(this.service.getModel(), this.service.findAll)
+        resolveQuery(this.service.getModel(), this.service.findAll, this.options)
       ),
     };
   }

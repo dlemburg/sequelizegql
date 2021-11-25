@@ -36,6 +36,9 @@ export type ResolverOptions = {
   omitResolvers?: string[];
   onBeforeResolve?;
   onBAfterResolve?;
+  fieldMappers?: {
+    FILTERS: string; // defaults 'FILTERS'
+  };
 };
 
 export type SchemaMapResolverOptions = Omit<ResolverOptions, 'generate'>;

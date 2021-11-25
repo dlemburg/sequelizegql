@@ -43,7 +43,7 @@ class Typedef extends BaseGql {
   }
 
   public whereInputGql() {
-    return whereInputGql(this.name, this.whereAttributes());
+    return whereInputGql(this.name, this.whereAttributes(), this.options);
   }
 
   public queryGql() {

@@ -28,10 +28,13 @@ https://www.omdbapi.com/
   10.) README (lightweight docs)
   11.) onBeforeResolve, onAfterResolve middlewares [DONE]
   12.) createMany resolver/typedef [DONE]
-  13.) add AND, OR operator filters [DONE]
-  14.) add sequelize-mapped operator FILTERS [IN_PROGRESS]
+  13.) add AND, OR operator filters to whereInput [DONE]
+  14.) add sequelize-mapped operator FILTERS to whereInput [IN_PROGRESS]
+  15.) operators: gql [DONE]
+  16.) operators: undo JSON! type for multivariant type
 
 future support (v2)
 
 - cli
 - crawl database and generate models, types, etc
+- operators: recursive
