@@ -2,8 +2,8 @@ import {
   parseResolveInfo,
   simplifyParsedResolveInfoFragmentWithType,
 } from 'graphql-parse-resolve-info';
-import { getModels } from '../../state';
 import { getAttributes } from '../../services/base-service';
+import { StateFactory } from './state';
 
 type RecursiveInclude = {
   include: RecursiveInclude[];
@@ -16,7 +16,7 @@ type QueryAttributes = {
 };
 
 const recurseQueryFields = (fieldEntries, modelAttributes): QueryAttributes => {
-  const Models = getModels();
+  const Models = StateFactory().getModels();
 
   const result = (fieldEntries ?? [])?.reduce(
     (acc, [key, value]: any) => {
