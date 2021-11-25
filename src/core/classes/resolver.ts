@@ -2,6 +2,48 @@ import { BaseInput, GeneratedResolverField } from '../../types/types';
 import { QueryAttributeBuilder } from './query-attribute';
 import { BaseGql } from './base-gql';
 import { buildSort } from '../../util/sequelize-util';
+import { TOP_LEVEL_OPERATORS_GQL_MAP } from '../mappers/sequelize-gql-operators-map';
+import { Op } from 'sequelize/types';
+
+// Example API
+// const input = {
+//   where: {
+//     id: 7,
+//     AND: [{ id: 1 }, { id: 3 }],
+//     OR: [{ id: 1 }, { id: 3 }],
+//     FILTERS: [{ field: 'email', EQ: 'foo@bar.com' }], // TODO
+//   },
+//   options: {
+//     limit: 10,
+//     skip: 10,
+//   },
+// };
+
+const parseWhere = (where = {}) => {
+  const whereEntries = Object.entries(where);
+
+  if (!whereEntries?.length) return where;
+
+  const filter = whereEntries.reduce((acc, [key, value]) => {
+    const operatorResult = TOP_LEVEL_OPERATORS_GQL_MAP[key]?.();
+
+    if (key === 'FILTERS') {
+      return acc; // TODO
+    }
+
+    if (operatorResult) {
+      const { name, getValue } = operatorResult;
+
+      return { ...acc, [Op[name]]: getValue(value) };
+    }
+
+    acc[key] = value;
+
+    return acc;
+  }, {});
+
+  return filter;
+};
 
 const resolveQuery =
   (model, serviceMethod) =>
@@ -9,12 +51,18 @@ const resolveQuery =
     let include, attributes;
     const order =
       options?.order?.length ?? options?.order.map(({ field, dir }) => buildSort(field, dir));
+    const filter = parseWhere(where);
 
     if (resolveInfo) {
       ({ include, attributes } = QueryAttributeBuilder.build(model, resolveInfo));
     }
 
-    return serviceMethod(where ?? {}, { attributes, include, ...(order && { order }), ...options });
+    return serviceMethod(filter, {
+      attributes,
+      include,
+      ...(order && { order }),
+      ...options,
+    });
   };
 
 const middleware =
