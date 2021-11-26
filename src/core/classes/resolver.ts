@@ -6,7 +6,6 @@ import {
   OPERATORS_FILTERS_MAP,
   TOP_LEVEL_OPERATORS_GQL_MAP,
 } from '../mappers/sequelize-gql-operators-map';
-import { Op } from 'sequelize/types';
 import Constants from '../constants';
 
 // // Example API
@@ -31,9 +30,9 @@ const buildWhereFilters = (entries) => {
   const whereFilters = Object.entries(entries).reduce((acc2, [key, value]: any) => {
     const ops = Object.entries(value).reduce((acc3, [opKey, opValue]: any) => {
       const filterOperatorResult = OPERATORS_FILTERS_MAP[opKey]?.();
-      const { op: opName, getValue } = filterOperatorResult;
+      const { op, getValue } = filterOperatorResult;
 
-      return { ...acc3, [Op[opName]]: getValue(opValue) };
+      return { ...acc3, [op]: getValue(opValue) };
     }, {});
 
     acc2[key] = ops;
@@ -53,9 +52,9 @@ const parseWhere = (where, resolverOptions: ResolverOptions) => {
     const topLevelOperatorResult = TOP_LEVEL_OPERATORS_GQL_MAP[key]?.();
 
     if (topLevelOperatorResult) {
-      const { op: opName, getValue } = topLevelOperatorResult;
+      const { op, getValue } = topLevelOperatorResult;
 
-      return { ...acc, [Op[opName]]: getValue(value) };
+      return { ...acc, [op]: getValue(value) };
     }
 
     // TODO: recursive
@@ -63,9 +62,9 @@ const parseWhere = (where, resolverOptions: ResolverOptions) => {
       key === (resolverOptions?.fieldMappers?.FILTERS || Constants.FILTERS) &&
       Object.keys(whereEntries[key])?.length
     ) {
-      const whereFilters = buildWhereFilters(whereEntries[key]);
+      const whereOperatorFilters = buildWhereFilters(whereEntries[key]);
 
-      return { ...acc, ...whereFilters };
+      return { ...acc, ...whereOperatorFilters };
     }
 
     acc[key] = value;

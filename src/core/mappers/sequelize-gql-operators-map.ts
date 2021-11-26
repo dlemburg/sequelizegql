@@ -1,12 +1,14 @@
+import { Op } from 'sequelize/types';
+
 export const TOP_LEVEL_OPERATORS_GQL_MAP = {
   AND: (whereInputName?: string) => ({
     gql: () => `[${whereInputName}]`,
-    op: 'and',
+    op: Op.and,
     getValue: (value) => value,
   }),
   OR: (whereInputName?: string) => ({
     gql: () => `[${whereInputName}]`,
-    op: 'or',
+    op: Op.or,
     getValue: (value) => value,
   }),
 };
@@ -14,87 +16,87 @@ export const TOP_LEVEL_OPERATORS_GQL_MAP = {
 export const OPERATORS_FILTERS_MAP = {
   LIKE: () => ({
     gql: () => 'String!',
-    op: 'like',
+    op: Op.like,
     getValue: (value) => `%${value}`,
   }),
   NOT_LIKE: () => ({
     gql: () => 'String!',
-    op: 'notLike',
+    op: Op.notLike,
     getValue: (value) => `%${value}`,
   }),
   STARTS_WITH: () => ({
     gql: () => 'String!',
-    op: 'startsWith',
+    op: Op.startsWith,
     getValue: (value) => value,
   }),
   ENDS_WITH: () => ({
     gql: () => 'String!',
-    op: 'endsWith',
+    op: Op.endsWith,
     getValue: (value) => value,
   }),
   SUBSTRING: () => ({
     gql: () => 'String!',
-    op: 'substring',
+    op: Op.substring,
     getValue: (value) => value,
   }),
   EQ: () => ({
     gql: () => 'JSON!',
-    op: 'eq',
+    op: Op.eq,
     getValue: (value) => value,
   }),
   NE: () => ({
     gql: () => 'JSON!',
-    op: 'ne',
+    op: Op.ne,
     getValue: (value) => value,
   }),
   IS_NULL: () => ({
     gql: () => 'String!',
-    op: 'is',
+    op: Op.is,
     getValue: (value) => null,
   }),
   NOT: () => ({
     gql: () => 'JSON!',
-    op: 'not',
+    op: Op.not,
     getValue: (value) => value,
   }),
   GT: () => ({
     gql: () => 'Int!',
-    op: 'gt',
+    op: Op.gt,
     getValue: (value) => value,
   }),
   GTE: () => ({
     gql: () => 'Int!',
-    op: 'gte',
+    op: Op.gte,
     getValue: (value) => value,
   }),
   LT: () => ({
     gql: () => 'Int!',
-    op: 'lt',
+    op: Op.lt,
     getValue: (value) => value,
   }),
   LTE: () => ({
     gql: () => 'Int!',
-    op: 'lte',
+    op: Op.lte,
     getValue: (value) => value,
   }),
   BETWEEN: () => ({
     gql: () => 'JSON!',
-    op: 'between',
+    op: Op.between,
     getValue: (value) => value,
   }),
   NOT_BETWEEN: () => ({
     gql: () => 'JSON!',
-    op: 'notBetween',
+    op: Op.notBetween,
     getValue: (value) => value,
   }),
   IN: () => ({
     gql: () => 'JSON!',
-    op: 'in',
+    op: Op.in,
     getValue: (value) => value,
   }),
   NOT_IN: () => ({
     gql: () => 'JSON!',
-    op: 'notIn',
+    op: Op.notIn,
     getValue: (value) => value,
   }),
 };
