@@ -12,7 +12,7 @@ import Constants from '../constants';
 // const input = {
 //   where: {
 //     id: 7,
-//     AND: [{ id: 1 }, { id: 3 }],
+//     AND: [{ sortOrder: 1 }, { sortOrder: 3 }],
 //     OR: [{ id: 1 }, { id: 3 }],
 //     FILTERS: {
 //       name: { LIKE: 'da' },
