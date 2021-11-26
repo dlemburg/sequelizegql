@@ -17,17 +17,30 @@ export type InitializeInput = {
   options?: ResolverOptions & InitializationOptions;
 };
 
-export const initialize = ({
-  enums = {},
-  models,
-  sequelize,
-  schemaMap = {},
-  options = {},
-}: InitializeInput): InitializeResponse => {
-  StateFactory({ enums, models, sequelize });
+class SequelizeGraphql {
+  private typedefs;
+  private resolvers;
 
-  const { typedefs, resolvers } = buildSchema(models, enums, { schemaMap, options });
-  const generatedGql = typedefs + buildRootTypedefs(options);
+  public initialize({
+    enums = {},
+    models,
+    sequelize,
+    schemaMap = {},
+    options = {},
+  }: InitializeInput): InitializeResponse {
+    StateFactory({ enums, models, sequelize });
 
-  return { typedefs: generatedGql, resolvers };
-};
+    const { typedefs, resolvers } = buildSchema(models, enums, { schemaMap, options });
+
+    this.typedefs = typedefs + buildRootTypedefs(options);
+    this.resolvers = resolvers;
+
+    return { typedefs: this.typedefs, resolvers: this.resolvers };
+  }
+
+  public printConsole() {
+    console.log(this.typedefs);
+  }
+}
+
+export default new SequelizeGraphql();
