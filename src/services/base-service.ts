@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import { Model, CreateOptions, UpdateOptions, DestroyOptions } from 'sequelize';
-import { getEnums, getModels, getSequelize } from '../state';
 import { buildSortDesc } from '../util/sequelize-util';
 import { BaseServiceFilter, BaseServiceOptions, ModelAttributes } from '../types/types';
+import { StateFactory } from '../core/classes/state';
 
 const getEnumType = (values) => {
-  const result = Object.entries(getEnums()).find(
+  const result = Object.entries(StateFactory().getEnums()).find(
     ([, aEnum]: any) => _.difference(values, Object.values(aEnum))?.length === 0
   );
 
@@ -57,19 +57,9 @@ const buildModelAssociations = (associations) => {
   }, {});
 };
 
-const findAll =
-  (model) =>
-  (where = {}, options = {}) =>
-    model.findAll({ where, ...options });
-
-const findOne =
-  (model) =>
-  (where = {}, options = {}) =>
-    model.findOne({ where, ...options });
-
 const buildAssociationOptions = (model) => (input) => {
   try {
-    const Models = getModels();
+    const Models = StateFactory().getModels();
     const attributes = getAttributes(model)();
     const associationOptions = Object.keys(input)?.reduce((acc, key) => {
       const value = attributes?.associations?.[key];
@@ -87,6 +77,16 @@ const buildAssociationOptions = (model) => (input) => {
     return {};
   }
 };
+
+const findAll =
+  (model) =>
+  (where = {}, options = {}) =>
+    model.findAll({ where, ...options });
+
+const findOne =
+  (model) =>
+  (where = {}, options = {}) =>
+    model.findOne({ where, ...options });
 
 const create =
   (model) =>
@@ -117,7 +117,7 @@ const update =
 const upsert =
   (model) =>
   async (input, where = {}, options = {} as any) => {
-    const sequelize = getSequelize();
+    const sequelize = StateFactory().getSequelize();
     return sequelize.transaction(async (transaction) => {
       transaction = options?.transaction ?? transaction;
 

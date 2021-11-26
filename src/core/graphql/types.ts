@@ -2,13 +2,21 @@ import { ModelAttributes } from '../../types';
 import { mapSequelizeToGraphql } from '../mappers';
 import { stringBuilder } from '../util/string-util';
 import { newLine } from './new-line';
+import { whereInputNameGql } from './where-input';
 
-const mapTypes = (attributes, options) =>
+const mapPrimitiveFields = (attributes, options) =>
   Object.entries(attributes)
     .map(([key, value]) => {
       return `${key}: ${mapSequelizeToGraphql(value, options)}`;
     })
     .join(` ${newLine()} `);
+
+const mapAssociationFields = (name, attributes, options) =>
+  Object.entries(attributes)
+    .map(([key, value]) => {
+      return `${key}(where: ${whereInputNameGql(name)}): ${mapSequelizeToGraphql(value, options)}`;
+    })
+    .join(`${newLine()}`);
 
 export const typeGql = () => 'type';
 export const inputGql = () => 'input';
@@ -26,13 +34,14 @@ export const typesGql = (
   name,
   { associations = {}, ...attributes } = {} as ModelAttributes
 ) => {
-  const generateNullable = gqlKeyword !== inputGql();
+  const input = inputGql();
+  const generateNullable = gqlKeyword !== input;
   const result = `
     ${gqlKeyword} ${name} {
-      ${mapTypes(attributes, { generateNullable })}
-      ${mapTypes(associations, {
+      ${mapPrimitiveFields(attributes, { generateNullable })}
+      ${mapAssociationFields(name, associations, {
         generateNullable,
-        suffix: gqlKeyword === inputGql() ? inputGql() : '',
+        suffix: gqlKeyword === input ? input : '',
       })}
     }
   `;
