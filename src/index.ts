@@ -2,7 +2,7 @@ import { buildRootTypedefs } from './core/util/root-typedefs-util';
 import { buildSchema } from './core';
 import { StateFactory } from './core/classes/state';
 import { Sequelize } from 'sequelize/types';
-import { EnumMap, InitializationOptions, ModelMap, ResolverOptions, SchemaMap } from './types';
+import { EnumMap, ModelMap, SchemaMap, SchemaMapResolverOptions } from './types';
 
 export type InitializeResponse = {
   typedefs: string;
@@ -14,7 +14,7 @@ export type InitializeInput = {
   enums?: EnumMap;
   models?: ModelMap;
   schemaMap?: SchemaMap;
-  options?: ResolverOptions & InitializationOptions;
+  options?: SchemaMapResolverOptions;
 };
 
 class SequelizeGraphql {

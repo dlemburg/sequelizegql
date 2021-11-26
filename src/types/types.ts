@@ -41,7 +41,21 @@ export type ResolverOptions = {
   };
 };
 
-export type SchemaMapResolverOptions = Omit<ResolverOptions, 'generate'>;
+export type InitializationOptions = {
+  includeRootTypedefs?: boolean;
+  includeQueryDefinition?: boolean;
+  includeMutationDefinition?: boolean;
+  includeDeleteResponse?: boolean;
+  includeDeleteOptions?: boolean;
+  onBeforeEveryResolve?;
+  onAfterEveryResolve?;
+};
+
+export type SchemaMapResolverOptions = Omit<
+  ResolverOptions,
+  'generate' | 'onBeforeResolve' | 'onAfterResolve'
+> &
+  InitializationOptions;
 
 export type Resolver = {
   [key: string]: ResolverOptions;
@@ -67,14 +81,6 @@ export type BaseInput<T = any> = {
   model: T;
   options?: ResolverOptions;
   resolvers?: Resolver;
-};
-
-export type InitializationOptions = {
-  includeRootTypedefs?: boolean;
-  includeQueryDefinition?: boolean;
-  includeMutationDefinition?: boolean;
-  includeDeleteResponse?: boolean;
-  includeDeleteOptions?: boolean;
 };
 
 export type BaseAttributes = {

@@ -27,11 +27,13 @@ const resolveQuery =
 const middleware =
   (options, resolve) =>
   async (...args) => {
-    await options?.onBeforeResolve(...args);
+    await options?.onBeforeEveryResolve?.(...args);
+    await options?.onBeforeResolve?.(...args);
 
     const result = await resolve(...args);
 
-    await options?.onAfterResolve(result, ...args);
+    await options?.onAfterEveryResolve?.(result, ...args);
+    await options?.onAfterResolve?.(result, ...args);
 
     return result;
   };

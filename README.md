@@ -32,7 +32,7 @@ https://www.omdbapi.com/
   14.) add sequelize-mapped operator FILTERS to whereInput [DONE]
   15.) operators: gql [DONE]
   16.) operators: undo JSON! type for multivariant type
-  17.) parse operator FILTERS on associated query fields
+  17.) parse operator FILTERS on associated query fields [DONE]
 
 future support (v2)
 
