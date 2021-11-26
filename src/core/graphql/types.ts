@@ -4,14 +4,14 @@ import { stringBuilder } from '../util/string-util';
 import { newLine } from './new-line';
 import { whereInputNameGql } from './where-input';
 
-const mapPrimitiveFields = (attributes, options) =>
+const mapFields = (attributes, options) =>
   Object.entries(attributes)
     .map(([key, value]) => {
       return `${key}: ${mapSequelizeToGraphql(value, options)}`;
     })
     .join(` ${newLine()} `);
 
-const mapAssociationFields = (name, attributes, options) =>
+const mapAssociationTypes = (name, attributes, options) =>
   Object.entries(attributes)
     .map(([key, value]) => {
       return `${key}(where: ${whereInputNameGql(name)}): ${mapSequelizeToGraphql(value, options)}`;
@@ -36,13 +36,21 @@ export const typesGql = (
 ) => {
   const input = inputGql();
   const generateNullable = gqlKeyword !== input;
+  const associationTypesGql =
+    gqlKeyword === input
+      ? mapFields(associations, {
+          generateNullable,
+          suffix: input,
+        })
+      : mapAssociationTypes(name, associations, {
+          generateNullable,
+          suffix: '',
+        });
+
   const result = `
     ${gqlKeyword} ${name} {
-      ${mapPrimitiveFields(attributes, { generateNullable })}
-      ${mapAssociationFields(name, associations, {
-        generateNullable,
-        suffix: gqlKeyword === input ? input : '',
-      })}
+      ${mapFields(attributes, { generateNullable })}
+      ${associationTypesGql}
     }
   `;
 

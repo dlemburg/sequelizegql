@@ -31,19 +31,28 @@ const recurseQueryFields = (fieldEntries, modelAttributes): QueryAttributes => {
           const associationFields = Object.entries(fields)
             .filter(([xKey, xValue]: any) => {
               const result = Object.keys(xValue?.fieldsByTypeName ?? {});
-              return result?.length && Models?.[result[0]];
+              const associationName = result?.[0];
+
+              return associationName ? Models?.[associationName] : false;
             })
             .reduce(
               (acc: any, x: any) => {
                 const fields = x[1];
-                const modelName = Object.keys(x[1]?.fieldsByTypeName ?? {})?.[0];
+                const args = fields?.args; // TODO: args
+                const modelName = Object.keys(fields?.fieldsByTypeName ?? {})?.[0];
+                const model = Models[modelName];
+                const fieldEntries = [fields.name, fields];
                 const { attributes, include: associatedInclude } = recurseQueryFields(
-                  [[fields.name, fields]],
-                  getAttributes(Models[modelName])()
+                  [fieldEntries],
+                  getAttributes(model)()
                 );
 
                 const baseInclude = [
-                  { association: fields.name, include: associatedInclude?.include ?? [] },
+                  {
+                    association: fields.name,
+                    include: associatedInclude?.include ?? [],
+                    where: {}, // TODO: args
+                  },
                 ];
                 acc.attributes = attributes;
                 acc.include = acc?.include ? [acc.include, ...baseInclude] : baseInclude;
@@ -53,7 +62,9 @@ const recurseQueryFields = (fieldEntries, modelAttributes): QueryAttributes => {
               { attributes: [], include: undefined }
             );
 
-          const baseInclude = [{ association: key, include: associationFields?.include ?? [] }];
+          const baseInclude = [
+            { association: key, include: associationFields?.include ?? [], where: {} }, // TODO: args
+          ];
           acc.include = acc?.include
             ? { include: [acc.include, ...baseInclude] }
             : { include: baseInclude };

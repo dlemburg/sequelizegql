@@ -8,24 +8,6 @@ import {
 } from '../mappers/sequelize-gql-operators-map';
 import Constants from '../constants';
 
-// // Example API
-// const input = {
-//   where: {
-//     id: 7,
-//     AND: [{ sortOrder: 1 }, { sortOrder: 3 }],
-//     OR: [{ id: 1 }, { id: 3 }],
-//     FILTERS: {
-//       name: { LIKE: 'da' },
-//       sortOrder: { GTE: 1 },
-//       createdAt: { BETWEEN: ['11-01-2021', '11-30-2021'] },
-//     }, // TODO
-//   },
-//   options: {
-//     limit: 10,
-//     skip: 10,
-//   },
-// };
-
 const buildWhereFilters = (entries) => {
   const whereFilters = Object.entries(entries).reduce((acc2, [key, value]: any) => {
     const ops = Object.entries(value).reduce((acc3, [opKey, opValue]: any) => {
@@ -57,7 +39,6 @@ const parseWhere = (where, resolverOptions: ResolverOptions) => {
       return { ...acc, [op]: getValue(value) };
     }
 
-    // TODO: recursive
     if (
       key === (resolverOptions?.fieldMappers?.FILTERS || Constants.FILTERS) &&
       Object.keys(whereEntries[key])?.length
