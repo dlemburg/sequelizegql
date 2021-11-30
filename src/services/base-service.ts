@@ -101,7 +101,7 @@ const bulkCreate =
   (input, options = {}) => {
     const associationOptions = buildAssociationOptions(model)(input);
 
-    return model.bulkCreate(input, { ...options, ...associationOptions });
+    return model.bulkCreate(input, { ...options, ...associationOptions, validate: true });
   };
 
 const update =

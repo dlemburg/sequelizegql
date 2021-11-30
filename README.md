@@ -24,7 +24,6 @@ https://www.omdbapi.com/
   6.) Clean up all types [IN_PROGRESS]
   7.) 'omitResolvers' option [DONE]
   8.) merge utility: 'customSchemaPath', 'customTypes'
-  9.) Recursive creates - currently 1 level deep
   10.) README (lightweight docs)
   11.) onBeforeResolve, onAfterResolve middlewares [DONE]
   12.) createMany resolver/typedef [DONE]
@@ -39,3 +38,4 @@ future support (v2)
 - cli
 - crawl database and generate models, types, etc
 - operators: recursive
+- Recursive creates - currently 1 level deep
