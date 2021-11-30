@@ -1,82 +1,8 @@
-import _ from 'lodash';
 import { Model, CreateOptions, UpdateOptions, DestroyOptions } from 'sequelize';
-import { buildSortDesc } from '../util/sequelize-util';
-import { BaseServiceFilter, BaseServiceOptions, ModelAttributes } from '../types/types';
-import { StateFactory } from '../core/classes/state';
-
-const getEnumType = (values) => {
-  const result = Object.entries(StateFactory().getEnums()).find(
-    ([, aEnum]: any) => _.difference(values, Object.values(aEnum))?.length === 0
-  );
-
-  return result?.[0];
-};
-
-const buildModelAttributes = (rawAttributes) => {
-  return Object.entries(rawAttributes ?? {}).reduce((acc, [property, value]: any) => {
-    let type = value.type.key;
-    let sequelizeType = type;
-    let isArray = false;
-
-    switch (type) {
-      case 'ENUM': {
-        type = getEnumType(value.type.values);
-        break;
-      }
-      case 'ARRAY': {
-        isArray = true;
-        type =
-          value.type?.options?.type?.key === 'ENUM'
-            ? getEnumType(value?.type?.type?.values)
-            : value.type?.options?.type?.key;
-        break;
-      }
-    }
-
-    return {
-      ...acc,
-      [property]: {
-        sequelizeType,
-        type,
-        isArray,
-        allowNull: value.allowNull === false ? false : true,
-      },
-    };
-  }, {});
-};
-
-const buildModelAssociations = (associations) => {
-  return Object.entries(associations ?? []).reduce((acc, [property, value]: any) => {
-    acc[property] = {
-      sequelizeType: 'ASSOCIATION',
-      type: value.target.name,
-      isArray: value.associationType === 'HasMany',
-      allowNull: true,
-    };
-    return acc;
-  }, {});
-};
-
-const buildAssociationCreateOptions = (model) => (input) => {
-  try {
-    const Models = StateFactory().getModels();
-    const attributes = getAttributes(model)();
-    const associationOptions = Object.keys(input)?.reduce((acc, key) => {
-      const value = attributes?.associations?.[key];
-      const type = value?.type;
-      const Model = type && Models?.[type];
-
-      if (Model) {
-        const include = [Model];
-        return acc?.include ? { include: [...acc.include, ...include] } : { ...acc, include };
-      }
-    }, {} as any);
-
-    return associationOptions;
-  } catch {
-    return {};
-  }
-};
+import { buildSortDesc } from '../../util/sequelize-util';
+import { BaseServiceFilter, BaseServiceOptions, ModelAttributes } from '../../types/types';
+import { StateFactory } from '../../core/classes/state';
+import { buildAssociationCreateOptions, getAttributes } from './util';
 
 const findAll =
   (model) =>
@@ -207,13 +133,6 @@ const restore = (model) => async (where, options) => {
   await result.restore();
 
   return result;
-};
-
-export const getAttributes = (model) => (): ModelAttributes => {
-  const associations = buildModelAssociations(model.associations);
-  const attributes = buildModelAttributes(model.rawAttributes);
-
-  return { ...attributes, associations };
 };
 
 export type BaseServiceInterface<T> = {
