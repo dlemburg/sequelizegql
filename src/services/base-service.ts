@@ -57,7 +57,7 @@ const buildModelAssociations = (associations) => {
   }, {});
 };
 
-const buildAssociationOptions = (model) => (input) => {
+const buildAssociationCreateOptions = (model) => (input) => {
   try {
     const Models = StateFactory().getModels();
     const attributes = getAttributes(model)();
@@ -91,7 +91,7 @@ const findOne =
 const create =
   (model) =>
   (input, options = {}) => {
-    const associationOptions = buildAssociationOptions(model)(input);
+    const associationOptions = buildAssociationCreateOptions(model)(input);
 
     return model.create(input, { ...options, ...associationOptions });
   };
@@ -99,7 +99,7 @@ const create =
 const bulkCreate =
   (model) =>
   (input, options = {}) => {
-    const associationOptions = buildAssociationOptions(model)(input);
+    const associationOptions = buildAssociationCreateOptions(model)(input);
 
     return model.bulkCreate(input, { ...options, ...associationOptions, validate: true });
   };
@@ -124,8 +124,8 @@ const upsert =
       const instance = await findOne(model)(where, { ...options, transaction });
 
       const data = !instance
-        ? await options?.onBeforeCreate()
-        : await options?.onBeforeUpdate(instance);
+        ? await options?.onBeforeCreate?.()
+        : await options?.onBeforeUpdate?.(instance);
       const value = { ...input, ...data };
 
       if (!instance) {
