@@ -17,12 +17,12 @@ https://www.omdbapi.com/
 - User
 - UserBook
 
-  - operators: undo JSON! type for multivariant type
-  - merge utility: 'customSchemaPath', 'customTypes' [DONE]
-  - README (lightweight docs)
   - Clean up all types [IN_PROGRESS]
+  - README (lightweight docs)
+  - operators: undo JSON! type for multivariant type
 
-  - Extend the Sequelize DataTypes, make db-client-specific data type mappings (requires a 'client' input) [DONE_KINDA]
+  - merge utility: 'customSchemaPath', 'customTypes' [DONE]
+  - Extend the Sequelize DataTypes [DONE]
   - Pluralization (optional) [DONE]
   - Build out the default sequelize options, - - paging - order [DONE]
   - Print/Export Schema [DONE]
