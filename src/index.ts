@@ -81,7 +81,7 @@ class SequelizeGraphql {
   }
 
   public outputTypedefs(filepath?: string) {
-    const output = `export const typedefsString = ${this.typedefs}`;
+    const output = `export const typedefsString = '${this.typedefs}'`;
 
     fs.writeFileSync(filepath || `${__dirname}/generated-typedefs.js`, output, 'utf-8');
   }
