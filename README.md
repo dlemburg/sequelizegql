@@ -18,7 +18,7 @@ https://www.omdbapi.com/
 - UserBook
 
   - operators: undo JSON! type for multivariant type
-  - merge utility: 'customSchemaPath', 'customTypes' [IN_PROGRESS]
+  - merge utility: 'customSchemaPath', 'customTypes' [DONE]
   - README (lightweight docs)
   - Clean up all types [IN_PROGRESS]
 
