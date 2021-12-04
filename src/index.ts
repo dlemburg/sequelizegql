@@ -1,13 +1,20 @@
 import fs from 'fs';
+import gql from 'graphql-tag';
+import merge from 'lodash/merge';
+import { typeDefs as DateTypedefs, resolvers as DateResolvers } from 'graphql-scalars';
+import { mergeTypeDefs } from '@graphql-tools/merge';
+import { DocumentNode } from 'graphql';
 import { buildRootTypedefs } from './core/util/root-typedefs-util';
 import { buildSchema } from './core';
 import { StateFactory } from './core/classes/state';
 import { Sequelize } from 'sequelize/types';
 import { EnumMap, ModelMap, SchemaMap, SchemaMapResolverOptions } from './types';
+import { buildCustomSchema } from './util/build-schema-util';
 
 export type InitializeResponse = {
-  typedefs: string;
+  typedefs: DocumentNode;
   resolvers: any;
+  typedefsString: string;
 };
 
 export type InitializeInput = {
@@ -17,6 +24,11 @@ export type InitializeInput = {
   schemaMap?: SchemaMap;
   options?: SchemaMapResolverOptions;
 };
+
+export const buildGql = (value) =>
+  gql`
+    ${value}
+  `;
 
 class SequelizeGraphql {
   private resolvers;
@@ -36,31 +48,32 @@ class SequelizeGraphql {
     this.typedefs = typedefs + buildRootTypedefs(options);
     this.resolvers = resolvers;
 
-    // TODO: custom schema utility work
-    // if ()
-    // const customSchema = await buildSchema({ models: Models, customSchemaPath: options?.customSchemaPath });
-    // const graphqlSequelize = GraphqlSequelize.initialize({
-    //   enums: Enums,
-    //   models: Models,
-    //   baseDirective: INTERNAL_USER_AUTH,
-    //   schemaMap: customSchema.schemaMap,
-    // } as any);
+    if (options?.customSchemaPath) {
+      const customSchema = buildCustomSchema({
+        models,
+        customSchemaPath: options?.customSchemaPath,
+      });
 
-    // const typeDefs = mergeTypeDefs([
-    //   authDirectiveTypeDefs,
-    //   buildGql(graphqlSequelize.typedefs),
-    //   ...DateTypedefs,
-    //   ...customSchema.typedefs,
-    // ]);
+      const typedefs = mergeTypeDefs([
+        ...DateTypedefs,
+        buildGql(this.typedefs),
+        ...customSchema.typedefs,
+      ]);
 
-    // const resolvers = merge(DateResolvers, graphqlSequelize.resolvers, customSchema.resolvers);
+      const resolvers = merge(DateResolvers, this.resolvers, customSchema.resolvers);
 
-    // return {
-    //   typeDefs,
-    //   resolvers,
-    // };
+      return {
+        typedefs,
+        resolvers,
+        typedefsString: this.typedefs,
+      };
+    }
 
-    return { typedefs: this.typedefs, resolvers: this.resolvers };
+    return {
+      typedefs: buildGql(this.typedefs),
+      resolvers: this.resolvers,
+      typedefsString: this.typedefs,
+    };
   }
 
   public printConsole() {

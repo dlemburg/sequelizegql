@@ -18,14 +18,14 @@ https://www.omdbapi.com/
 - UserBook
 
   - operators: undo JSON! type for multivariant type
-  - merge utility: 'customSchemaPath', 'customTypes'
+  - merge utility: 'customSchemaPath', 'customTypes' [IN_PROGRESS]
   - README (lightweight docs)
   - Clean up all types [IN_PROGRESS]
 
   - Extend the Sequelize DataTypes, make db-client-specific data type mappings (requires a 'client' input) [DONE_KINDA]
   - Pluralization (optional) [DONE]
   - Build out the default sequelize options, - - paging - order [DONE]
-  - Print/Export Schema [DONE_KINDA]
+  - Print/Export Schema [DONE]
   - 'omitResolvers' option [DONE]
   - onBeforeResolve, onAfterResolve middlewares [DONE]
   - createMany resolver/typedef [DONE]

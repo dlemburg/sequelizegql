@@ -1,21 +1,21 @@
 import { merge } from 'lodash';
 
-export const buildSchema = async ({ models: Models, customSchemaPath }) => {
+export const buildCustomSchema = ({ models: Models, customSchemaPath }) => {
   let result = { schemaMap: {}, resolvers: {}, typedefs: [] as any[] };
 
   for (let name of [...Object.keys(Models), 'Health', 'Lookups', 'Customer']) {
     try {
-      const exports = await import(`${__dirname}/${customSchemaPath}/${name}`);
+      const exports = require(`${__dirname}/${customSchemaPath}/${name}`);
 
-      if (exports?.schemaMap) {
+      if (exports?.default?.schemaMap || exports?.schemaMap) {
         result.schemaMap = merge(result.schemaMap, exports?.schemaMap);
       }
 
-      if (exports?.resolvers) {
+      if (exports?.default?.resolvers || exports?.resolvers) {
         result.resolvers = merge(result.resolvers, exports?.resolvers);
       }
 
-      if (exports?.typedefs) {
+      if (exports?.default?.typedefs || exports?.typedefs) {
         result.typedefs = [...result.typedefs, exports?.typedefs];
       }
     } catch {}
