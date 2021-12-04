@@ -12,7 +12,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.7.2",
     "faker": "^5.5.3",
     "graphql-parse-resolve-info": "^4.12.0",
     "lodash": "^4.17.21",

@@ -43,6 +43,7 @@ export type ResolverOptions = {
 };
 
 export type InitializationOptions = {
+  customSchemaPath?: string;
   deleteResponseGql?: boolean;
   includeDeleteOptions?: boolean;
   onBeforeEveryResolve?;

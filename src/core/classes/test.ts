@@ -1,5 +1,4 @@
 import omit from 'lodash/omit';
-import Bluebird from 'bluebird';
 import { BaseTestFactoryInput, GeneratedResolverField } from '../../types/types';
 import { BaseService } from '../../services';
 import { buildTests } from '../util/test-util';
@@ -46,32 +45,31 @@ export const runTestSuite = async (tests, { expect, ...Op }) => {
 
   // expect(baseEntity).toEqual({ id: starterId, ...starterTest.variables.input });
 
-  const responses = await Bluebird.mapSeries(
-    dependencyTests,
-    async ({ name, body, operationType, variables }) => {
-      if (variables.hasOwnProperty('where')) variables.where = { id: baseId };
+  for (let x of dependencyTests) {
+    const { name, body, operationType, variables } = x;
 
-      const result = await Op[operationType](body, { variables });
+    if (variables.hasOwnProperty('where')) variables.where = { id: baseId };
 
-      expect(result?.errors).toBeUndefined();
+    const result = await Op[operationType](body, { variables });
 
-      const resultData = result?.data?.[name] ?? result?.data;
+    expect(result?.errors).toBeUndefined();
 
-      if (Array.isArray(resultData)) {
-        expect(resultData.length).toBeGreaterThanOrEqual(1);
+    const resultData = result?.data?.[name] ?? result?.data;
 
-        const originalEntity = resultData.find((x) => x.id === baseId);
+    if (Array.isArray(resultData)) {
+      expect(resultData.length).toBeGreaterThanOrEqual(1);
 
-        // TODO: this can be improved
-        expect(originalEntity.id).toEqual(baseEntity.id);
-      } else {
-        // TODO: this can be improved
-        expect(resultData.id).toEqual(baseEntity.id);
-      }
+      const originalEntity = resultData.find((x) => x.id === baseId);
 
-      return { name, body, operationType, variables, result };
+      // TODO: this can be improved
+      expect(originalEntity.id).toEqual(baseEntity.id);
+    } else {
+      // TODO: this can be improved
+      expect(resultData.id).toEqual(baseEntity.id);
     }
-  );
+
+    return { name, body, operationType, variables, result };
+  }
 
   const deleteResult = await Op.mutation(deleteTest.body, {
     variables: { where: { id: baseEntity.id }, options: { force: true } },
@@ -80,5 +78,5 @@ export const runTestSuite = async (tests, { expect, ...Op }) => {
   expect(deleteResult?.errors).toBeUndefined();
   expect(+deleteResult?.data?.[deleteTest.name]?.id).toEqual(baseEntity.id);
 
-  return responses;
+  return;
 };

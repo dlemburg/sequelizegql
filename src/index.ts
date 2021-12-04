@@ -3,13 +3,7 @@ import { buildRootTypedefs } from './core/util/root-typedefs-util';
 import { buildSchema } from './core';
 import { StateFactory } from './core/classes/state';
 import { Sequelize } from 'sequelize/types';
-import {
-  EnumMap,
-  InitializationOptions,
-  ModelMap,
-  SchemaMap,
-  SchemaMapResolverOptions,
-} from './types';
+import { EnumMap, ModelMap, SchemaMap, SchemaMapResolverOptions } from './types';
 
 export type InitializeResponse = {
   typedefs: string;
@@ -27,12 +21,11 @@ export type InitializeInput = {
 class SequelizeGraphql {
   private resolvers;
   private typedefs: string;
-  private options: InitializationOptions;
 
   public initialize({
-    enums = {},
     models,
     sequelize,
+    enums = {},
     schemaMap = {},
     options = {},
   }: InitializeInput): InitializeResponse {
@@ -42,7 +35,30 @@ class SequelizeGraphql {
 
     this.typedefs = typedefs + buildRootTypedefs(options);
     this.resolvers = resolvers;
-    this.options = options;
+
+    // TODO: custom schema utility work
+    // if ()
+    // const customSchema = await buildSchema({ models: Models, customSchemaPath: options?.customSchemaPath });
+    // const graphqlSequelize = GraphqlSequelize.initialize({
+    //   enums: Enums,
+    //   models: Models,
+    //   baseDirective: INTERNAL_USER_AUTH,
+    //   schemaMap: customSchema.schemaMap,
+    // } as any);
+
+    // const typeDefs = mergeTypeDefs([
+    //   authDirectiveTypeDefs,
+    //   buildGql(graphqlSequelize.typedefs),
+    //   ...DateTypedefs,
+    //   ...customSchema.typedefs,
+    // ]);
+
+    // const resolvers = merge(DateResolvers, graphqlSequelize.resolvers, customSchema.resolvers);
+
+    // return {
+    //   typeDefs,
+    //   resolvers,
+    // };
 
     return { typedefs: this.typedefs, resolvers: this.resolvers };
   }
@@ -52,7 +68,9 @@ class SequelizeGraphql {
   }
 
   public outputTypedefs(filepath?: string) {
-    fs.writeFileSync(filepath || `${__dirname}/generated-typedefs.js`, this.typedefs, 'utf-8');
+    const output = `export const typedefsString = ${this.typedefs}`;
+
+    fs.writeFileSync(filepath || `${__dirname}/generated-typedefs.js`, output, 'utf-8');
   }
 }
 
