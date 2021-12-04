@@ -33,6 +33,7 @@ https://www.omdbapi.com/
   - add sequelize-mapped operator FILTERS to whereInput [DONE]
   - operators: gql [DONE]
   - parse operator FILTERS on associated query fields [DONE]
+  - add paging endpoint [DONE]
 
 future support (v2)
 
