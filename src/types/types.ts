@@ -20,6 +20,7 @@ export enum GeneratedResolverField {
   FIND_ALL = 'all',
   FIND_ONE = 'one',
   FIND_MANY = 'many',
+  FIND_MANY_PAGED = 'manyPaged',
 }
 
 export enum BaseWhereInputType {

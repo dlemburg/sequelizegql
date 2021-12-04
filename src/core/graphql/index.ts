@@ -8,3 +8,4 @@ export * from './delete-options';
 export * from './delete-response';
 export * from './new-line';
 export * from './options';
+export * from './paged';

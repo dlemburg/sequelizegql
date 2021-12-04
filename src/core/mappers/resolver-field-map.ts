@@ -1,8 +1,8 @@
 import pluralize from 'pluralize';
 import { GeneratedResolverField, ResolverOptions } from '../../types';
 import { lowercaseFirstLetter } from '../../util/general-util';
-import { whereInputNameGql } from '../graphql';
-import { optionsQueryInputNameGql } from '../graphql/options';
+import { pagedGql, whereInputNameGql } from '../graphql';
+import { optionsPagedQueryInputNameGql, optionsQueryInputNameGql } from '../graphql/options';
 
 const sanitize = (value: string, options: ResolverOptions) => {
   const result = options?.pluralize !== false ? pluralize(value) : value;
@@ -28,15 +28,20 @@ export const getResolverFieldMap = (name: string, options: ResolverOptions) => {
       name: `${pluralizedLoweredName}`,
       args: [{ where: whereInputNameGql(name) }, { options: optionsQueryInputNameGql() }],
       returnType: `[${name}]!`,
-      pickedReturnAttributes: ['id'],
       key: GeneratedResolverField.FIND_MANY,
+    },
+    [GeneratedResolverField.FIND_MANY_PAGED]: {
+      operationType: 'query',
+      name: `${pluralizedLoweredName}Paged`,
+      args: [{ where: whereInputNameGql(name) }, { options: optionsPagedQueryInputNameGql() }],
+      returnType: `[${pagedGql(name)}]!`,
+      key: GeneratedResolverField.FIND_MANY_PAGED,
     },
     [GeneratedResolverField.FIND_ALL]: {
       operationType: 'query',
       name: `all${pluralizedName}`,
       args: [],
       returnType: `[${name}]!`,
-      pickedReturnAttributes: ['id'],
       key: GeneratedResolverField.FIND_ALL,
     },
     [GeneratedResolverField.CREATE_MUTATION]: {

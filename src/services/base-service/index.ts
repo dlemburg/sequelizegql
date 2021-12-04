@@ -9,6 +9,11 @@ const findAll =
   (where = {}, options = {}) =>
     model.findAll({ where, ...options });
 
+const findAndCountAll =
+  (model) =>
+  (where = {}, options = {}) =>
+    model.findAndCountAll({ where, ...options });
+
 const findOne =
   (model) =>
   (where = {}, options = {}) =>
@@ -140,6 +145,10 @@ export type BaseServiceInterface<T> = {
   getModel: () => T;
   getAttributes: () => ModelAttributes;
   findAll: (filter?: BaseServiceFilter<T>, options?: BaseServiceOptions<T>) => Promise<T[]>;
+  findAndCountAll: (
+    filter?: BaseServiceFilter<T>,
+    options?: BaseServiceOptions<T>
+  ) => Promise<{ rows: T[]; count: number }>;
   findAllIncludingDestroyed: (
     filter?: BaseServiceFilter<T>,
     options?: BaseServiceOptions<T>
@@ -183,6 +192,7 @@ export const BaseService = <T>(
   getModel: model,
   getAttributes: getAttributes(model),
   findAll: findAll(model),
+  findAndCountAll: findAndCountAll(model),
   findAllIncludingDestroyed: findAllIncludingDestroyed(model),
   findAllWithAssociations: findAllWithAssociations(model),
   findOneWithAssociations: findOneWithAssociations(model),

@@ -1,7 +1,12 @@
 export const optionsQueryInputNameGql = () => `OptionsInput`;
+export const optionsPagedQueryInputNameGql = () => `${optionsQueryInputNameGql()}Paged`;
+
+const baseOptiongsGql = `
+  order: [OrderInput]
+  group: String
+`;
 
 export const optionsQueryGql = () => `
- 
   enum OrderDirection {
     ASC
     DESC
@@ -13,10 +18,12 @@ export const optionsQueryGql = () => `
   }
 
   input ${optionsQueryInputNameGql()} {
-    order: [OrderInput]
-    group: String
+    ${baseOptiongsGql}
+  }
+
+  input ${optionsPagedQueryInputNameGql()} {
+    ${baseOptiongsGql}
+    offset: Int
+    limit: Int
   }
 `;
-
-// offset: Int
-// limit: Int

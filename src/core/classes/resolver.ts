@@ -55,6 +55,18 @@ class ResolverService extends BaseGql {
         this.options,
         resolveQuery(this.service.getModel(), this.service.findAll, this.options)
       ),
+      [this.resolverMap[GeneratedResolverField.FIND_MANY_PAGED].name]: middleware(
+        this.options,
+        async (_, { where, options }, context, resolveInfo) => {
+          const result = await resolveQuery(
+            this.service.getModel(),
+            this.service.findAndCountAll,
+            this.options
+          )(_, { where, options }, context, resolveInfo);
+
+          return { entities: result.rows, totalCount: result.count };
+        }
+      ),
       [this.resolverMap[GeneratedResolverField.FIND_ALL].name]: middleware(
         this.options,
         resolveQuery(this.service.getModel(), this.service.findAll, this.options)

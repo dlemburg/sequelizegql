@@ -6,8 +6,9 @@ import {
   typesGql,
   typeGql,
   inputGql,
-  updateInputGqlBuilder,
-  inputGqlBuilder,
+  updateInputNameGql,
+  inputNameGql,
+  pagedInputsGql,
 } from '../graphql/types';
 import { WhereAttributeFactory } from './where-attributes';
 import { QueryFactory } from './query';
@@ -35,11 +36,15 @@ class Typedef extends BaseGql {
   }
 
   public inputGql() {
-    return typesGql(inputGql(), inputGqlBuilder(this.name), this.inputAttributes());
+    return typesGql(inputGql(), inputNameGql(this.name), this.inputAttributes());
+  }
+
+  public pagedInputGql() {
+    return pagedInputsGql(this.name);
   }
 
   public updateInputGql() {
-    return typesGql(inputGql(), updateInputGqlBuilder(this.name), this.inputAttributes());
+    return typesGql(inputGql(), updateInputNameGql(this.name), this.inputAttributes());
   }
 
   public whereInputGql() {
@@ -69,6 +74,7 @@ class Typedef extends BaseGql {
   public typedefMap() {
     const baseType = this.typeGql();
     const baseInput = this.inputGql();
+    const basePagedInput = this.pagedInputGql();
     const baseUpdateInput = this.updateInputGql();
     const baseWhereInput = this.whereInputGql();
     const baseMutation = this.mutationGql();
@@ -81,11 +87,13 @@ class Typedef extends BaseGql {
       baseType,
       baseInput,
       baseUpdateInput,
+      basePagedInput,
       generatedGqlTypesAndInputs: `
         ${baseType}
         ${baseInput}
         ${baseUpdateInput}
         ${baseWhereInput}
+        ${basePagedInput}
       `,
       generatedGql: `
         ${baseWhereInput}
@@ -94,6 +102,7 @@ class Typedef extends BaseGql {
         ${baseType}
         ${baseInput}
         ${baseUpdateInput}
+        ${basePagedInput}
       `,
     };
   }

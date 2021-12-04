@@ -2,6 +2,7 @@ import { ModelAttributes } from '../../types';
 import { mapSequelizeToGraphql } from '../mappers';
 import { stringBuilder } from '../util/string-util';
 import { newLine } from './new-line';
+import { pagedGql } from './paged';
 import { whereInputNameGql } from './where-input';
 
 const mapFields = (attributes, options) =>
@@ -24,10 +25,9 @@ export const inputGql = () => 'input';
 export const typeGqlUpper = () => 'Type';
 export const inputGqlUpper = () => 'Input';
 
-export const inputGqlBuilder = (name: string) => stringBuilder(name, inputGqlUpper());
+export const inputNameGql = (name: string) => stringBuilder(name, inputGqlUpper());
 
-export const updateInputGqlBuilder = (name: string) =>
-  stringBuilder('Update', inputGqlBuilder(name));
+export const updateInputNameGql = (name: string) => stringBuilder('Update', inputNameGql(name));
 
 export const typesGql = (
   gqlKeyword,
@@ -56,3 +56,10 @@ export const typesGql = (
 
   return result;
 };
+
+export const pagedInputsGql = (name) => `
+  input ${pagedGql(name)} {
+    entities: [${name}]
+    totalCount: Int
+  }
+`;
