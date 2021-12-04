@@ -39,13 +39,23 @@ export const OPERATORS_FILTERS_MAP = {
     op: Op.substring,
     getValue: (value) => value,
   }),
-  EQ: () => ({
-    gql: () => 'JSON!',
+  EQ_STRING: () => ({
+    gql: () => 'String!',
     op: Op.eq,
     getValue: (value) => value,
   }),
-  NE: () => ({
-    gql: () => 'JSON!',
+  NE_STRING: () => ({
+    gql: () => 'String!',
+    op: Op.ne,
+    getValue: (value) => value,
+  }),
+  EQ_INT: () => ({
+    gql: () => 'Int!',
+    op: Op.eq,
+    getValue: (value) => value,
+  }),
+  NE_INT: () => ({
+    gql: () => 'Int!',
     op: Op.ne,
     getValue: (value) => value,
   }),
@@ -54,8 +64,13 @@ export const OPERATORS_FILTERS_MAP = {
     op: Op.is,
     getValue: (value) => null,
   }),
-  NOT: () => ({
-    gql: () => 'JSON!',
+  NOT_STRING: () => ({
+    gql: () => 'String!',
+    op: Op.not,
+    getValue: (value) => value,
+  }),
+  NOT_INT: () => ({
+    gql: () => 'Int!',
     op: Op.not,
     getValue: (value) => value,
   }),
@@ -79,23 +94,43 @@ export const OPERATORS_FILTERS_MAP = {
     op: Op.lte,
     getValue: (value) => value,
   }),
-  BETWEEN: () => ({
-    gql: () => 'JSON!',
+  BETWEEN_INT: () => ({
+    gql: () => 'Int!',
     op: Op.between,
     getValue: (value) => value,
   }),
-  NOT_BETWEEN: () => ({
-    gql: () => 'JSON!',
+  BETWEEN_DATE: () => ({
+    gql: () => 'DateTime!',
+    op: Op.between,
+    getValue: (value) => value,
+  }),
+  NOT_BETWEEN_INT: () => ({
+    gql: () => 'Int!',
     op: Op.notBetween,
     getValue: (value) => value,
   }),
-  IN: () => ({
-    gql: () => 'JSON!',
+  NOT_BETWEEN_DATE: () => ({
+    gql: () => 'DateTime!',
+    op: Op.notBetween,
+    getValue: (value) => value,
+  }),
+  IN_INT: () => ({
+    gql: () => 'Int!',
     op: Op.in,
     getValue: (value) => value,
   }),
-  NOT_IN: () => ({
-    gql: () => 'JSON!',
+  IN_STRING: () => ({
+    gql: () => 'String!',
+    op: Op.in,
+    getValue: (value) => value,
+  }),
+  NOT_IN_INT: () => ({
+    gql: () => 'Int!',
+    op: Op.notIn,
+    getValue: (value) => value,
+  }),
+  NOT_IN_STRING: () => ({
+    gql: () => 'String!',
     op: Op.notIn,
     getValue: (value) => value,
   }),

@@ -19,7 +19,7 @@ https://www.omdbapi.com/
 
   - Clean up all types [IN_PROGRESS]
   - README (lightweight docs)
-  - operators: undo JSON! type for multivariant type
+  - operators: undo JSON! type for multivariant type [DONE]
 
   - merge utility: 'customSchemaPath', 'customTypes' [DONE]
   - Extend the Sequelize DataTypes [DONE]
