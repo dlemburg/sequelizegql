@@ -12,7 +12,7 @@ type BuildSchemaOptions = {
 
 type BuildSchemaResponse = {
   typedefs: string;
-  resolvers: any;
+  resolvers: { [key: string]: any };
 };
 
 const STARTER_ACC: BuildSchemaResponse = { typedefs: '', resolvers: {} };

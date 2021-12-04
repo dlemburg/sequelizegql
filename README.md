@@ -17,21 +17,22 @@ https://www.omdbapi.com/
 - User
 - UserBook
 
-  2.) Extend the Sequelize DataTypes, make db-client-specific data type mappings (requires a 'client' input) [DONE_KINDA]
-  3.) Pluralization (optional) [DONE]
-  4.) Build out the default sequelize options, i.e - paging - order [DONE]
-  5.) Print/Export Schema
-  6.) Clean up all types [IN_PROGRESS]
-  7.) 'omitResolvers' option [DONE]
-  8.) merge utility: 'customSchemaPath', 'customTypes'
-  10.) README (lightweight docs)
-  11.) onBeforeResolve, onAfterResolve middlewares [DONE]
-  12.) createMany resolver/typedef [DONE]
-  13.) add AND, OR operator filters to whereInput [DONE]
-  14.) add sequelize-mapped operator FILTERS to whereInput [DONE]
-  15.) operators: gql [DONE]
-  16.) operators: undo JSON! type for multivariant type
-  17.) parse operator FILTERS on associated query fields [DONE]
+  - operators: undo JSON! type for multivariant type
+  - merge utility: 'customSchemaPath', 'customTypes'
+  - README (lightweight docs)
+  - Clean up all types [IN_PROGRESS]
+
+  - Extend the Sequelize DataTypes, make db-client-specific data type mappings (requires a 'client' input) [DONE_KINDA]
+  - Pluralization (optional) [DONE]
+  - Build out the default sequelize options, - - paging - order [DONE]
+  - Print/Export Schema [DONE_KINDA]
+  - 'omitResolvers' option [DONE]
+  - onBeforeResolve, onAfterResolve middlewares [DONE]
+  - createMany resolver/typedef [DONE]
+  - add AND, OR operator filters to whereInput [DONE]
+  - add sequelize-mapped operator FILTERS to whereInput [DONE]
+  - operators: gql [DONE]
+  - parse operator FILTERS on associated query fields [DONE]
 
 future support (v2)
 

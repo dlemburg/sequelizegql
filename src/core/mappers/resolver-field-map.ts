@@ -2,7 +2,7 @@ import pluralize from 'pluralize';
 import { GeneratedResolverField, ResolverOptions } from '../../types';
 import { lowercaseFirstLetter } from '../../util/general-util';
 import { whereInputNameGql } from '../graphql';
-import { optionsQueryInputGql } from '../graphql/options';
+import { optionsQueryInputNameGql } from '../graphql/options';
 
 const sanitize = (value: string, options: ResolverOptions) => {
   const result = options?.pluralize !== false ? pluralize(value) : value;
@@ -19,15 +19,14 @@ export const getResolverFieldMap = (name: string, options: ResolverOptions) => {
     [GeneratedResolverField.FIND_ONE]: {
       operationType: 'query',
       name: `${loweredName}`,
-      args: [{ where: whereInputNameGql(name) }, { options: optionsQueryInputGql() }],
+      args: [{ where: whereInputNameGql(name) }, { options: optionsQueryInputNameGql() }],
       returnType: `${name}`,
-      pickedReturnAttributes: ['id'],
       key: GeneratedResolverField.FIND_ONE,
     },
     [GeneratedResolverField.FIND_MANY]: {
       operationType: 'query',
       name: `${pluralizedLoweredName}`,
-      args: [{ where: whereInputNameGql(name) }, { options: optionsQueryInputGql() }],
+      args: [{ where: whereInputNameGql(name) }, { options: optionsQueryInputNameGql() }],
       returnType: `[${name}]!`,
       pickedReturnAttributes: ['id'],
       key: GeneratedResolverField.FIND_MANY,
@@ -45,7 +44,6 @@ export const getResolverFieldMap = (name: string, options: ResolverOptions) => {
       name: `create${name}`,
       args: [{ input: `${name}Input!` }],
       returnType: `${name}!`,
-      pickedReturnAttributes: ['id'],
       key: GeneratedResolverField.CREATE_MUTATION,
     },
     [GeneratedResolverField.CREATE_MANY_MUTATION]: {
@@ -53,7 +51,6 @@ export const getResolverFieldMap = (name: string, options: ResolverOptions) => {
       name: `createMany${name}`,
       args: [{ input: `[${name}Input!]!` }],
       returnType: `[${name}!]!`,
-      pickedReturnAttributes: ['id'],
       key: GeneratedResolverField.CREATE_MANY_MUTATION,
     },
     [GeneratedResolverField.UPDATE_MUTATION]: {
@@ -61,7 +58,6 @@ export const getResolverFieldMap = (name: string, options: ResolverOptions) => {
       name: `update${name}`,
       args: [{ where: whereInputNameGql(name) }, { input: `Update${name}Input!` }],
       returnType: `${name}!`,
-      pickedReturnAttributes: ['id'],
       key: GeneratedResolverField.UPDATE_MUTATION,
     },
     [GeneratedResolverField.DELETE_MUTATION]: {
@@ -69,7 +65,6 @@ export const getResolverFieldMap = (name: string, options: ResolverOptions) => {
       name: `delete${name}`,
       args: [{ where: whereInputNameGql(name) }, { options: 'DeleteOptions' }],
       returnType: `DeleteResponse`,
-      pickedReturnAttributes: [],
       key: GeneratedResolverField.DELETE_MUTATION,
     },
     [GeneratedResolverField.UPSERT_MUTATION]: {
@@ -77,7 +72,6 @@ export const getResolverFieldMap = (name: string, options: ResolverOptions) => {
       name: `upsert${name}`,
       args: [{ where: whereInputNameGql(name) }, { input: `${name}Input!` }],
       returnType: `${name}!`,
-      pickedReturnAttributes: ['id'],
       key: GeneratedResolverField.UPSERT_MUTATION,
     },
   };

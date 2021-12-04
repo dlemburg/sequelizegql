@@ -1,4 +1,4 @@
-export const optionsQueryInputGql = () => `OptionsInput`;
+export const optionsQueryInputNameGql = () => `OptionsInput`;
 
 export const optionsQueryGql = () => `
  
@@ -12,9 +12,11 @@ export const optionsQueryGql = () => `
     dir: OrderDirection
   }
 
-  input ${optionsQueryInputGql()} {
-    offset: Int
-    limit: Int
+  input ${optionsQueryInputNameGql()} {
     order: [OrderInput]
+    group: String
   }
 `;
+
+// offset: Int
+// limit: Int

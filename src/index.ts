@@ -1,8 +1,15 @@
+import fs from 'fs';
 import { buildRootTypedefs } from './core/util/root-typedefs-util';
 import { buildSchema } from './core';
 import { StateFactory } from './core/classes/state';
 import { Sequelize } from 'sequelize/types';
-import { EnumMap, ModelMap, SchemaMap, SchemaMapResolverOptions } from './types';
+import {
+  EnumMap,
+  InitializationOptions,
+  ModelMap,
+  SchemaMap,
+  SchemaMapResolverOptions,
+} from './types';
 
 export type InitializeResponse = {
   typedefs: string;
@@ -18,8 +25,9 @@ export type InitializeInput = {
 };
 
 class SequelizeGraphql {
-  private typedefs;
   private resolvers;
+  private typedefs: string;
+  private options: InitializationOptions;
 
   public initialize({
     enums = {},
@@ -34,12 +42,17 @@ class SequelizeGraphql {
 
     this.typedefs = typedefs + buildRootTypedefs(options);
     this.resolvers = resolvers;
+    this.options = options;
 
     return { typedefs: this.typedefs, resolvers: this.resolvers };
   }
 
   public printConsole() {
     console.log(this.typedefs);
+  }
+
+  public outputTypedefs(filepath?: string) {
+    fs.writeFileSync(filepath || `${__dirname}/generated-typedefs.js`, this.typedefs, 'utf-8');
   }
 }
 

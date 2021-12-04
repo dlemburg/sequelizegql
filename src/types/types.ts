@@ -42,20 +42,14 @@ export type ResolverOptions = {
 };
 
 export type InitializationOptions = {
-  includeRootTypedefs?: boolean;
-  includeQueryDefinition?: boolean;
-  includeMutationDefinition?: boolean;
-  includeDeleteResponse?: boolean;
+  deleteResponseGql?: boolean;
   includeDeleteOptions?: boolean;
   onBeforeEveryResolve?;
   onAfterEveryResolve?;
 };
 
-export type SchemaMapResolverOptions = Omit<
-  ResolverOptions,
-  'generate' | 'onBeforeResolve' | 'onAfterResolve'
-> &
-  InitializationOptions;
+export type SchemaMapResolverOptions = InitializationOptions &
+  Omit<ResolverOptions, 'generate' | 'onBeforeResolve' | 'onAfterResolve'>;
 
 export type Resolver = {
   [key: string]: ResolverOptions;

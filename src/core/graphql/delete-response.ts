@@ -1,5 +1,7 @@
-export const deleteResponseGql = (name = 'DeleteResponse') => `
-  type ${name} {
-    id: String
+export const deleteResponseGql = (deleteResponseGql) =>
+  deleteResponseGql ||
+  `
+  type DeleteResponse {
+    id: JSON
   }
 `;
