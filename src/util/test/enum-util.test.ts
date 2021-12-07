@@ -15,13 +15,15 @@ const enums = {
   Starter,
 };
 
-test('[buildEnums] should transform enum into key:values object', () => {
-  expect(buildEnums(enums)).toStrictEqual({
-    Foo: { values: ['BAR', 'BAZ'] },
-    Starter: { values: ['HELLO', 'WORLD'] },
+describe('[enum-util.test.ts] suite', () => {
+  test('[buildEnums] should transform enum into key:values object', () => {
+    expect(buildEnums(enums)).toStrictEqual({
+      Foo: { values: ['BAR', 'BAZ'] },
+      Starter: { values: ['HELLO', 'WORLD'] },
+    });
   });
-});
 
-test('[enumToArray] should transform an enum into an array of values', () => {
-  expect(enumToArray(Foo)).toStrictEqual(['BAR', 'BAZ']);
+  test('[enumToArray] should transform an enum into an array of values', () => {
+    expect(enumToArray(Foo)).toStrictEqual(['BAR', 'BAZ']);
+  });
 });
