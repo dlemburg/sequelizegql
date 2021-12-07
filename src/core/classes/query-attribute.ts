@@ -53,8 +53,9 @@ const recurseQueryFields = (fieldEntries, modelAttributes, resolverOptions): Que
                 const baseInclude = [
                   {
                     association: fields.name,
-                    include: associatedInclude?.include ?? [],
-                    where,
+                    ...(associationFields?.include?.length && {
+                      include: associationFields?.include,
+                    }),
                   },
                 ];
                 acc.attributes = attributes;
@@ -66,12 +67,15 @@ const recurseQueryFields = (fieldEntries, modelAttributes, resolverOptions): Que
             );
 
           const baseInclude = [
-            { association: key, include: associationFields?.include ?? [], where },
+            {
+              association: key,
+              ...(associationFields?.include?.length && {
+                include: associationFields?.include,
+              }),
+            },
           ];
 
-          acc.include = acc?.include
-            ? { include: [acc.include, ...baseInclude] }
-            : { include: baseInclude };
+          acc.include = acc?.include ? [acc.include, ...baseInclude] : baseInclude;
         }
       } else if (attributeValue) {
         acc.attributes.push(key);

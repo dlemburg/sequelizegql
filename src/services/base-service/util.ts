@@ -48,7 +48,7 @@ export const buildModelAssociations = (associations) => {
     acc[property] = {
       sequelizeType: 'ASSOCIATION',
       type: value.target.name,
-      isArray: value.associationType === 'HasMany',
+      isArray: value.associationType === 'HasMany' || value.associationType === 'BelongsToMany',
       allowNull: true,
     };
     return acc;
