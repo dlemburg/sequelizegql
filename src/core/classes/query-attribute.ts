@@ -2,7 +2,7 @@ import {
   parseResolveInfo,
   simplifyParsedResolveInfoFragmentWithType,
 } from 'graphql-parse-resolve-info';
-import { getAttributes } from '../../services/base-service';
+import { getAttributes } from '../../services/base-service/util';
 import { parseWhere } from '../util/parse-where-util';
 import { StateFactory } from './state';
 
@@ -12,7 +12,7 @@ type RecursiveInclude = {
 };
 
 type QueryAttributes = {
-  include?: RecursiveInclude;
+  include?: RecursiveInclude[];
   attributes?: string[];
 };
 
@@ -33,33 +33,33 @@ const recurseQueryFields = (fieldEntries, modelAttributes, resolverOptions): Que
           const associationFields = Object.entries(fields)
             .filter(([xKey, xValue]: any) => {
               const result = Object.keys(xValue?.fieldsByTypeName ?? {});
-              const associationName = result?.[0];
-
-              return associationName ? Models?.[associationName] : false;
+              return result?.length && Models?.[result[0]];
             })
             .reduce(
               (acc: any, x: any) => {
-                const fields = x[1];
-                const where = parseWhere(fields?.args?.where, resolverOptions);
-                const modelName = Object.keys(fields?.fieldsByTypeName ?? {})?.[0];
-                const model = Models[modelName];
-                const fieldEntries = [fields.name, fields];
+                const fieldName = x[1].name;
+                const fieldsByType = x[1].fieldsByTypeName;
+                const modelName = Object.keys(x[1]?.fieldsByTypeName ?? {})?.[0];
+                const fields = fieldsByType[modelName];
+                const nextFields = Object.entries(fields);
+                const nextAttributes = getAttributes(Models[modelName])();
+
                 const { attributes, include: associatedInclude } = recurseQueryFields(
-                  [fieldEntries],
-                  getAttributes(model)(),
+                  nextFields,
+                  nextAttributes,
                   resolverOptions
                 );
 
                 const baseInclude = [
                   {
-                    association: fields.name,
-                    ...(associationFields?.include?.length && {
-                      include: associationFields?.include,
+                    association: fieldName,
+                    ...(associatedInclude?.length && {
+                      include: associatedInclude,
                     }),
                   },
                 ];
                 acc.attributes = attributes;
-                acc.include = acc?.include ? [acc.include, ...baseInclude] : baseInclude;
+                acc.include = acc?.include ? [...acc.include, ...baseInclude] : baseInclude;
 
                 return acc;
               },
@@ -74,8 +74,7 @@ const recurseQueryFields = (fieldEntries, modelAttributes, resolverOptions): Que
               }),
             },
           ];
-
-          acc.include = acc?.include ? [acc.include, ...baseInclude] : baseInclude;
+          acc.include = acc?.include ? [...acc.include, ...baseInclude] : baseInclude;
         }
       } else if (attributeValue) {
         acc.attributes.push(key);
