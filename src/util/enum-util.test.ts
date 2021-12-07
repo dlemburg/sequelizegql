@@ -1,4 +1,4 @@
-import { buildEnums } from './enum-util';
+import { buildEnums, enumToArray } from './enum-util';
 
 enum Foo {
   BAR = 'BAR',
@@ -20,4 +20,8 @@ test('[buildEnums] should transform enum into key:values object', () => {
     Foo: { values: ['BAR', 'BAZ'] },
     Starter: { values: ['HELLO', 'WORLD'] },
   });
+});
+
+test('[enumToArray] should transform an enum into an array of values', () => {
+  expect(enumToArray(Foo)).toStrictEqual(['BAR', 'BAZ']);
 });
