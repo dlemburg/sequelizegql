@@ -18,8 +18,9 @@ export const buildTests = ({
   inputAttributes,
   resolvers = {} as any,
   variables = {} as any,
+  options = {} as any,
 }) => {
-  const resolverMap = getResolverFieldMap(name);
+  const resolverMap = getResolverFieldMap(name, options);
 
   const operations = Object.entries(resolverMap).reduce((acc, [key, value]) => {
     const { args, name, operationType, pickedReturnAttributes, key: resolverKey } = value as any;

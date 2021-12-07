@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 import { SchemaMap, ResolverOptions, ModelMap, EnumMap } from '../types';
-import { buildEnums } from '../util/array-util';
+import { buildEnums } from '../util/enum-util';
 import { ResolverFactory, TypedefFactory } from './classes';
 import { generateEnumsGql } from './graphql/enums';
 import { optionsQueryGql } from './graphql/options';
