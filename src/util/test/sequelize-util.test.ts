@@ -1,4 +1,4 @@
-import { buildSort, buildSortAsc, buildSortDesc } from './sequelize-util';
+import { buildSort, buildSortAsc, buildSortDesc } from '../sequelize-util';
 
 test('[buildSort] should build a proper sort array', () => {
   expect(buildSort('foo', 'ASC')).toEqual(['foo', 'ASC']);
