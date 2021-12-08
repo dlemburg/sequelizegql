@@ -1,3 +1,4 @@
+import { ModelAttributes } from '../../types';
 import { mapSequelizeToGraphql } from '../mappers';
 
 type KeyValuePairsResponse = {
@@ -7,7 +8,7 @@ type KeyValuePairsResponse = {
 
 class WhereAttributes {
   private whereAttributes;
-  private modelAttributes;
+  private modelAttributes: ModelAttributes;
 
   constructor(whereAttributes, modelAttributes) {
     this.whereAttributes = whereAttributes;

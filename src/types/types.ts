@@ -1,6 +1,6 @@
 import { DataTypes, FindOptions, WhereOptions } from 'sequelize';
 
-const RESOLVER_MAP_KEYS = {
+export const RESOLVER_MAP_KEYS = {
   create: '',
   createMany: '',
   update: '',
@@ -17,10 +17,10 @@ export enum GeneratedResolverField {
   UPDATE_MUTATION = 'update',
   UPSERT_MUTATION = 'upsert',
   DELETE_MUTATION = 'delete',
-  FIND_ALL = 'all',
-  FIND_ONE = 'one',
-  FIND_MANY = 'many',
-  FIND_MANY_PAGED = 'manyPaged',
+  FIND_ALL = 'findAll',
+  FIND_ONE = 'findOne',
+  FIND_MANY = 'findMany',
+  FIND_MANY_PAGED = 'findManyPaged',
 }
 
 export enum BaseWhereInputType {
@@ -111,3 +111,14 @@ export type BaseTestFactoryInput<T = any> = BaseInput<T> & {
 export type EnumMap = Record<string, string>;
 
 export type ModelMap = Record<string, any>;
+
+// Property in keyof Type
+export type ResolverFieldMap<Type> = {
+  [key: string]: {
+    operationType: 'query' | 'mutation';
+    name: string;
+    args: { [key: string]: string }[];
+    returnType: string;
+    key: GeneratedResolverField;
+  };
+};

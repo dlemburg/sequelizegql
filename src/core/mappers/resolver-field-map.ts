@@ -1,5 +1,10 @@
 import pluralize from 'pluralize';
-import { GeneratedResolverField, ResolverOptions } from '../../types';
+import {
+  GeneratedResolverField,
+  ResolverFieldMap,
+  ResolverOptions,
+  RESOLVER_MAP_KEYS,
+} from '../../types';
 import { lowercaseFirstLetter } from '../../util/general-util';
 import { pagedGql, whereInputNameGql } from '../graphql';
 import { optionsPagedQueryInputNameGql, optionsQueryInputNameGql } from '../graphql/options';
@@ -10,7 +15,10 @@ const sanitize = (value: string, options: ResolverOptions): string => {
   return result;
 };
 
-export const getResolverFieldMap = (name: string, options: ResolverOptions) => {
+export const getResolverFieldMap = (
+  name: string,
+  options: ResolverOptions
+): ResolverFieldMap<typeof RESOLVER_MAP_KEYS> => {
   const loweredName = lowercaseFirstLetter(name);
   const pluralizedName = sanitize(name, options);
   const pluralizedLoweredName = sanitize(loweredName, options);
