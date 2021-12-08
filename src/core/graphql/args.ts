@@ -1,4 +1,6 @@
-export const argsGql = (args): string =>
+import { ResolverFieldMapArgs } from '../../types';
+
+export const argsGql = (args: ResolverFieldMapArgs): string =>
   args.length
     ? `(${args
         .map((x) => {

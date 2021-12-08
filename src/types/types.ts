@@ -124,3 +124,8 @@ export type ResolverFieldMap<Type> = {
     key: GeneratedResolverField;
   };
 };
+
+export type KeyValuePairsResponse = {
+  key: string;
+  value: string;
+};
