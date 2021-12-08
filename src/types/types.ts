@@ -112,12 +112,14 @@ export type EnumMap = Record<string, string>;
 
 export type ModelMap = Record<string, any>;
 
-// Property in keyof Type
+export type ResolverFieldMapArgs = { [key: string]: string }[];
+
+// TODO: 'Property in keyof Type' instead of '[key: string]'
 export type ResolverFieldMap<Type> = {
   [key: string]: {
     operationType: 'query' | 'mutation';
     name: string;
-    args: { [key: string]: string }[];
+    args: ResolverFieldMapArgs;
     returnType: string;
     key: GeneratedResolverField;
   };

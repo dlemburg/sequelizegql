@@ -1,4 +1,4 @@
-export const argsGql = (args) =>
+export const argsGql = (args): string =>
   args.length
     ? `(${args
         .map((x) => {

@@ -1,14 +1,21 @@
+import { Model } from 'sequelize';
 import { BaseService, BaseServiceInterface } from '../../services';
-import { BaseInput, ResolverOptions } from '../../types';
+import {
+  BaseInput,
+  Resolver,
+  ResolverFieldMap,
+  ResolverOptions,
+  RESOLVER_MAP_KEYS,
+} from '../../types';
 import { argsGql, newLine } from '../graphql';
 import { getResolverFieldMap } from '../mappers';
 
 export class BaseGql {
   public name: string;
-  public resolvers;
+  public resolvers: Resolver;
   public options: ResolverOptions;
-  public resolverMap;
-  public model;
+  public resolverMap: ResolverFieldMap<typeof RESOLVER_MAP_KEYS>;
+  public model: Model<any, any>;
   public service: BaseServiceInterface<any>;
 
   constructor({ model, resolvers = {}, options = {} }: BaseInput) {
@@ -22,7 +29,7 @@ export class BaseGql {
     return this;
   }
 
-  public getOperations = () => {
+  public getOperations = (): string => {
     const operations = Object.entries(this.resolverMap).reduce((acc, [key, value]: any) => {
       const argsValue = argsGql(value.args);
       const resolverKey = value.key;

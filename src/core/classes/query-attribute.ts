@@ -3,6 +3,7 @@ import {
   simplifyParsedResolveInfoFragmentWithType,
 } from 'graphql-parse-resolve-info';
 import { getAttributes } from '../../services/base-service/util';
+import { ModelAttributes, ResolverOptions } from '../../types';
 import { parseWhere } from '../util/parse-where-util';
 import { StateFactory } from './state';
 
@@ -16,7 +17,11 @@ type QueryAttributes = {
   attributes?: string[];
 };
 
-const recurseQueryFields = (fieldEntries, modelAttributes, resolverOptions): QueryAttributes => {
+const recurseQueryFields = (
+  fieldEntries: any,
+  modelAttributes: ModelAttributes,
+  resolverOptions: ResolverOptions
+): QueryAttributes => {
   const Models = StateFactory().getModels();
 
   const result = (fieldEntries ?? [])?.reduce(
@@ -25,7 +30,7 @@ const recurseQueryFields = (fieldEntries, modelAttributes, resolverOptions): Que
       const attributeValue = modelAttributes?.[key];
       const where = parseWhere(value?.fieldsByTypeName?.args?.where, resolverOptions);
 
-      if (associationValue) {
+      if (associationValue?.type) {
         const Model = associationValue?.type && Models?.[associationValue?.type];
         const fields = value?.fieldsByTypeName?.[associationValue?.type];
 

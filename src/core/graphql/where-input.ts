@@ -4,7 +4,7 @@ import { whereOperatorFiltersInputGql } from './where-operator-filters';
 
 export const whereInputNameGql = (name) => `${name}WhereInput`;
 
-export const whereInputGql = (name, whereAttributes, options) => {
+export const whereInputGql = (name: string, whereAttributes, options) => {
   const whereInputName = whereInputNameGql(name);
 
   const { gql: operatorsGql, whereInputFilterFields } = whereOperatorFiltersInputGql(

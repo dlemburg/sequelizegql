@@ -1,5 +1,5 @@
 import omit from 'lodash/omit';
-import { BaseInput } from '../../types/types';
+import { BaseInput, ModelAttributes } from '../../types/types';
 import { MutationFactory } from './mutation';
 import { whereInputGql } from '../graphql/where-input';
 import {
@@ -15,8 +15,8 @@ import { QueryFactory } from './query';
 import { BaseGql } from './base-gql';
 
 class Typedef extends BaseGql {
-  attributes;
-  omitAttributes;
+  attributes: ModelAttributes;
+  omitAttributes: string[] | undefined;
 
   constructor(input: BaseInput) {
     super(input);
@@ -68,7 +68,7 @@ class Typedef extends BaseGql {
   }
 
   public whereAttributes() {
-    return WhereAttributeFactory(this.options?.whereAttributes, this.attributes).keyValuePairs();
+    return WhereAttributeFactory().keyValuePairs(this.options?.whereAttributes, this.attributes);
   }
 
   public typedefMap() {

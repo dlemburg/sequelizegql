@@ -1,7 +1,9 @@
+import { Model, Sequelize } from 'sequelize';
+
 class State {
-  private models;
+  private models: { [key: string]: Model<any, any> };
   private enums;
-  private sequelize;
+  private sequelize: Sequelize;
 
   constructor({ models, enums, sequelize }) {
     this.models = models;
