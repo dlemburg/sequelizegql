@@ -1,7 +1,15 @@
 import { merge } from 'lodash';
+import { DocumentNode } from 'graphql';
+import { ResolverOptions, SchemaMap } from '../types';
 
-export const buildCustomSchema = ({ models: Models, customSchemaPath }) => {
-  let result = { schemaMap: {}, resolvers: {}, typedefs: [] as any[] };
+type CustomSchema = {
+  schemaMap: SchemaMap;
+  resolvers: ResolverOptions;
+  typedefs: DocumentNode[];
+};
+
+export const buildCustomSchema = ({ models: Models, customSchemaPath }): CustomSchema => {
+  let result: CustomSchema = { schemaMap: {}, resolvers: {}, typedefs: [] };
 
   for (let name of [...Object.keys(Models)]) {
     try {
