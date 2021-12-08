@@ -4,7 +4,7 @@ import { lowercaseFirstLetter } from '../../util/general-util';
 import { pagedGql, whereInputNameGql } from '../graphql';
 import { optionsPagedQueryInputNameGql, optionsQueryInputNameGql } from '../graphql/options';
 
-const sanitize = (value: string, options: ResolverOptions) => {
+const sanitize = (value: string, options: ResolverOptions): string => {
   const result = options?.pluralize !== false ? pluralize(value) : value;
 
   return result;
