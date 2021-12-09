@@ -10,9 +10,11 @@ type BuildSchemaOptions = {
   options?: ResolverOptions;
 };
 
+type ResolverResponse = { Query?: Record<any, any>; Mutation?: Record<any, any> };
+
 type BuildSchemaResponse = {
   typedefs: string;
-  resolvers: { [key: string]: any };
+  resolvers: ResolverResponse;
 };
 
 const STARTER_ACC: BuildSchemaResponse = { typedefs: '', resolvers: {} };

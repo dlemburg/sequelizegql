@@ -1,4 +1,4 @@
-import { KeyValuePairs } from '../../types';
+import { KeyValuePairs, ModelAttributes } from '../../types';
 import { mapSequelizeToGraphql } from '../mappers';
 
 class WhereAttributes {
@@ -6,13 +6,13 @@ class WhereAttributes {
     return this;
   }
 
-  public keyValuePairs(whereAttributes, modelAttributes): KeyValuePairs[] {
-    const DEFAULT_WHERE_ATTRIBUTES = [
-      {
-        key: 'id',
-        value: mapSequelizeToGraphql(modelAttributes['id'], { generateNullable: false }),
-      },
-    ];
+  public keyValuePairs(whereAttributes, modelAttributes: ModelAttributes): KeyValuePairs[] {
+    // const DEFAULT_WHERE_ATTRIBUTES = [
+    //   {
+    //     key: 'id',
+    //     value: mapSequelizeToGraphql(modelAttributes['id'], { generateNullable: false }),
+    //   },
+    // ];
 
     const result =
       whereAttributes?.reduce((acc, x) => {
@@ -23,7 +23,7 @@ class WhereAttributes {
         }
 
         return acc;
-      }, []) ?? DEFAULT_WHERE_ATTRIBUTES;
+      }, []) ?? [];
 
     return result;
   }
