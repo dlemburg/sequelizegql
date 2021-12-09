@@ -1,4 +1,4 @@
-import { DataTypes, FindOptions, WhereOptions } from 'sequelize';
+import { DataTypes, FindOptions, Model, WhereOptions } from 'sequelize';
 
 export const RESOLVER_MAP_KEYS = {
   create: '',
@@ -125,7 +125,15 @@ export type ResolverFieldMap<Type> = {
   };
 };
 
-export type KeyValuePairsResponse = {
+export type KeyValuePairs = {
   key: string;
   value: string;
 };
+
+export type Models = { [key: string]: Model<any, any> };
+export type Enums = { [key: string]: string };
+
+export enum SortDirection {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}

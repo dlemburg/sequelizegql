@@ -1,4 +1,4 @@
-import { KeyValuePairsResponse } from '../../types';
+import { KeyValuePairs } from '../../types';
 import { mapSequelizeToGraphql } from '../mappers';
 
 class WhereAttributes {
@@ -6,7 +6,7 @@ class WhereAttributes {
     return this;
   }
 
-  public keyValuePairs(whereAttributes, modelAttributes): KeyValuePairsResponse[] {
+  public keyValuePairs(whereAttributes, modelAttributes): KeyValuePairs[] {
     const DEFAULT_WHERE_ATTRIBUTES = [
       {
         key: 'id',

@@ -8,7 +8,15 @@ type CustomSchema = {
   typedefs: DocumentNode[];
 };
 
-export const buildCustomSchema = ({ models: Models, customSchemaPath }): CustomSchema => {
+type BuildCustomSchemaInput = {
+  models: any;
+  customSchemaPath: string;
+};
+
+export const buildCustomSchema = ({
+  models: Models,
+  customSchemaPath,
+}: BuildCustomSchemaInput): CustomSchema => {
   let result: CustomSchema = { schemaMap: {}, resolvers: {}, typedefs: [] };
 
   for (let name of [...Object.keys(Models)]) {

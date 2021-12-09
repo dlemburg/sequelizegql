@@ -1,7 +1,8 @@
 import { Model, Sequelize } from 'sequelize';
+import { Models } from '../../types';
 
 class State {
-  private models: { [key: string]: Model<any, any> };
+  private models: Models;
   private enums;
   private sequelize: Sequelize;
 

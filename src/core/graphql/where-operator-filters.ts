@@ -4,12 +4,12 @@ import {
 } from '../mappers/sequelize-gql-operators-map';
 import { newLine } from './new-line';
 import Constants from '../constants';
-import { ResolverOptions } from '../../types';
+import { KeyValuePairs, ResolverOptions } from '../../types';
 
 export const whereOperatorFiltersInputGql = (
   name: string,
   whereInputName: string,
-  whereAttributes,
+  whereAttributes: KeyValuePairs[],
   options: ResolverOptions
 ) => {
   const filterInputName = `${name}WhereFilterInput`;
