@@ -1,5 +1,7 @@
+import { ResolverFieldMapArgs } from '../../types';
+
 class OperationArgs {
-  private args;
+  private args: ResolverFieldMapArgs;
 
   constructor(args) {
     this.args = args;
@@ -27,4 +29,4 @@ class OperationArgs {
   }
 }
 
-export const OperationArgsFactory = (args) => new OperationArgs(args);
+export const OperationArgsFactory = (args: ResolverFieldMapArgs) => new OperationArgs(args);

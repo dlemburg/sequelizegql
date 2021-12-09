@@ -6,7 +6,10 @@ class WhereAttributes {
     return this;
   }
 
-  public keyValuePairs(whereAttributes, modelAttributes: ModelAttributes): KeyValuePairs[] {
+  public keyValuePairs(
+    whereAttributes: string[] | undefined,
+    modelAttributes: ModelAttributes
+  ): KeyValuePairs[] {
     // const DEFAULT_WHERE_ATTRIBUTES = [
     //   {
     //     key: 'id',
@@ -23,7 +26,7 @@ class WhereAttributes {
         }
 
         return acc;
-      }, []) ?? [];
+      }, [] as KeyValuePairs[]) ?? [];
 
     return result;
   }

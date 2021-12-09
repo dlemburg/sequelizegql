@@ -1,4 +1,4 @@
-import { Model, Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize';
 import { Enums, Models } from '../../types';
 
 class State {
