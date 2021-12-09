@@ -1,9 +1,9 @@
 import { Model, Sequelize } from 'sequelize';
-import { Models } from '../../types';
+import { Enums, Models } from '../../types';
 
 class State {
   private models: Models;
-  private enums;
+  private enums: Enums;
   private sequelize: Sequelize;
 
   constructor({ models, enums, sequelize }) {

@@ -8,7 +8,15 @@ import { buildRootTypedefs } from './core/util/root-typedefs-util';
 import { buildSchema } from './core';
 import { StateFactory } from './core/classes/state';
 import { Sequelize } from 'sequelize/types';
-import { EnumMap, ModelMap, SchemaMap, SchemaMapResolverOptions } from './types';
+import {
+  EnumMap,
+  Enums,
+  ModelMap,
+  Models,
+  Resolver,
+  SchemaMap,
+  SchemaMapResolverOptions,
+} from './types';
 import { buildCustomSchema } from './util/build-schema-util';
 
 export type InitializeResponse = {
@@ -19,8 +27,8 @@ export type InitializeResponse = {
 
 export type InitializeInput = {
   sequelize: Sequelize;
-  enums?: EnumMap;
-  models?: ModelMap;
+  enums?: Enums;
+  models?: Models;
   schemaMap?: SchemaMap;
   options?: SchemaMapResolverOptions;
 };
