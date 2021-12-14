@@ -26,7 +26,7 @@ export class BookLibrary extends Model<BookLibrary> {
 
   @Column
   @ForeignKey(() => Book)
-  bookIsbn: number;
+  bookId: number;
 
   @CreatedAt
   @AllowNull(false)
