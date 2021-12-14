@@ -54,3 +54,4 @@ logs/**
 /schema/core.sql
 dist
 /lib
+/examples/library/node_modules
