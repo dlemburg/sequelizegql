@@ -27,7 +27,7 @@ export const buildSchema = (
   const result: any = Object.values(models as any).reduce(
     (acc: BuildSchemaResponse, model: any): BuildSchemaResponse => {
       const modelOverrides = schemaOptions?.schemaMap?.[model.name];
-      const options = { ...schemaOptions?.options, ...modelOverrides?.options };
+      const options: any = { ...schemaOptions?.options, ...modelOverrides?.options };
 
       if (options?.generate === false) return acc;
 
