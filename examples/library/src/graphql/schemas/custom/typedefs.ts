@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express';
 
 const HealthTypedefs = gql`
   extend type Query {
-    customerHealth: [Int]
+    health: [Int]
   }
 
   type HealthResponse {

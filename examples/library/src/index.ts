@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { router as RestRouter } from './rest';
 import { createApolloServer } from './server';
 import { init } from './orm/sequelize';
 
@@ -12,7 +11,6 @@ async function main() {
   app = express();
 
   app.use(bodyParser.json());
-  app.use('/api', RestRouter);
 
   app.use((err, req, res, next) => {
     console.error(`[${err.message}]: ${err.stack}`);

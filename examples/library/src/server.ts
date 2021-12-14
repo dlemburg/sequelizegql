@@ -1,7 +1,3 @@
-import DataLayer from './db';
-
-DataLayer.init();
-
 import { ApolloServer } from 'apollo-server-express';
 import { getGraphqlSchema } from './graphql';
 

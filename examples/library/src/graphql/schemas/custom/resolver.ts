@@ -1,6 +1,6 @@
 const HealthResolver = {
   Query: {
-    customerHealth: async () => {
+    health: async () => {
       return {
         ok: true,
         date: new Date().toISOString(),
