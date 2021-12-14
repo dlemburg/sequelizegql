@@ -1,6 +1,7 @@
 # compiled output
 /build
 /node_modules
+*/**/node_modules
 /.pnp
 .pnp.js
 .vscode/
@@ -53,3 +54,4 @@ logs/**
 /schema/core.sql
 dist
 /lib
+/examples/library/node_modules
