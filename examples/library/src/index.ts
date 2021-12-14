@@ -1,14 +1,15 @@
-import express from 'express';
 import bodyParser from 'body-parser';
-import { createApolloServer } from './server';
+import { ApolloServer } from 'apollo-server-express';
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import express from 'express';
+import http from 'http';
 import { init } from './orm/sequelize';
+import { getGraphqlSchema } from './graphql';
 
 export let app;
 
-async function main() {
-  init();
-  const port = 4000;
-  app = express();
+async function startApolloServer() {
+  const app = express();
 
   app.use(bodyParser.json());
 
@@ -17,15 +18,21 @@ async function main() {
     res.status(500).send({ err: err.message });
   });
 
-  const server = await createApolloServer();
-  await server.start();
-
-  server.applyMiddleware({
-    app,
+  const httpServer = http.createServer(app);
+  const { schema } = await getGraphqlSchema();
+  const server = new ApolloServer({
+    schema,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
+  await server.start();
+  server.applyMiddleware({ app });
+  await new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve));
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+}
 
-  await new Promise((resolve) => resolve(app.listen({ port })));
-  console.log(`🚀 Server ready at http://localhost:${port}`, { port });
+async function main() {
+  init();
+  startApolloServer();
 }
 
 main().catch((e) => {
