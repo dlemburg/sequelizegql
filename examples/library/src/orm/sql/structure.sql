@@ -1,5 +1,19 @@
 -- Create database
-CREATE DATABASE libraries;
+CREATE DATABASE library_db;
+
+-- Create library_status type
+DO
+$$
+    BEGIN
+        IF NOT EXISTS(SELECT 1 FROM pg_type WHERE typname = 'library_status') THEN
+          CREATE TYPE library_status AS ENUM
+            (
+              'ACTIVE',
+              'INACTIVE'
+            );
+        END IF;
+    END
+$$;
 
 -- Create author table
 CREATE TABLE IF NOT EXISTS author
@@ -25,9 +39,21 @@ CREATE TABLE IF NOT EXISTS category
 -- Create book table
 CREATE TABLE IF NOT EXISTS book
 (
+  id                              SERIAL PRIMARY KEY NOT NULL,
+  category_id                     INTEGER REFERENCES "category" (id) NOT NULL,
   isbn                            VARCHAR(200) PRIMARY KEY NOT NULL,
   title                           VARCHAR(200) NOT NULL,
-  category_id                     INTEGER REFERENCES "category" (id) NOT NULL,
+  created_at                      TIMESTAMP DEFAULT now() NOT NULL,
+  updated_at                      TIMESTAMP DEFAULT now() NOT NULL,
+  removed_at                      TIMESTAMP
+);
+
+-- Create book_author table
+CREATE TABLE IF NOT EXISTS book_author
+(
+  id                              SERIAL PRIMARY KEY NOT NULL,
+  author_id                       INTEGER REFERENCES "author" (id) NOT NULL,
+  book_id                         INTEGER REFERENCES "book" (id) NOT NULL,
   created_at                      TIMESTAMP DEFAULT now() NOT NULL,
   updated_at                      TIMESTAMP DEFAULT now() NOT NULL,
   removed_at                      TIMESTAMP
@@ -43,31 +69,6 @@ CREATE TABLE IF NOT EXISTS city
   updated_at                      TIMESTAMP DEFAULT now() NOT NULL,
   removed_at                      TIMESTAMP
 );
-
--- Create book_author table
-CREATE TABLE IF NOT EXISTS book_author
-(
-  id                              SERIAL PRIMARY KEY NOT NULL,
-  author_id                       INTEGER REFERENCES "author" (id) NOT NULL,
-  book_isbn                       VARCHAR(200) REFERENCES "book" (isbn) NOT NULL,
-  created_at                      TIMESTAMP DEFAULT now() NOT NULL,
-  updated_at                      TIMESTAMP DEFAULT now() NOT NULL,
-  removed_at                      TIMESTAMP
-);
-
--- Create library_status type
-DO
-$$
-    BEGIN
-        IF NOT EXISTS(SELECT 1 FROM pg_type WHERE typname = 'library_status') THEN
-          CREATE TYPE library_status AS ENUM
-            (
-              'ACTIVE',
-              'INACTIVE'
-            );
-        END IF;
-    END
-$$;
 
 -- Create library table
 CREATE TABLE IF NOT EXISTS library
@@ -88,7 +89,7 @@ CREATE TABLE IF NOT EXISTS book_library
 (
   id                              SERIAL PRIMARY KEY NOT NULL,
   library_id                      INTEGER REFERENCES "library" (id) NOT NULL,
-  book_isbn                       VARCHAR(200) REFERENCES "book" (isbn) NOT NULL,
+  book_id                         INTEGER REFERENCES "book" (id) NOT NULL,
   created_at                      TIMESTAMP DEFAULT now() NOT NULL,
   updated_at                      TIMESTAMP DEFAULT now() NOT NULL,
   removed_at                      TIMESTAMP
