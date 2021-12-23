@@ -189,7 +189,7 @@ export const BaseService = <T>(
   model: T extends Model<any, any> ? any : any
 ): BaseServiceInterface<T> => ({
   getModelName: () => model.name,
-  getModel: model,
+  getModel: () => model,
   getAttributes: getAttributes(model),
   findAll: findAll(model),
   findAndCountAll: findAndCountAll(model),

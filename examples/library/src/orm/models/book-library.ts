@@ -10,10 +10,10 @@ import {
   AutoIncrement,
   ForeignKey,
 } from 'sequelize-typescript';
-import { Author } from './author';
+import { Library } from '.';
 import { Book } from './book';
 
-@Table({ underscored: true, tableName: 'book_author', paranoid: true })
+@Table({ underscored: true, tableName: 'book_library', paranoid: true })
 export class BookLibrary extends Model<BookLibrary> {
   @PrimaryKey
   @AutoIncrement
@@ -21,7 +21,7 @@ export class BookLibrary extends Model<BookLibrary> {
   id: number;
 
   @Column
-  @ForeignKey(() => Author)
+  @ForeignKey(() => Library)
   libraryId: number;
 
   @Column

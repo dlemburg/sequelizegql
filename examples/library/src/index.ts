@@ -31,7 +31,7 @@ async function startApolloServer() {
 }
 
 async function main() {
-  init();
+  await init();
   startApolloServer();
 }
 

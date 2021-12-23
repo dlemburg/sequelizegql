@@ -7,7 +7,7 @@ import { DocumentNode } from 'graphql';
 import { buildRootTypedefs } from './core/util/root-typedefs-util';
 import { buildSchema } from './core';
 import { StateFactory } from './core/classes/state';
-import { Sequelize } from 'sequelize/types';
+import { Sequelize } from 'sequelize';
 import {
   EnumMap,
   Enums,

@@ -1,4 +1,4 @@
-export const deleteResponseGql = (deleteResponseGql: string) =>
+export const deleteResponseGql = (deleteResponseGql?: string) =>
   deleteResponseGql ||
   `
   type DeleteResponse {

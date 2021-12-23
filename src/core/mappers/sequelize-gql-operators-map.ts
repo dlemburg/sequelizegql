@@ -1,4 +1,4 @@
-import { Op } from 'sequelize/types';
+import { Op } from 'sequelize';
 
 export const TOP_LEVEL_OPERATORS_GQL_MAP = {
   AND: (whereInputName?: string) => ({

@@ -5,7 +5,7 @@ import { deleteResponseGql } from '../graphql/delete-response';
 export const buildRootTypedefs = (options: InitializationOptions) => {
   let rootTypedefs = '';
 
-  if (options.deleteResponseGql !== false) {
+  if (options.deleteResponseGql) {
     rootTypedefs += deleteResponseGql(options.deleteResponseGql);
   }
 
