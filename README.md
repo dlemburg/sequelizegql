@@ -2,12 +2,6 @@
 
 1.) Example schema and tests
 
-## Potential Examples
-
-### 1
-
-https://www.omdbapi.com/
-
 ### 2
 
 - Library
