@@ -27,8 +27,8 @@ class Typedef extends BaseGql {
     return this;
   }
 
-  public inputAttributes() {
-    return omit(this.attributes, this.omitAttributes);
+  public inputAttributes(omitAttributes: string[] = []) {
+    return omit(this.attributes, [...this.omitAttributes ?? [], ...omitAttributes]);
   }
 
   public typeGql() {
@@ -44,7 +44,7 @@ class Typedef extends BaseGql {
   }
 
   public updateInputGql() {
-    return typesGql(inputGql(), updateInputNameGql(this.name), this.inputAttributes());
+    return typesGql(inputGql(), updateInputNameGql(this.name), this.inputAttributes(['associations']));
   }
 
   public whereInputGql() {
