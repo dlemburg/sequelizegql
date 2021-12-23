@@ -8,19 +8,14 @@ class WhereAttributes {
 
   public keyValuePairs(
     whereAttributes: string[] | undefined,
-    modelAttributes: ModelAttributes
+    modelWhereAttributes: ModelAttributes
   ): KeyValuePairs[] {
-    // const DEFAULT_WHERE_ATTRIBUTES = [
-    //   {
-    //     key: 'id',
-    //     value: mapSequelizeToGraphql(modelAttributes['id'], { generateNullable: false }),
-    //   },
-    // ];
+    const attributes = whereAttributes?.length ? whereAttributes : Object.keys(modelWhereAttributes);
 
     const result =
-      whereAttributes?.reduce((acc, x) => {
-        if (modelAttributes[x]) {
-          const value = mapSequelizeToGraphql(modelAttributes[x], { generateNullable: false });
+      attributes?.reduce((acc, x) => {
+        if (modelWhereAttributes[x]) {
+          const value = mapSequelizeToGraphql(modelWhereAttributes[x], { generateNullable: false });
 
           acc.push({ key: x, value });
         }

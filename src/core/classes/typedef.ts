@@ -68,7 +68,7 @@ class Typedef extends BaseGql {
   }
 
   public whereAttributes() {
-    return WhereAttributeFactory().keyValuePairs(this.options?.whereAttributes, this.attributes);
+    return WhereAttributeFactory().keyValuePairs(this.options?.whereAttributes, this.inputAttributes(['associations']));
   }
 
   public typedefMap() {
