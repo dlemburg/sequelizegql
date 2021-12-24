@@ -39,8 +39,9 @@ export class BaseGql {
     const resolverMap = type === 'query' ? this.queryResolverMap : this.mutationResolverMap;
 
     const operations = Object.entries(resolverMap).reduce((acc, [key, value]: any) => {
-      const argsValue = argsGql(value.args);
-      const resolverKey = value.key;
+      const { key: resolverKey, name: resolverName } = value;
+      const resolverArgs = argsGql(value.args);
+      const resolverDirective = this.options?.directive ?? this.resolvers[resolverKey]?.directive ?? '';
 
       if (
         this.resolvers[resolverKey]?.generate === false ||
@@ -49,11 +50,9 @@ export class BaseGql {
         return acc;
       }
 
-      const result = `${value.name}${argsValue}: ${value.returnType} ${
-        this.resolvers[resolverKey]?.directive ?? this.options?.directive ?? ''
-      }`;
+      const result = `${resolverName}${resolverArgs}: ${value.returnType} ${resolverDirective}${newLine()}`;
 
-      return acc + result + newLine();
+      return acc + result;
     }, '');
 
     return operations;

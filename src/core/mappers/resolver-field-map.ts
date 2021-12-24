@@ -73,14 +73,14 @@ export const getQueryResolverFieldMap = (
   return {
     [GeneratedResolverField.FIND_ONE]: {
       operationType: 'query',
-      name: `${GeneratedResolverField.FIND_ONE}${name}`,
+      name: `${loweredName}`,
       args: [{ where: whereInputNameGql(name) }, { options: optionsQueryInputNameGql() }],
       returnType: name,
       key: GeneratedResolverField.FIND_ONE,
     },
     [GeneratedResolverField.FIND_MANY]: {
       operationType: 'query',
-      name: `${GeneratedResolverField.FIND_MANY}${pluralizedName}`,
+      name: `${pluralizedLoweredName}`,
       args: [{ where: whereInputNameGql(name) }, { options: optionsQueryInputNameGql() }],
       returnType: `[${name}]!`,
       key: GeneratedResolverField.FIND_MANY,
