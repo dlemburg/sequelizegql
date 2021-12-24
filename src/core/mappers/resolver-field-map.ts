@@ -15,7 +15,7 @@ const sanitize = (value: string, options: ResolverOptions): string => {
   return result;
 };
 
-export const getResolverFieldMap = (
+export const getMutationResolverFieldMap = (
   name: string,
   options: ResolverOptions
 ): ResolverFieldMap<typeof RESOLVER_MAP_KEYS> => {
@@ -24,34 +24,6 @@ export const getResolverFieldMap = (
   const pluralizedLoweredName = sanitize(loweredName, options);
 
   return {
-    [GeneratedResolverField.FIND_ONE]: {
-      operationType: 'query',
-      name: `${loweredName}`,
-      args: [{ where: whereInputNameGql(name) }, { options: optionsQueryInputNameGql() }],
-      returnType: `${name}`,
-      key: GeneratedResolverField.FIND_ONE,
-    },
-    [GeneratedResolverField.FIND_MANY]: {
-      operationType: 'query',
-      name: `${pluralizedLoweredName}`,
-      args: [{ where: whereInputNameGql(name) }, { options: optionsQueryInputNameGql() }],
-      returnType: `[${name}]!`,
-      key: GeneratedResolverField.FIND_MANY,
-    },
-    [GeneratedResolverField.FIND_MANY_PAGED]: {
-      operationType: 'query',
-      name: `${pluralizedLoweredName}Paged`,
-      args: [{ where: whereInputNameGql(name) }, { options: optionsPagedQueryInputNameGql() }],
-      returnType: `[${pagedGql(name)}]!`,
-      key: GeneratedResolverField.FIND_MANY_PAGED,
-    },
-    [GeneratedResolverField.FIND_ALL]: {
-      operationType: 'query',
-      name: `all${pluralizedName}`,
-      args: [],
-      returnType: `[${name}]!`,
-      key: GeneratedResolverField.FIND_ALL,
-    },
     [GeneratedResolverField.CREATE_MUTATION]: {
       operationType: 'mutation',
       name: `create${name}`,
@@ -61,7 +33,7 @@ export const getResolverFieldMap = (
     },
     [GeneratedResolverField.CREATE_MANY_MUTATION]: {
       operationType: 'mutation',
-      name: `createMany${name}`,
+      name: `createMany${pluralizedName}`,
       args: [{ input: `[${name}Input!]!` }],
       returnType: `[${name}!]!`,
       key: GeneratedResolverField.CREATE_MANY_MUTATION,
@@ -87,5 +59,55 @@ export const getResolverFieldMap = (
       returnType: `${name}!`,
       key: GeneratedResolverField.UPSERT_MUTATION,
     },
+  }
+};
+
+export const getQueryResolverFieldMap = (
+  name: string,
+  options: ResolverOptions
+): ResolverFieldMap<typeof RESOLVER_MAP_KEYS> => {
+  const loweredName = lowercaseFirstLetter(name);
+  const pluralizedName = sanitize(name, options);
+  const pluralizedLoweredName = sanitize(loweredName, options);
+
+  return {
+    [GeneratedResolverField.FIND_ONE]: {
+      operationType: 'query',
+      name: `${GeneratedResolverField.FIND_ONE}${name}`,
+      args: [{ where: whereInputNameGql(name) }, { options: optionsQueryInputNameGql() }],
+      returnType: name,
+      key: GeneratedResolverField.FIND_ONE,
+    },
+    [GeneratedResolverField.FIND_MANY]: {
+      operationType: 'query',
+      name: `${GeneratedResolverField.FIND_MANY}${pluralizedName}`,
+      args: [{ where: whereInputNameGql(name) }, { options: optionsQueryInputNameGql() }],
+      returnType: `[${name}]!`,
+      key: GeneratedResolverField.FIND_MANY,
+    },
+    [GeneratedResolverField.FIND_MANY_PAGED]: {
+      operationType: 'query',
+      name: `${pluralizedLoweredName}Paged`,
+      args: [{ where: whereInputNameGql(name) }, { options: optionsPagedQueryInputNameGql() }],
+      returnType: `${pagedGql(name)}!`,
+      key: GeneratedResolverField.FIND_MANY_PAGED,
+    },
+    [GeneratedResolverField.FIND_ALL]: {
+      operationType: 'query',
+      name: `all${pluralizedName}`,
+      args: [],
+      returnType: `[${name}]!`,
+      key: GeneratedResolverField.FIND_ALL,
+    },
+  };
+};
+
+export const getResolverFieldMap = (
+  name: string,
+  options: ResolverOptions
+): ResolverFieldMap<typeof RESOLVER_MAP_KEYS> => {
+  return {
+    ...getQueryResolverFieldMap(name, options),
+    ...getMutationResolverFieldMap(name, options)
   };
 };

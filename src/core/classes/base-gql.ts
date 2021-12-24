@@ -6,15 +6,19 @@ import {
   ResolverFieldMap,
   ResolverOptions,
   RESOLVER_MAP_KEYS,
+  RESOLVER_MUTATION_MAP_KEYS,
+  RESOLVER_QUERY_MAP_KEYS,
 } from '../../types';
 import { argsGql, newLine } from '../graphql';
-import { getResolverFieldMap } from '../mappers';
+import { getMutationResolverFieldMap, getQueryResolverFieldMap, getResolverFieldMap } from '../mappers';
 
 export class BaseGql {
   public name: string;
   public resolvers: Resolver;
   public options: ResolverOptions;
   public resolverMap: ResolverFieldMap<typeof RESOLVER_MAP_KEYS>;
+  public queryResolverMap: ResolverFieldMap<typeof RESOLVER_QUERY_MAP_KEYS>;
+  public mutationResolverMap: ResolverFieldMap<typeof RESOLVER_MUTATION_MAP_KEYS>;
   public model: Model<any, any>;
   public service: BaseServiceInterface<any>;
 
@@ -25,12 +29,16 @@ export class BaseGql {
     this.resolvers = resolvers;
     this.options = options;
     this.resolverMap = getResolverFieldMap(this.name, this.options);
+    this.queryResolverMap = getQueryResolverFieldMap(this.name, this.options);
+    this.mutationResolverMap = getMutationResolverFieldMap(this.name, this.options);
 
     return this;
   }
 
-  public getOperations = (): string => {
-    const operations = Object.entries(this.resolverMap).reduce((acc, [key, value]: any) => {
+  public getOperations = (type: 'query' | 'mutation'): string => {
+    const resolverMap = type === 'query' ? this.queryResolverMap : this.mutationResolverMap;
+
+    const operations = Object.entries(resolverMap).reduce((acc, [key, value]: any) => {
       const argsValue = argsGql(value.args);
       const resolverKey = value.key;
 
@@ -41,7 +49,7 @@ export class BaseGql {
         return acc;
       }
 
-      const result = `${resolverKey}${argsValue}: ${value.returnType} ${
+      const result = `${value.name}${argsValue}: ${value.returnType} ${
         this.resolvers[resolverKey]?.directive ?? this.options?.directive ?? ''
       }`;
 

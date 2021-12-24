@@ -25,7 +25,7 @@ export const inputGql = () => 'input';
 export const typeGqlUpper = () => 'Type';
 export const inputGqlUpper = () => 'Input';
 
-export const inputNameGql = (name: string) => stringBuilder(name, inputGqlUpper());
+export const inputNameGql = (name: string) => `${name}${inputGqlUpper()}`;
 
 export const updateInputNameGql = (name: string) => stringBuilder('Update', inputNameGql(name));
 
@@ -40,7 +40,7 @@ export const typesGql = (
     gqlKeyword === input
       ? mapFields(associations, {
           generateNullable,
-          suffix: input,
+          suffix: inputGqlUpper(),
         })
       : mapAssociationTypes(name, associations, {
           generateNullable,
@@ -57,8 +57,8 @@ export const typesGql = (
   return result;
 };
 
-export const pagedInputsGql = (name) => `
-  input ${pagedGql(name)} {
+export const pagedTypeGql = (name) => `
+  type ${pagedGql(name)} {
     entities: [${name}]
     totalCount: Int
   }

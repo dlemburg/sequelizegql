@@ -38,7 +38,7 @@ const middleware =
     return result;
   };
 
-class ResolverService extends BaseGql {
+class Resolver extends BaseGql {
   constructor(input: BaseInput) {
     super(input);
 
@@ -107,4 +107,4 @@ class ResolverService extends BaseGql {
   }
 }
 
-export const ResolverFactory = <T = any>(input: BaseInput) => new ResolverService(input);
+export const ResolverFactory = <T = any>(input: BaseInput) => new Resolver(input);

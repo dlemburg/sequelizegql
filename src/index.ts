@@ -2,6 +2,7 @@ import fs from 'fs';
 import gql from 'graphql-tag';
 import merge from 'lodash/merge';
 import { typeDefs as DateTypedefs, resolvers as DateResolvers } from 'graphql-scalars';
+import GraphQLJSON, { GraphQLJSONObject } from 'graphql-type-json';
 import { mergeTypeDefs } from '@graphql-tools/merge';
 import { DocumentNode } from 'graphql';
 import { buildRootTypedefs } from './core/util/root-typedefs-util';
@@ -9,11 +10,8 @@ import { buildSchema } from './core';
 import { StateFactory } from './core/classes/state';
 import { Sequelize } from 'sequelize';
 import {
-  EnumMap,
   Enums,
-  ModelMap,
   Models,
-  Resolver,
   SchemaMap,
   SchemaMapResolverOptions,
 } from './types';
@@ -38,6 +36,10 @@ export const buildGql = (value) =>
     ${value}
   `;
 
+const JSONResolvers = {
+  JSON: GraphQLJSON,
+  JSONObject: GraphQLJSONObject,
+}
 class SequelizeGraphql {
   private resolvers;
   private typedefs: string;
@@ -68,7 +70,7 @@ class SequelizeGraphql {
         ...customSchema.typedefs,
       ]);
 
-      const resolvers = merge(DateResolvers, this.resolvers, customSchema.resolvers);
+      const resolvers = merge(JSONResolvers, DateResolvers, this.resolvers, customSchema.resolvers);
 
       return {
         typedefs,

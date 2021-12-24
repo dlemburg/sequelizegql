@@ -10,9 +10,11 @@ class Query extends BaseGql {
   }
 
   public gql(): string {
-    const operations = this.getOperations();
+    const operations = this.getOperations('query');
 
-    return queryGql(operations);
+    const result = queryGql(operations);
+
+    return result;
   }
 }
 

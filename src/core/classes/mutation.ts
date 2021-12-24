@@ -10,9 +10,11 @@ class Mutation extends BaseGql {
   }
 
   public gql(): string {
-    const operations = this.getOperations();
+    const operations = this.getOperations('mutation');
 
-    return mutationGql(operations);
+    const result = mutationGql(operations);
+
+    return result;
   }
 }
 

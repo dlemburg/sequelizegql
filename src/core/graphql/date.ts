@@ -1,0 +1,1 @@
+export const dateGql = () => `scalar DateTime \n scalar Date`

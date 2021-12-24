@@ -1,5 +1,6 @@
 import { DataTypes, FindOptions, Model, WhereOptions } from 'sequelize';
 
+// TODO: refactor MAP_KEYS
 export const RESOLVER_MAP_KEYS = {
   create: '',
   createMany: '',
@@ -9,6 +10,20 @@ export const RESOLVER_MAP_KEYS = {
   all: '',
   findOne: '',
   findMany: '',
+} as const;
+
+export const RESOLVER_QUERY_MAP_KEYS = {
+  all: '',
+  findOne: '',
+  findMany: '',
+} as const;
+
+export const RESOLVER_MUTATION_MAP_KEYS = {
+  create: '',
+  createMany: '',
+  update: '',
+  upsert: '',
+  delete: '',
 } as const;
 
 export enum GeneratedResolverField {
