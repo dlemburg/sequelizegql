@@ -46,16 +46,12 @@ export type InitializationOptions = {
   onAfterEveryResolve?;
 };
 
-export type SchemaMapResolverOptions = InitializationOptions &
-  Omit<ResolverOptions, 'generate' | 'onBeforeResolve' | 'onAfterResolve'>;
-
 export type ResolverMap = {
   [Property in keyof GeneratedResolverField]?: ResolverOptions;
 };
 
 export type ResolverOptions = {
   generate?: boolean; // defaults true
-  pluralize?: boolean; // defaults true
   directive?: string;
   whereAttributes?: string[];
   resolvers?: ResolverMap;
@@ -71,8 +67,11 @@ export type ResolverOptions = {
 
 type ModelName = string;
 
+type BaseSchemaMapOptions = { pluralize?: boolean };
+export type SchemaMapOptions = BaseSchemaMapOptions & ResolverOptions;
+
 export type SchemaMap = {
-  [key: ModelName]: ResolverOptions;
+  [key: ModelName]: SchemaMapOptions; // defaults true
 };
 
 export type BuildQueryMutation = {

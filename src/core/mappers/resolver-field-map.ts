@@ -1,4 +1,3 @@
-import pluralize from 'pluralize';
 import {
   GeneratedResolverField,
   ResolverFieldMap,
@@ -8,20 +7,15 @@ import {
 import { lowercaseFirstLetter } from '../../util/general-util';
 import { pagedGql, whereInputNameGql } from '../graphql';
 import { optionsPagedQueryInputNameGql, optionsQueryInputNameGql } from '../graphql/options';
-
-const sanitize = (value: string, options: ResolverOptions): string => {
-  const result = options?.pluralize !== false ? pluralize(value) : value;
-
-  return result;
-};
+import { maybePluralize } from '../util/pluralize';
 
 export const getMutationResolverFieldMap = (
   name: string,
   options: ResolverOptions
 ): ResolverFieldMap<typeof RESOLVER_MAP_KEYS> => {
   const loweredName = lowercaseFirstLetter(name);
-  const pluralizedName = sanitize(name, options);
-  const pluralizedLoweredName = sanitize(loweredName, options);
+  const pluralizedName = maybePluralize(options, name);
+  const pluralizedLoweredName = maybePluralize(options, loweredName);
 
   return {
     [GeneratedResolverField.CREATE_MUTATION]: {
@@ -59,7 +53,7 @@ export const getMutationResolverFieldMap = (
       returnType: `${name}!`,
       key: GeneratedResolverField.UPSERT_MUTATION,
     },
-  }
+  };
 };
 
 export const getQueryResolverFieldMap = (
@@ -67,8 +61,8 @@ export const getQueryResolverFieldMap = (
   options: ResolverOptions
 ): ResolverFieldMap<typeof RESOLVER_MAP_KEYS> => {
   const loweredName = lowercaseFirstLetter(name);
-  const pluralizedName = sanitize(name, options);
-  const pluralizedLoweredName = sanitize(loweredName, options);
+  const pluralizedName = maybePluralize(options, name);
+  const pluralizedLoweredName = maybePluralize(options, loweredName);
 
   return {
     [GeneratedResolverField.FIND_ONE]: {
@@ -108,6 +102,6 @@ export const getResolverFieldMap = (
 ): ResolverFieldMap<typeof RESOLVER_MAP_KEYS> => {
   return {
     ...getQueryResolverFieldMap(name, options),
-    ...getMutationResolverFieldMap(name, options)
+    ...getMutationResolverFieldMap(name, options),
   };
 };

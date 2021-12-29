@@ -14,7 +14,7 @@ import {
   getQueryResolverFieldMap,
   getResolverFieldMap,
 } from '../mappers';
-import { doGenerate } from '../util/generate';
+import { maybeGenerate } from '../util/generate';
 
 export class BaseGql {
   public name: string;
@@ -46,7 +46,7 @@ export class BaseGql {
       const resolverDirective =
         this.options?.directive ?? this.options?.resolvers?.[resolverKey]?.directive ?? '';
 
-      if (!doGenerate(this.options, resolverKey)) {
+      if (!maybeGenerate(this.options, resolverKey)) {
         return acc;
       }
 

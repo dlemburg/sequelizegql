@@ -9,12 +9,7 @@ import { buildRootTypedefs } from './core/util/root-typedefs-util';
 import { buildSchema } from './core';
 import { StateFactory } from './core/classes/state';
 import { Sequelize } from 'sequelize';
-import {
-  Enums,
-  Models,
-  SchemaMap,
-  SchemaMapResolverOptions,
-} from './types';
+import { Enums, InitializationOptions, Models, SchemaMap } from './types';
 import { buildCustomSchema } from './util/build-schema-util';
 
 export type InitializeResponse = {
@@ -28,7 +23,7 @@ export type InitializeInput = {
   enums?: Enums;
   models?: Models;
   schemaMap?: SchemaMap;
-  options?: SchemaMapResolverOptions;
+  options?: InitializationOptions;
 };
 
 export const buildGql = (value) =>
@@ -39,7 +34,7 @@ export const buildGql = (value) =>
 const JSONResolvers = {
   JSON: GraphQLJSON,
   JSONObject: GraphQLJSONObject,
-}
+};
 class SequelizeGraphql {
   private resolvers;
   private typedefs: string;
@@ -49,11 +44,11 @@ class SequelizeGraphql {
     sequelize = {} as Sequelize,
     enums = {} as Enums,
     schemaMap = {} as SchemaMap,
-    options = {} as SchemaMapResolverOptions,
+    options = {} as InitializationOptions,
   }: InitializeInput): InitializeResponse {
     StateFactory({ enums, models, sequelize });
 
-    const { typedefs, resolvers } = buildSchema(models, enums, { schemaMap, options });
+    const { typedefs, resolvers } = buildSchema(models, enums, { schemaMap });
 
     this.typedefs = typedefs + buildRootTypedefs(options);
     this.resolvers = resolvers;

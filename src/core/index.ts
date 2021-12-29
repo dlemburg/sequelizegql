@@ -1,14 +1,9 @@
 import merge from 'lodash/merge';
-import { SchemaMap, ResolverOptions, Enums, Models } from '../types';
+import { ResolverOptions, Enums, Models, SchemaMap, SchemaMapOptions } from '../types';
 import { buildEnums } from '../util/enum-util';
 import { ResolverFactory, TypedefFactory } from './classes';
 import { generateEnumsGql } from './graphql/enums';
 import { optionsQueryGql } from './graphql/options';
-
-type BuildSchemaOptions = {
-  schemaMap?: SchemaMap;
-  options?: ResolverOptions;
-};
 
 type ResolverResponse = { Query?: Record<any, any>; Mutation?: Record<any, any> };
 
@@ -22,14 +17,14 @@ const STARTER_ACC: BuildSchemaResponse = { typedefs: '', resolvers: {} };
 export const buildSchema = (
   models: Models | undefined,
   enums: Enums | undefined,
-  schemaOptions: BuildSchemaOptions
+  schemaMap: SchemaMap
 ): BuildSchemaResponse => {
   const enumGql = generateEnumsGql(buildEnums(enums));
   const orderGql = optionsQueryGql();
   const result: any = Object.values(models as any).reduce(
     (acc: BuildSchemaResponse, model: any): BuildSchemaResponse => {
-      const modelOverrides = schemaOptions?.schemaMap?.[model.name];
-      const options: ResolverOptions = { ...schemaOptions?.options, ...modelOverrides };
+      const modelOverrides = schemaMap?.schemaMap?.[model.name];
+      const options: SchemaMapOptions = { ...schemaMap, ...modelOverrides };
 
       if (options?.generate === false) return acc;
 
