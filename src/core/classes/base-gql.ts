@@ -44,7 +44,7 @@ export class BaseGql {
       const { key: resolverKey, name: resolverName } = value;
       const resolverArgs = argsGql(value.args);
       const resolverDirective =
-        this.options?.directive ?? this.options?.resolvers?.[resolverKey]?.directive ?? '';
+        this.options?.directive ?? this.options?.[resolverKey]?.directive ?? '';
 
       if (!maybeGenerate(this.options, resolverKey)) {
         return acc;

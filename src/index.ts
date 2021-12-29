@@ -48,7 +48,7 @@ class SequelizeGraphql {
   }: InitializeInput): InitializeResponse {
     StateFactory({ enums, models, sequelize });
 
-    const { typedefs, resolvers } = buildSchema(models, enums, { schemaMap });
+    const { typedefs, resolvers } = buildSchema(models, enums, schemaMap);
 
     this.typedefs = typedefs + buildRootTypedefs(options);
     this.resolvers = resolvers;

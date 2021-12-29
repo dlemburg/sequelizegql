@@ -38,23 +38,20 @@ export enum GeneratedResolverField {
   FIND_MANY_PAGED = 'findManyPaged',
 }
 
+export type ResolverMap = {
+  [Property in keyof GeneratedResolverField]?: ResolverOptions;
+};
+
 export type InitializationOptions = {
   customSchemaPath?: string;
   deleteResponseGql?: string;
   includeDeleteOptions?: boolean;
-  onBeforeEveryResolve?;
-  onAfterEveryResolve?;
-};
-
-export type ResolverMap = {
-  [Property in keyof GeneratedResolverField]?: ResolverOptions;
 };
 
 export type ResolverOptions = {
   generate?: boolean; // defaults true
   directive?: string;
   whereAttributes?: string[];
-  resolvers?: ResolverMap;
   omitAttributes?: string[];
   omitResolvers?: GeneratedResolverField[];
   fieldMappers?: {
@@ -67,8 +64,13 @@ export type ResolverOptions = {
 
 type ModelName = string;
 
-type BaseSchemaMapOptions = { pluralize?: boolean };
-export type SchemaMapOptions = BaseSchemaMapOptions & ResolverOptions;
+export type SchemaMapOptions = {
+  generate?: boolean; // defaults true
+  pluralize?: boolean;
+  resolvers?: ResolverMap;
+  onBeforeEveryResolve?;
+  onAfterEveryResolve?;
+};
 
 export type SchemaMap = {
   [key: ModelName]: SchemaMapOptions; // defaults true
