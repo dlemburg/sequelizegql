@@ -48,29 +48,29 @@ export type InitializationOptions = {
   includeDeleteOptions?: boolean;
 };
 
-export type ResolverOptions = {
+type BaseOptions = {
   generate?: boolean; // defaults true
   directive?: string;
   whereAttributes?: string[];
-  omitAttributes?: string[];
   omitResolvers?: GeneratedResolverField[];
+  onBeforeResolve?;
+  onAfterResolve?;
   fieldMappers?: {
     /* field mapping names */
     FILTERS: string; // defaults 'FILTERS'
   };
-  onBeforeResolve?;
-  onAfterResolve?;
 };
+
+export type ResolverOptions = {
+  omitAttributes?: string[];
+} & BaseOptions;
 
 type ModelName = string;
 
 export type SchemaMapOptions = {
-  generate?: boolean; // defaults true
   pluralize?: boolean;
   resolvers?: ResolverMap;
-  onBeforeEveryResolve?;
-  onAfterEveryResolve?;
-};
+} & BaseOptions;
 
 export type SchemaMap = {
   [key: ModelName]: SchemaMapOptions; // defaults true

@@ -7,6 +7,7 @@ import {
   RESOLVER_MAP_KEYS,
   RESOLVER_MUTATION_MAP_KEYS,
   RESOLVER_QUERY_MAP_KEYS,
+  SchemaMapOptions,
 } from '../../types';
 import { argsGql, newLine } from '../graphql';
 import {
@@ -18,7 +19,7 @@ import { maybeGenerate } from '../util/generate';
 
 export class BaseGql {
   public name: string;
-  public options: ResolverOptions;
+  public options: SchemaMapOptions;
   public resolverMap: ResolverFieldMap<typeof RESOLVER_MAP_KEYS>;
   public queryResolverMap: ResolverFieldMap<typeof RESOLVER_QUERY_MAP_KEYS>;
   public mutationResolverMap: ResolverFieldMap<typeof RESOLVER_MUTATION_MAP_KEYS>;
