@@ -38,9 +38,7 @@ export enum GeneratedResolverField {
   FIND_MANY_PAGED = 'findManyPaged',
 }
 
-export type ResolverMap = {
-  [Property in keyof GeneratedResolverField]?: ResolverOptions;
-};
+type ModelName = string;
 
 export type InitializationOptions = {
   customSchemaPath?: string;
@@ -65,7 +63,9 @@ export type ResolverOptions = {
   omitAttributes?: string[];
 } & BaseOptions;
 
-type ModelName = string;
+export type ResolverMap = {
+  [Property in keyof GeneratedResolverField]?: ResolverOptions;
+};
 
 export type SchemaMapOptions = {
   pluralize?: boolean;
