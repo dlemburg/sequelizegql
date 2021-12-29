@@ -23,7 +23,7 @@ export const buildSchema = (
   const orderGql = optionsQueryGql();
   const result: any = Object.values(models as any).reduce(
     (acc: BuildSchemaResponse, model: any): BuildSchemaResponse => {
-      const modelOverrides = schemaMap?.schemaMap?.[model.name];
+      const modelOverrides = schemaMap?.[model.name];
       const options: SchemaMapOptions = { ...schemaMap, ...modelOverrides };
 
       if (options?.generate === false) return acc;
