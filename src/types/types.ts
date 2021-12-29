@@ -28,7 +28,7 @@ export const RESOLVER_MUTATION_MAP_KEYS = {
 
 export enum GeneratedResolverField {
   CREATE_MUTATION = 'create',
-  CREATE_MANY_MUTATION = 'createMany',
+  CREATE_BULK_MUTATION = 'bulkCreate',
   UPDATE_MUTATION = 'update',
   UPSERT_MUTATION = 'upsert',
   DELETE_MUTATION = 'delete',
@@ -37,25 +37,6 @@ export enum GeneratedResolverField {
   FIND_MANY = 'findMany',
   FIND_MANY_PAGED = 'findManyPaged',
 }
-
-export enum BaseWhereInputType {
-  STRING = 'String!',
-  NUMBER = 'Int!',
-}
-
-export type ResolverOptions = {
-  generate?: boolean; // defaults true
-  pluralize?: boolean; // defaults true
-  directive?: string;
-  whereAttributes?: string[];
-  omitAttributes?: string[];
-  omitResolvers?: GeneratedResolverField[];
-  onBeforeResolve?;
-  onAfterResolve?;
-  fieldMappers?: {
-    FILTERS: string; // defaults 'FILTERS'
-  };
-};
 
 export type InitializationOptions = {
   customSchemaPath?: string;
@@ -68,30 +49,40 @@ export type InitializationOptions = {
 export type SchemaMapResolverOptions = InitializationOptions &
   Omit<ResolverOptions, 'generate' | 'onBeforeResolve' | 'onAfterResolve'>;
 
-export type Resolver = {
-  [key: string]: ResolverOptions;
+export type ResolverMap = {
+  [Property in keyof GeneratedResolverField]?: ResolverOptions;
 };
 
-type ResolverMap<Type> = {
-  [Property in keyof Type]?: ResolverOptions;
+export type ResolverOptions = {
+  generate?: boolean; // defaults true
+  pluralize?: boolean; // defaults true
+  directive?: string;
+  whereAttributes?: string[];
+  resolvers?: ResolverMap;
+  omitAttributes?: string[];
+  omitResolvers?: GeneratedResolverField[];
+  fieldMappers?: {
+    /* field mapping names */
+    FILTERS: string; // defaults 'FILTERS'
+  };
+  onBeforeResolve?;
+  onAfterResolve?;
 };
+
+type ModelName = string;
 
 export type SchemaMap = {
-  [key: string]: {
-    options?: ResolverOptions;
-    resolvers: ResolverMap<typeof RESOLVER_MAP_KEYS>;
-  };
+  [key: ModelName]: ResolverOptions;
 };
 
 export type BuildQueryMutation = {
   name: string;
-  resolvers?: Resolver;
+  resolvers?: ResolverMap;
 };
 
 export type BaseInput<T = any> = {
   model: T;
   options?: ResolverOptions;
-  resolvers?: Resolver;
 };
 
 export type BaseAttributes = {

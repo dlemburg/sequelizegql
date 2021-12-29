@@ -3,6 +3,7 @@ import { QueryAttributeBuilder } from './query-attribute';
 import { BaseGql } from './base-gql';
 import { buildSort } from '../../util/sequelize-util';
 import { parseWhere } from '../util/parse-where-util';
+import { doGenerate } from '../util/generate';
 
 const resolveQuery =
   (model, serviceMethod, resolverOptions: ResolverOptions) =>
@@ -47,64 +48,84 @@ class Resolver extends BaseGql {
 
   public query() {
     return {
-      [this.resolverMap[GeneratedResolverField.FIND_ONE].name]: middleware(
-        this.options,
-        resolveQuery(this.service.getModel(), this.service.findOne, this.options)
-      ),
-      [this.resolverMap[GeneratedResolverField.FIND_MANY].name]: middleware(
-        this.options,
-        resolveQuery(this.service.getModel(), this.service.findAll, this.options)
-      ),
-      [this.resolverMap[GeneratedResolverField.FIND_MANY_PAGED].name]: middleware(
-        this.options,
-        async (_, { where, options }, context, resolveInfo) => {
-          const result = await resolveQuery(
-            this.service.getModel(),
-            this.service.findAndCountAll,
-            this.options
-          )(_, { where, options }, context, resolveInfo);
+      ...(doGenerate(this.options, GeneratedResolverField.FIND_ONE) && {
+        [this.resolverMap[GeneratedResolverField.FIND_ONE].name]: middleware(
+          this.options,
+          resolveQuery(this.service.getModel(), this.service.findOne, this.options)
+        ),
+      }),
+      ...(doGenerate(this.options, GeneratedResolverField.FIND_MANY) && {
+        [this.resolverMap[GeneratedResolverField.FIND_MANY].name]: middleware(
+          this.options,
+          resolveQuery(this.service.getModel(), this.service.findAll, this.options)
+        ),
+      }),
+      ...(doGenerate(this.options, GeneratedResolverField.FIND_MANY_PAGED) && {
+        [this.resolverMap[GeneratedResolverField.FIND_MANY_PAGED].name]: middleware(
+          this.options,
+          async (_, { where, options }, context, resolveInfo) => {
+            const result = await resolveQuery(
+              this.service.getModel(),
+              this.service.findAndCountAll,
+              this.options
+            )(_, { where, options }, context, resolveInfo);
 
-          return { entities: result.rows, totalCount: result.count };
-        }
-      ),
-      [this.resolverMap[GeneratedResolverField.FIND_ALL].name]: middleware(
-        this.options,
-        resolveQuery(this.service.getModel(), this.service.findAll, this.options)
-      ),
+            return { entities: result.rows, totalCount: result.count };
+          }
+        ),
+      }),
+      ...(doGenerate(this.options, GeneratedResolverField.FIND_ALL) && {
+        [this.resolverMap[GeneratedResolverField.FIND_ALL].name]: middleware(
+          this.options,
+          resolveQuery(this.service.getModel(), this.service.findAll, this.options)
+        ),
+      }),
     };
   }
 
   public mutation() {
     return {
-      [this.resolverMap[GeneratedResolverField.CREATE_MUTATION].name]: middleware(
-        this.options,
-        (_, { input }) => this.service.create(input)
-      ),
-      [this.resolverMap[GeneratedResolverField.CREATE_MANY_MUTATION].name]: middleware(
-        this.options,
-        (_, { input }) => this.service.bulkCreate(input)
-      ),
-      [this.resolverMap[GeneratedResolverField.UPDATE_MUTATION].name]: middleware(
-        this.options,
-        (_, { input, where }) => this.service.update(input, where)
-      ),
-      [this.resolverMap[GeneratedResolverField.UPSERT_MUTATION].name]: middleware(
-        this.options,
-        (_, { where, input }) => this.service.upsert(where, input)
-      ),
-      [this.resolverMap[GeneratedResolverField.DELETE_MUTATION].name]: middleware(
-        this.options,
-        (_, { where, options = {} }) => this.service.destroy(where, options)
-      ),
+      ...(doGenerate(this.options, GeneratedResolverField.CREATE_MUTATION) && {
+        [this.resolverMap[GeneratedResolverField.CREATE_MUTATION].name]: middleware(
+          this.options,
+          (_, { input }) => this.service.create(input)
+        ),
+      }),
+      ...(doGenerate(this.options, GeneratedResolverField.CREATE_BULK_MUTATION) && {
+        [this.resolverMap[GeneratedResolverField.CREATE_BULK_MUTATION].name]: middleware(
+          this.options,
+          (_, { input }) => this.service.bulkCreate(input)
+        ),
+      }),
+      ...(doGenerate(this.options, GeneratedResolverField.UPDATE_MUTATION) && {
+        [this.resolverMap[GeneratedResolverField.UPDATE_MUTATION].name]: middleware(
+          this.options,
+          (_, { input, where }) => this.service.update(input, where)
+        ),
+      }),
+      ...(doGenerate(this.options, GeneratedResolverField.UPSERT_MUTATION) && {
+        [this.resolverMap[GeneratedResolverField.UPSERT_MUTATION].name]: middleware(
+          this.options,
+          (_, { where, input }) => this.service.upsert(where, input)
+        ),
+      }),
+      ...(doGenerate(this.options, GeneratedResolverField.DELETE_MUTATION) && {
+        [this.resolverMap[GeneratedResolverField.DELETE_MUTATION].name]: middleware(
+          this.options,
+          (_, { where, options = {} }) => this.service.destroy(where, options)
+        ),
+      }),
     };
   }
 
   public resolversMap() {
-    return {
+    const result = {
       Query: this.query(),
       Mutation: this.mutation(),
     };
+
+    return result;
   }
 }
 
-export const ResolverFactory = <T = any>(input: BaseInput) => new Resolver(input);
+export const ResolverFactory = (input: BaseInput) => new Resolver(input);

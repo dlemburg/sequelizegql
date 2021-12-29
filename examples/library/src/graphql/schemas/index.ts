@@ -7,6 +7,13 @@ export const getSchema = async () => {
   const graphqlSequelize = SequelizeGraphql.initialize({
     enums: Enums,
     models: Models,
+    schemaMap: {
+      BookAuthor: {
+        resolvers: {
+          create: { generate: false },
+        },
+      },
+    },
   } as any);
 
   return {

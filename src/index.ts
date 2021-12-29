@@ -45,11 +45,11 @@ class SequelizeGraphql {
   private typedefs: string;
 
   public initialize({
-    models,
-    sequelize,
-    enums = {},
-    schemaMap = {},
-    options = {},
+    models = {} as Models,
+    sequelize = {} as Sequelize,
+    enums = {} as Enums,
+    schemaMap = {} as SchemaMap,
+    options = {} as SchemaMapResolverOptions,
   }: InitializeInput): InitializeResponse {
     StateFactory({ enums, models, sequelize });
 

@@ -31,12 +31,12 @@ export const getMutationResolverFieldMap = (
       returnType: `${name}!`,
       key: GeneratedResolverField.CREATE_MUTATION,
     },
-    [GeneratedResolverField.CREATE_MANY_MUTATION]: {
+    [GeneratedResolverField.CREATE_BULK_MUTATION]: {
       operationType: 'mutation',
       name: `createMany${pluralizedName}`,
       args: [{ input: `[${name}Input!]!` }],
       returnType: `[${name}!]!`,
-      key: GeneratedResolverField.CREATE_MANY_MUTATION,
+      key: GeneratedResolverField.CREATE_BULK_MUTATION,
     },
     [GeneratedResolverField.UPDATE_MUTATION]: {
       operationType: 'mutation',

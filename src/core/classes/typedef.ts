@@ -28,7 +28,7 @@ class Typedef extends BaseGql {
   }
 
   public inputAttributes(omitAttributes: string[] = []) {
-    return omit(this.attributes, [...this.omitAttributes ?? [], ...omitAttributes]);
+    return omit(this.attributes, [...(this.omitAttributes ?? []), ...omitAttributes]);
   }
 
   public typeGql() {
@@ -44,7 +44,11 @@ class Typedef extends BaseGql {
   }
 
   public updateInputGql() {
-    return typesGql(inputGql(), updateInputNameGql(this.name), this.inputAttributes(['associations']));
+    return typesGql(
+      inputGql(),
+      updateInputNameGql(this.name),
+      this.inputAttributes(['associations'])
+    );
   }
 
   public whereInputGql() {
@@ -52,23 +56,22 @@ class Typedef extends BaseGql {
   }
 
   public queryGql() {
-    return QueryFactory({
-      model: this.model,
-      resolvers: this.resolvers,
-      options: this.options,
-    }).gql();
+    const operations = this.getOperations('query');
+
+    return QueryFactory().gql(operations);
   }
 
   public mutationGql() {
-    return MutationFactory({
-      model: this.model,
-      resolvers: this.resolvers,
-      options: this.options,
-    }).gql();
+    const operations = this.getOperations('mutation');
+
+    return MutationFactory().gql(operations);
   }
 
   public whereAttributes() {
-    return WhereAttributeFactory().keyValuePairs(this.options?.whereAttributes, this.inputAttributes(['associations']));
+    return WhereAttributeFactory().keyValuePairs(
+      this.options?.whereAttributes,
+      this.inputAttributes(['associations'])
+    );
   }
 
   public typedefMap() {
