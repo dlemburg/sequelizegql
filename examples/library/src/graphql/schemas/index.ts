@@ -38,6 +38,7 @@ export const getSchema = async () => {
   });
 
   // graphqlSequelize.printConsole();
+  // graphqlSequelize.outputTypedefs();
 
   return {
     typeDefs: schema.typedefs,
