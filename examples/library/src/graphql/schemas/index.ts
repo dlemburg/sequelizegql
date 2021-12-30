@@ -10,7 +10,7 @@ const schemaMap: SchemaMap = {
     resolvers: {
       findAll: { generate: false },
     },
-    whereAttributes: ['id'],
+    // whereAttributes: ['id'],
   },
   author: {
     whereAttributes: ['id', 'name', 'surname'],
@@ -29,15 +29,18 @@ const schemaMap: SchemaMap = {
 };
 
 export const getSchema = async () => {
-  const graphqlSequelize = SequelizeGraphql.initialize({
+  const graphqlSequelize = new SequelizeGraphql();
+  const schema = graphqlSequelize.schema({
     enums: Enums as any,
     models: Models as any,
     sequelize,
     schemaMap,
   });
 
+  // graphqlSequelize.printConsole();
+
   return {
-    typeDefs: graphqlSequelize.typedefs,
-    resolvers: graphqlSequelize.resolvers,
+    typeDefs: schema.typedefs,
+    resolvers: schema.resolvers,
   };
 };

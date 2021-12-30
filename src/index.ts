@@ -39,7 +39,7 @@ class SequelizeGraphql {
   private resolvers;
   private typedefs: string;
 
-  public initialize({
+  public schema({
     models = {} as Models,
     sequelize = {} as Sequelize,
     enums = {} as Enums,
@@ -92,4 +92,4 @@ class SequelizeGraphql {
   }
 }
 
-export default new SequelizeGraphql();
+export default SequelizeGraphql;
