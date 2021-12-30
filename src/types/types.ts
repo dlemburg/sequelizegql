@@ -2,6 +2,10 @@ import { DataTypes, FindOptions, Model, WhereOptions } from 'sequelize';
 
 type ModelName = string;
 
+export enum SEQUELIZE_GRAPHQL_NAMESPACE {
+  root = 'SEQUELIZE_GRAPHQL_ROOT',
+}
+
 export enum GeneratedResolverField {
   CREATE_MUTATION = 'create',
   CREATE_BULK_MUTATION = 'bulkCreate',
@@ -53,9 +57,11 @@ export type SchemaMapOptions = {
   resolvers?: ResolverMap;
 } & BaseOptions;
 
+type RootSchemaMap = { sequelizeGraphqlRoot?: SchemaMapOptions };
+
 export type SchemaMap = {
   [key: ModelName]: SchemaMapOptions; // defaults true
-};
+} & RootSchemaMap;
 
 export type BuildQueryMutation = {
   name: string;

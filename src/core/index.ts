@@ -1,6 +1,8 @@
 import merge from 'lodash/merge';
-import { ResolverOptions, Enums, Models, SchemaMap, SchemaMapOptions } from '../types';
+import cloneDeep from 'lodash/cloneDeep';
+import { Enums, Models, SchemaMap, SchemaMapOptions, SEQUELIZE_GRAPHQL_NAMESPACE } from '../types';
 import { buildEnums } from '../util/enum-util';
+import { lowercaseFirstLetter } from '../util/general-util';
 import { ResolverFactory, TypedefFactory } from './classes';
 import { generateEnumsGql } from './graphql/enums';
 import { optionsQueryGql } from './graphql/options';
@@ -12,7 +14,12 @@ type BuildSchemaResponse = {
   resolvers: ResolverResponse;
 };
 
-const STARTER_ACC: BuildSchemaResponse = { typedefs: '', resolvers: {} };
+const findModelOverrides = (schemaMap: SchemaMap, model): SchemaMapOptions => {
+  const loweredName = lowercaseFirstLetter(model.name);
+  const modelOverrides = schemaMap?.[model.name] || schemaMap?.[loweredName] || {};
+
+  return modelOverrides;
+};
 
 export const buildSchema = (
   models: Models | undefined,
@@ -23,8 +30,8 @@ export const buildSchema = (
   const orderGql = optionsQueryGql();
   const result: any = Object.values(models as any).reduce(
     (acc: BuildSchemaResponse, model: any): BuildSchemaResponse => {
-      const modelOverrides = schemaMap?.[model.name];
-      const options: SchemaMapOptions = { ...schemaMap, ...modelOverrides };
+      const root = cloneDeep(schemaMap[SEQUELIZE_GRAPHQL_NAMESPACE.root]);
+      const options = merge(root, findModelOverrides(schemaMap, model));
 
       if (options?.generate === false) return acc;
 
@@ -39,7 +46,7 @@ export const buildSchema = (
 
       return acc;
     },
-    STARTER_ACC
+    { typedefs: '', resolvers: {} }
   );
 
   result.typedefs = result.typedefs + enumGql + orderGql;
