@@ -1,23 +1,35 @@
 import SequelizeGraphql from '../../../../../src';
-import { GeneratedResolverField } from '../../../../../src/types';
+import { SchemaMap } from '../../../../../src/types';
 
 import * as Enums from '../../orm/enums';
 import * as Models from '../../orm/models';
+import { sequelize } from '../../orm/sequelize';
 
-const schemaMap = {
-  BookAuthor: {
+const schemaMap: SchemaMap = {
+  Author: {
+    whereAttributes: ['id', 'name', 'surname'],
     resolvers: {
-      [GeneratedResolverField.CREATE_MUTATION]: { generate: false },
+      findMany: { generate: false },
+      findAll: { generate: false },
     },
+  },
+  Book: {
+    resolvers: {
+      findAll: { generate: false },
+    },
+  },
+  BookAuthor: {
+    generate: false,
   },
 };
 
 export const getSchema = async () => {
   const graphqlSequelize = SequelizeGraphql.initialize({
-    enums: Enums,
-    models: Models,
+    enums: Enums as any,
+    models: Models as any,
+    sequelize,
     schemaMap,
-  } as any);
+  });
 
   return {
     typeDefs: graphqlSequelize.typedefs,

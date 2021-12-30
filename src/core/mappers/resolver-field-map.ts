@@ -1,9 +1,4 @@
-import {
-  GeneratedResolverField,
-  ResolverFieldMap,
-  ResolverOptions,
-  RESOLVER_MAP_KEYS,
-} from '../../types';
+import { GeneratedResolverField, ResolverFieldMap, ResolverOptions } from '../../types';
 import { lowercaseFirstLetter } from '../../util/general-util';
 import { pagedGql, whereInputNameGql } from '../graphql';
 import { optionsPagedQueryInputNameGql, optionsQueryInputNameGql } from '../graphql/options';
@@ -12,7 +7,7 @@ import { maybePluralize } from '../util/pluralize';
 export const getMutationResolverFieldMap = (
   name: string,
   options: ResolverOptions
-): ResolverFieldMap<typeof RESOLVER_MAP_KEYS> => {
+): ResolverFieldMap => {
   const loweredName = lowercaseFirstLetter(name);
   const pluralizedName = maybePluralize(options, name);
   const pluralizedLoweredName = maybePluralize(options, loweredName);
@@ -59,7 +54,7 @@ export const getMutationResolverFieldMap = (
 export const getQueryResolverFieldMap = (
   name: string,
   options: ResolverOptions
-): ResolverFieldMap<typeof RESOLVER_MAP_KEYS> => {
+): ResolverFieldMap => {
   const loweredName = lowercaseFirstLetter(name);
   const pluralizedName = maybePluralize(options, name);
   const pluralizedLoweredName = maybePluralize(options, loweredName);
@@ -96,10 +91,7 @@ export const getQueryResolverFieldMap = (
   };
 };
 
-export const getResolverFieldMap = (
-  name: string,
-  options: ResolverOptions
-): ResolverFieldMap<typeof RESOLVER_MAP_KEYS> => {
+export const getResolverFieldMap = (name: string, options: ResolverOptions): ResolverFieldMap => {
   return {
     ...getQueryResolverFieldMap(name, options),
     ...getMutationResolverFieldMap(name, options),

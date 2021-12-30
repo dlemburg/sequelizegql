@@ -1,30 +1,6 @@
 import { DataTypes, FindOptions, Model, WhereOptions } from 'sequelize';
 
-// TODO: refactor MAP_KEYS
-export const RESOLVER_MAP_KEYS = {
-  create: '',
-  createMany: '',
-  update: '',
-  upsert: '',
-  delete: '',
-  all: '',
-  findOne: '',
-  findMany: '',
-} as const;
-
-export const RESOLVER_QUERY_MAP_KEYS = {
-  all: '',
-  findOne: '',
-  findMany: '',
-} as const;
-
-export const RESOLVER_MUTATION_MAP_KEYS = {
-  create: '',
-  createMany: '',
-  update: '',
-  upsert: '',
-  delete: '',
-} as const;
+type ModelName = string;
 
 export enum GeneratedResolverField {
   CREATE_MUTATION = 'create',
@@ -37,8 +13,6 @@ export enum GeneratedResolverField {
   FIND_MANY = 'findMany',
   FIND_MANY_PAGED = 'findManyPaged',
 }
-
-type ModelName = string;
 
 export type InitializationOptions = {
   customSchemaPath?: string;
@@ -64,7 +38,14 @@ export type ResolverOptions = {
 } & BaseOptions;
 
 export type ResolverMap = {
-  [Property in keyof GeneratedResolverField]?: ResolverOptions;
+  create?: ResolverOptions;
+  createMany?: ResolverOptions;
+  update?: ResolverOptions;
+  upsert?: ResolverOptions;
+  delete?: ResolverOptions;
+  findAll?: ResolverOptions;
+  findOne?: ResolverOptions;
+  findMany?: ResolverOptions;
 };
 
 export type SchemaMapOptions = {
@@ -121,8 +102,7 @@ export type ModelMap = Record<string, any>;
 
 export type ResolverFieldMapArgs = { [key: string]: string }[];
 
-// TODO: 'Property in keyof Type' instead of '[key: string]'
-export type ResolverFieldMap<Type> = {
+export type ResolverFieldMap = {
   [key: string]: {
     operationType: 'query' | 'mutation';
     name: string;

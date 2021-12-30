@@ -1,14 +1,6 @@
 import { Model } from 'sequelize';
 import { BaseService, BaseServiceInterface } from '../../services';
-import {
-  BaseInput,
-  ResolverFieldMap,
-  ResolverOptions,
-  RESOLVER_MAP_KEYS,
-  RESOLVER_MUTATION_MAP_KEYS,
-  RESOLVER_QUERY_MAP_KEYS,
-  SchemaMapOptions,
-} from '../../types';
+import { BaseInput, ResolverFieldMap, SchemaMapOptions } from '../../types';
 import { argsGql, newLine } from '../graphql';
 import {
   getMutationResolverFieldMap,
@@ -20,9 +12,9 @@ import { maybeGenerate } from '../util/generate';
 export class BaseGql {
   public name: string;
   public options: SchemaMapOptions;
-  public resolverMap: ResolverFieldMap<typeof RESOLVER_MAP_KEYS>;
-  public queryResolverMap: ResolverFieldMap<typeof RESOLVER_QUERY_MAP_KEYS>;
-  public mutationResolverMap: ResolverFieldMap<typeof RESOLVER_MUTATION_MAP_KEYS>;
+  public resolverMap: ResolverFieldMap;
+  public queryResolverMap: ResolverFieldMap;
+  public mutationResolverMap: ResolverFieldMap;
   public model: Model<any, any>;
   public service: BaseServiceInterface<any>;
 
