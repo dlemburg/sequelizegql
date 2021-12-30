@@ -10,7 +10,7 @@ const schemaMap: SchemaMap = {
     resolvers: {
       findAll: { generate: false },
     },
-    // whereAttributes: ['id'],
+    whereAttributes: ['id'],
   },
   author: {
     whereAttributes: ['id', 'name', 'surname'],

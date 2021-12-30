@@ -10,6 +10,7 @@ import {
   BelongsTo,
   BelongsToMany,
   ForeignKey,
+  AutoIncrement,
 } from 'sequelize-typescript';
 import { Author } from './author';
 import { BookAuthor } from './book-author';
@@ -20,6 +21,10 @@ import { Library } from './library';
 @Table({ underscored: true, tableName: 'book', paranoid: true })
 export class Book extends Model<Book> {
   @PrimaryKey
+  @AutoIncrement
+  @Column
+  id: number;
+
   @Column
   isbn: String;
 
