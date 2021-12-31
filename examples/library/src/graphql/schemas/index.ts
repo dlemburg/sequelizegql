@@ -1,5 +1,9 @@
 import SequelizeGraphql from '../../../../../src';
-import { SchemaMap, SEQUELIZE_GRAPHQL_NAMESPACE } from '../../../../../src/types';
+import {
+  SchemaMap,
+  SEQUELIZE_GRAPHQL_NAMESPACE,
+  GeneratedResolverField,
+} from '../../../../../src/types';
 
 import * as Enums from '../../orm/enums';
 import * as Models from '../../orm/models';
@@ -10,10 +14,12 @@ const schemaMap: SchemaMap = {
     resolvers: {
       findAll: { generate: false },
     },
-    whereAttributes: ['id'],
+    omitResolvers: [GeneratedResolverField.FIND_ONE],
+    omitInputAttributes: ['createdAt', 'updatedAt', 'removedAt'],
+    whereInputAttributes: ['id'],
   },
   author: {
-    whereAttributes: ['id', 'name', 'surname'],
+    whereInputAttributes: ['id', 'name', 'surname'],
     resolvers: {
       findMany: { generate: false },
     },
@@ -22,9 +28,14 @@ const schemaMap: SchemaMap = {
     resolvers: {
       findAll: { generate: true },
     },
+    omitResolvers: [GeneratedResolverField.FIND_ONE],
   },
   BookAuthor: {
     generate: false,
+  },
+  City: {
+    omitResolvers: [GeneratedResolverField.FIND_ONE],
+    // pluralize: false,
   },
 };
 

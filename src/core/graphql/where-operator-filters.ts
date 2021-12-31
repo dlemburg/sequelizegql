@@ -9,7 +9,7 @@ import { KeyValuePairs, SchemaMapOptions } from '../../types';
 export const whereOperatorFiltersInputGql = (
   name: string,
   whereInputName: string,
-  whereAttributes: KeyValuePairs[],
+  whereInputAttributes: KeyValuePairs[],
   schemaMapOptions: SchemaMapOptions
 ) => {
   const filterInputName = `${name}WhereFilterInput`;
@@ -30,7 +30,7 @@ export const whereOperatorFiltersInputGql = (
       }
 
       input ${filterInputName} {
-        ${whereAttributes.map((x) => `${x.key}: ${filterOperatorMapInputName}`)}
+        ${whereInputAttributes.map((x) => `${x.key}: ${filterOperatorMapInputName}`)}
       }
     `,
     whereInputFilterFields: `

@@ -1,21 +1,25 @@
 import { KeyValuePairs, ModelAttributes } from '../../types';
 import { mapSequelizeToGraphql } from '../mappers';
 
-class WhereAttributes {
+class whereInputAttributes {
   constructor() {
     return this;
   }
 
   public keyValuePairs(
-    whereAttributes: string[] | undefined,
-    modelWhereAttributes: ModelAttributes
+    whereInputAttributes: string[] | undefined,
+    modelwhereInputAttributes: ModelAttributes
   ): KeyValuePairs[] {
-    const attributes = whereAttributes?.length ? whereAttributes : Object.keys(modelWhereAttributes);
+    const attributes = whereInputAttributes?.length
+      ? whereInputAttributes
+      : Object.keys(modelwhereInputAttributes);
 
     const result =
       attributes?.reduce((acc, x) => {
-        if (modelWhereAttributes[x]) {
-          const value = mapSequelizeToGraphql(modelWhereAttributes[x], { generateNullable: false });
+        if (modelwhereInputAttributes[x]) {
+          const value = mapSequelizeToGraphql(modelwhereInputAttributes[x], {
+            generateNullable: false,
+          });
 
           acc.push({ key: x, value });
         }
@@ -27,4 +31,4 @@ class WhereAttributes {
   }
 }
 
-export const WhereAttributeFactory = () => new WhereAttributes();
+export const WhereAttributeFactory = () => new whereInputAttributes();

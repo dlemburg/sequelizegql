@@ -16,19 +16,19 @@ import { BaseGql } from './base-gql';
 
 class Typedef extends BaseGql {
   attributes: ModelAttributes;
-  omitAttributes: string[] | undefined;
+  omitInputAttributes: string[] | undefined;
 
   constructor(input: BaseInput) {
     super(input);
 
     this.attributes = this.service?.getAttributes();
-    this.omitAttributes = input.options?.omitAttributes;
+    this.omitInputAttributes = input.options?.omitInputAttributes;
 
     return this;
   }
 
-  public inputAttributes(omitAttributes: string[] = []) {
-    return omit(this.attributes, [...(this.omitAttributes ?? []), ...omitAttributes]);
+  public inputAttributes(omitInputAttributes: string[] = []) {
+    return omit(this.attributes, [...(this.omitInputAttributes ?? []), ...omitInputAttributes]);
   }
 
   public typeGql() {
@@ -52,7 +52,7 @@ class Typedef extends BaseGql {
   }
 
   public whereInputGql() {
-    return whereInputGql(this.name, this.whereAttributes(), this.options);
+    return whereInputGql(this.name, this.whereInputAttributes(), this.options);
   }
 
   public queryGql() {
@@ -67,9 +67,9 @@ class Typedef extends BaseGql {
     return MutationFactory().gql(operations);
   }
 
-  public whereAttributes() {
+  public whereInputAttributes() {
     return WhereAttributeFactory().keyValuePairs(
-      this.options?.whereAttributes,
+      this.options?.whereInputAttributes,
       this.inputAttributes(['associations'])
     );
   }

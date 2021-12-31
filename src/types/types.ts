@@ -28,9 +28,9 @@ type BaseOptions = {
   pluralize?: boolean;
   generate?: boolean; // defaults true
   directive?: string;
-  whereAttributes?: string[];
+  whereInputAttributes?: string[];
   omitResolvers?: GeneratedResolverField[];
-  omitAttributes?: string[];
+  omitInputAttributes?: string[];
   onBeforeResolve?: (args) => Promise<void>;
   onAfterResolve?: (args) => Promise<void>;
   fieldNameMappers?: {
@@ -38,7 +38,10 @@ type BaseOptions = {
   };
 };
 
-export type ResolverOptions = Omit<BaseOptions, 'omitResolvers' | 'omitAttributes' | 'pluralize'>;
+export type ResolverOptions = Omit<
+  BaseOptions,
+  'omitResolvers' | 'omitInputAttributes' | 'pluralize'
+>;
 
 export type ResolverMap = {
   create?: ResolverOptions;

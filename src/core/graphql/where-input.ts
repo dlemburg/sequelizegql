@@ -7,7 +7,7 @@ export const whereInputNameGql = (name) => `${name}WhereInput`;
 
 export const whereInputGql = (
   name: string,
-  whereAttributes: KeyValuePairs[],
+  whereInputAttributes: KeyValuePairs[],
   schemaMapOptions: SchemaMapOptions
 ): string => {
   const whereInputName = whereInputNameGql(name);
@@ -15,17 +15,17 @@ export const whereInputGql = (
   const { gql: operatorsGql, whereInputFilterFields } = whereOperatorFiltersInputGql(
     name,
     whereInputName,
-    whereAttributes,
+    whereInputAttributes,
     schemaMapOptions
   );
 
-  const whereAttributesFieldsGql = whereAttributes
+  const whereInputAttributesFieldsGql = whereInputAttributes
     .map((x) => `${x.key}: ${x.value}`)
     .join(`${newLine()}`);
 
   return `
     ${inputGql()} ${whereInputName} {
-      ${whereAttributesFieldsGql}
+      ${whereInputAttributesFieldsGql}
       ${whereInputFilterFields}
     }
 
