@@ -1,4 +1,4 @@
-import { BaseInput, GeneratedResolverField, ResolverOptions } from '../../types/types';
+import { BaseInput, GeneratedResolverField, SchemaMapOptions } from '../../types/types';
 import { QueryAttributeBuilder } from './query-attribute';
 import { BaseGql } from './base-gql';
 import { buildSort } from '../../util/sequelize-util';
@@ -6,15 +6,15 @@ import { parseWhere } from '../util/parse-where-util';
 import { maybeGenerate } from '../util/generate';
 
 const resolveQuery =
-  (model, serviceMethod, resolverOptions: ResolverOptions) =>
+  (model, serviceMethod, schemaMapOptions: SchemaMapOptions) =>
   (_, { where, options }, context, resolveInfo) => {
     let include, attributes;
     const order =
       options?.order?.length ?? options?.order.map(({ field, dir }) => buildSort(field, dir));
-    const filter = parseWhere(where, resolverOptions);
+    const filter = parseWhere(where, schemaMapOptions);
 
     if (resolveInfo) {
-      ({ include, attributes } = QueryAttributeBuilder.build(model, resolveInfo, resolverOptions));
+      ({ include, attributes } = QueryAttributeBuilder.build(model, resolveInfo, schemaMapOptions));
     }
 
     return serviceMethod(filter, {

@@ -1,4 +1,4 @@
-import { ResolverOptions, KeyValuePairs } from '../../types';
+import { KeyValuePairs, SchemaMapOptions } from '../../types';
 import { newLine } from './new-line';
 import { inputGql } from './types';
 import { whereOperatorFiltersInputGql } from './where-operator-filters';
@@ -8,7 +8,7 @@ export const whereInputNameGql = (name) => `${name}WhereInput`;
 export const whereInputGql = (
   name: string,
   whereAttributes: KeyValuePairs[],
-  options: ResolverOptions
+  schemaMapOptions: SchemaMapOptions
 ): string => {
   const whereInputName = whereInputNameGql(name);
 
@@ -16,7 +16,7 @@ export const whereInputGql = (
     name,
     whereInputName,
     whereAttributes,
-    options
+    schemaMapOptions
   );
 
   const whereAttributesFieldsGql = whereAttributes

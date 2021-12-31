@@ -3,7 +3,7 @@ import {
   simplifyParsedResolveInfoFragmentWithType,
 } from 'graphql-parse-resolve-info';
 import { getAttributes } from '../../services/base-service/util';
-import { ModelAttributes, ResolverOptions } from '../../types';
+import { ModelAttributes, SchemaMapOptions } from '../../types';
 import { parseWhere } from '../util/parse-where-util';
 import { StateFactory } from './state';
 
@@ -20,7 +20,7 @@ type QueryAttributes = {
 const recurseQueryFields = (
   fieldEntries: any,
   modelAttributes: ModelAttributes,
-  resolverOptions: ResolverOptions
+  schemaMapOptions: SchemaMapOptions
 ): QueryAttributes => {
   const Models = StateFactory().getModels();
 
@@ -28,7 +28,7 @@ const recurseQueryFields = (
     (acc, [key, value]: any) => {
       const associationValue = modelAttributes?.associations?.[key];
       const attributeValue = modelAttributes?.[key];
-      const where = parseWhere(value?.fieldsByTypeName?.args?.where, resolverOptions);
+      const where = parseWhere(value?.fieldsByTypeName?.args?.where, schemaMapOptions);
 
       if (associationValue?.type) {
         const Model = associationValue?.type && Models?.[associationValue?.type];
@@ -52,7 +52,7 @@ const recurseQueryFields = (
                 const { attributes, include: associatedInclude } = recurseQueryFields(
                   nextFields,
                   nextAttributes,
-                  resolverOptions
+                  schemaMapOptions
                 );
 
                 const baseInclude = [
@@ -94,7 +94,7 @@ const recurseQueryFields = (
 };
 
 export class QueryAttributeBuilder {
-  public static build(model, resolveInfo, resolverOptions): QueryAttributes {
+  public static build(model, resolveInfo, schemamapOptions: SchemaMapOptions): QueryAttributes {
     try {
       const modelAttributes = getAttributes(model)();
       const parsedResolveInfoFragment = parseResolveInfo(resolveInfo) as any;
@@ -104,7 +104,7 @@ export class QueryAttributeBuilder {
       );
 
       const fields = Object.entries(info.fields);
-      const { attributes, include } = recurseQueryFields(fields, modelAttributes, resolverOptions);
+      const { attributes, include } = recurseQueryFields(fields, modelAttributes, schemamapOptions);
 
       return { attributes, include };
     } catch (err) {

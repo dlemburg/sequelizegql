@@ -25,6 +25,7 @@ export type InitializationOptions = {
 };
 
 type BaseOptions = {
+  pluralize?: boolean;
   generate?: boolean; // defaults true
   directive?: string;
   whereAttributes?: string[];
@@ -37,7 +38,7 @@ type BaseOptions = {
   };
 };
 
-export type ResolverOptions = BaseOptions;
+export type ResolverOptions = Omit<BaseOptions, 'omitResolvers' | 'omitAttributes' | 'pluralize'>;
 
 export type ResolverMap = {
   create?: ResolverOptions;
@@ -51,7 +52,6 @@ export type ResolverMap = {
 };
 
 export type SchemaMapOptions = BaseOptions & {
-  pluralize?: boolean;
   resolvers?: ResolverMap;
 };
 
@@ -68,7 +68,7 @@ export type BuildQueryMutation = {
 
 export type BaseInput<T = any> = {
   model: T;
-  options?: ResolverOptions;
+  options?: SchemaMapOptions;
 };
 
 export type BaseAttributes = {

@@ -1,31 +1,26 @@
 import { merge } from 'lodash';
 import { DocumentNode } from 'graphql';
-import { ResolverOptions, SchemaMap } from '../types';
+import { ResolverOptions } from '../types';
 
-type CustomSchema = {
-  schemaMap: SchemaMap;
+type CustomSchemaResponse = {
   resolvers: ResolverOptions;
   typedefs: DocumentNode[];
 };
 
-type BuildCustomSchemaInput = {
-  models: any;
+type CustomSchemaInput = {
+  models;
   customSchemaPath: string;
 };
 
 export const buildCustomSchema = ({
   models: Models,
   customSchemaPath,
-}: BuildCustomSchemaInput): CustomSchema => {
-  let result: CustomSchema = { schemaMap: {}, resolvers: {}, typedefs: [] };
+}: CustomSchemaInput): CustomSchemaResponse => {
+  let result: CustomSchemaResponse = { resolvers: {}, typedefs: [] };
 
   for (let name of [...Object.keys(Models)]) {
     try {
       const exports = require(`${__dirname}/${customSchemaPath}/${name}`);
-
-      if (exports?.default?.schemaMap || exports?.schemaMap) {
-        result.schemaMap = merge(result.schemaMap, exports.schemaMap);
-      }
 
       if (exports?.default?.resolvers || exports?.resolvers) {
         result.resolvers = merge(result.resolvers, exports.resolvers);
