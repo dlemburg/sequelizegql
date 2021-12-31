@@ -33,8 +33,7 @@ type BaseOptions = {
   onBeforeResolve?: (args) => Promise<void>;
   onAfterResolve?: (args) => Promise<void>;
   fieldNameMappers?: {
-    /* field mapping names */
-    FILTERS: string; // defaults 'FILTERS'
+    FILTERS: string; // defaults to 'FILTERS'
   };
 };
 
