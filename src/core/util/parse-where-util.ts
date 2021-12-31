@@ -37,7 +37,7 @@ export const parseWhere = (where, resolverOptions: ResolverOptions) => {
     }
 
     if (
-      key === (resolverOptions?.fieldMappers?.FILTERS || Constants.FILTERS) &&
+      key === (resolverOptions?.fieldNameMappers?.FILTERS || Constants.FILTERS) &&
       Object.keys(whereEntries[key])?.length
     ) {
       const whereOperatorFilters = buildWhereFilters(whereEntries[key]);

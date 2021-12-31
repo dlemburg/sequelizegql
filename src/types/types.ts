@@ -29,17 +29,16 @@ type BaseOptions = {
   directive?: string;
   whereAttributes?: string[];
   omitResolvers?: GeneratedResolverField[];
-  onBeforeResolve?;
-  onAfterResolve?;
-  fieldMappers?: {
+  omitAttributes?: string[];
+  onBeforeResolve?: (args) => Promise<void>;
+  onAfterResolve?: (args) => Promise<void>;
+  fieldNameMappers?: {
     /* field mapping names */
     FILTERS: string; // defaults 'FILTERS'
   };
 };
 
-export type ResolverOptions = {
-  omitAttributes?: string[];
-} & BaseOptions;
+export type ResolverOptions = BaseOptions;
 
 export type ResolverMap = {
   create?: ResolverOptions;
@@ -52,10 +51,10 @@ export type ResolverMap = {
   findMany?: ResolverOptions;
 };
 
-export type SchemaMapOptions = {
+export type SchemaMapOptions = BaseOptions & {
   pluralize?: boolean;
   resolvers?: ResolverMap;
-} & BaseOptions;
+};
 
 type RootSchemaMap = { sequelizeGraphqlRoot?: SchemaMapOptions };
 

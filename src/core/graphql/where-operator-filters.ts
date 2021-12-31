@@ -35,7 +35,7 @@ export const whereOperatorFiltersInputGql = (
     `,
     whereInputFilterFields: `
       ${topLevelOperatorsInput}
-      ${options?.fieldMappers?.FILTERS || Constants.FILTERS}: ${filterInputName}
+      ${options?.fieldNameMappers?.FILTERS || Constants.FILTERS}: ${filterInputName}
     `,
   };
 };
