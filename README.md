@@ -2,6 +2,8 @@
 
 ### v1
 
+- Test schema builder utility
+- fix 'pluralize' option
 - `omitInputAttributes` should apply to generated 'update' mutations
 - update mutations should allow updating one level of assocations like create. either way this should be explicit
 - Integrations tests against database
