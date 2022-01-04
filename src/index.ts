@@ -20,7 +20,7 @@ export type InitializeResponse = {
 };
 
 export type InitializeInput = {
-  sequelize: Sequelize;
+  sequelize?: Sequelize;
   enums?: Enums;
   models?: Models;
   schemaMap?: SchemaMap;
@@ -43,14 +43,17 @@ class SequelizeGraphql {
   public async schema({
     models: inputModels = {} as Models,
     enums: inputEmums = {} as Enums,
-    sequelize = {} as Sequelize,
+    sequelize: inputSequelize = {} as Sequelize,
     schemaMap = {} as SchemaMap,
     options = {} as InitializationOptions,
   }: InitializeInput): Promise<InitializeResponse> {
     const models = options.pathToModels ? await getExports(options.pathToModels) : inputModels;
     const enums = options.pathToEnums ? await getExports(options.pathToEnums) : inputEmums;
+    const sequelize = options.pathToSequelize
+      ? await getExports(options.pathToSequelize)
+      : inputSequelize;
 
-    StateFactory({ enums, models, sequelize });
+    StateFactory({ enums, models, sequelize: sequelize?.sequelize ?? sequelize?.default });
 
     const { typedefs, resolvers } = buildSchema(models, enums, schemaMap);
 

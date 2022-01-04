@@ -33,6 +33,7 @@ export type InitializationOptions = {
   pathToCustomSchema?: string;
   pathToModels?: string;
   pathToEnums?: string;
+  pathToSequelize?: string;
   deleteResponseGql?: string;
   includeDeleteOptions?: boolean;
 };

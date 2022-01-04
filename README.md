@@ -2,7 +2,6 @@
 
 ### v1
 
-- Test schema builder utility
 - Integrations tests against database
 - README (lightweight docs)
 - Test coverage
