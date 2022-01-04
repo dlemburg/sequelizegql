@@ -11,7 +11,7 @@ import { StateFactory } from './core/classes/state';
 import { Sequelize } from 'sequelize';
 import { Enums, InitializationOptions, Models, SchemaMap } from './types';
 import { buildCustomSchema } from './util/build-schema-util';
-import { getModels } from './util/model-util';
+import { getExports } from './util/export-util';
 
 export type InitializeResponse = {
   typedefs: DocumentNode;
@@ -42,12 +42,13 @@ class SequelizeGraphql {
 
   public async schema({
     models: inputModels = {} as Models,
+    enums: inputEmums = {} as Enums,
     sequelize = {} as Sequelize,
-    enums = {} as Enums,
     schemaMap = {} as SchemaMap,
     options = {} as InitializationOptions,
   }: InitializeInput): Promise<InitializeResponse> {
-    const models = options.pathToModels ? await getModels(options.pathToModels) : inputModels;
+    const models = options.pathToModels ? await getExports(options.pathToModels) : inputModels;
+    const enums = options.pathToEnums ? await getExports(options.pathToEnums) : inputEmums;
 
     StateFactory({ enums, models, sequelize });
 

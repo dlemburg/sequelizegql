@@ -32,6 +32,7 @@ export type ResolverMap = {
 export type InitializationOptions = {
   pathToCustomSchema?: string;
   pathToModels?: string;
+  pathToEnums?: string;
   deleteResponseGql?: string;
   includeDeleteOptions?: boolean;
 };
