@@ -11,7 +11,7 @@ import {
   ForeignKey,
 } from 'sequelize-typescript';
 import { Library } from '.';
-import { Book } from './book';
+import { Book } from './Book';
 
 @Table({ underscored: true, tableName: 'book_library', paranoid: true })
 export class BookLibrary extends Model<BookLibrary> {

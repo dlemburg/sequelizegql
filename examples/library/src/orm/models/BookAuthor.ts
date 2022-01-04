@@ -10,8 +10,8 @@ import {
   AutoIncrement,
   ForeignKey,
 } from 'sequelize-typescript';
-import { Author } from './author';
-import { Book } from './book';
+import { Author } from './Author';
+import { Book } from './Book';
 
 @Table({ underscored: true, tableName: 'book_author', paranoid: true })
 export class BookAuthor extends Model<BookAuthor> {

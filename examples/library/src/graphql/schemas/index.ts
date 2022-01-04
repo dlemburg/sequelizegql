@@ -6,7 +6,7 @@ import {
 } from '../../../../../src/types';
 
 import * as Enums from '../../orm/enums';
-import * as Models from '../../orm/models';
+// import * as Models from '../../orm/models';
 import { sequelize } from '../../orm/sequelize';
 
 const schemaMap: SchemaMap = {
@@ -45,12 +45,12 @@ export const getSchema = async () => {
   const graphqlSequelize = new SequelizeGraphql();
   const schema = await graphqlSequelize.schema({
     enums: Enums as any,
-    models: Models as any,
+    // models: Models as any,
     sequelize,
     schemaMap,
     options: {
       pathToCustomSchema: '/src/graphql/schemas/custom/index.ts',
-      // pathToModels: '/src/orm/models',
+      pathToModels: '/src/orm/models/**/*',
     },
   });
 

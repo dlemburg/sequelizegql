@@ -12,11 +12,11 @@ import {
   ForeignKey,
   AutoIncrement,
 } from 'sequelize-typescript';
-import { Author } from './author';
-import { BookAuthor } from './book-author';
-import { BookLibrary } from './book-library';
-import { Category } from './category';
-import { Library } from './library';
+import { Author } from './Author';
+import { BookAuthor } from './BookAuthor';
+import { BookLibrary } from './BookLibrary';
+import { Category } from './Category';
+import { Library } from './Library';
 
 @Table({ underscored: true, tableName: 'book', paranoid: true })
 export class Book extends Model<Book> {

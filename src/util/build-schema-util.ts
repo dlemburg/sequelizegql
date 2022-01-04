@@ -1,7 +1,7 @@
 import { merge } from 'lodash';
 import { DocumentNode } from 'graphql';
 import { ResolverOptions } from '../types';
-const glob = require('glob');
+import { getPaths } from './glob-util';
 
 type CustomSchemaResponse = {
   resolvers: ResolverOptions;
@@ -13,16 +13,7 @@ type CustomSchemaInput = {
   pathToCustomSchema: string;
 };
 
-const getDirectories = (src: string): Promise<string[]> => {
-  return new Promise((resolve, reject) => {
-    const path = process.cwd() + src;
-
-    glob(path, (err, files) => {
-      resolve(files);
-    });
-  });
-};
-
+//  any file ending in index.ts or a modelName.ts
 const isValidCustomPath = (pathToCustomSchema: string, path: string, modelNames: string[]) => {
   if (isGlob(pathToCustomSchema)) {
     return (
@@ -42,7 +33,7 @@ export const buildCustomSchema = async ({
 }: CustomSchemaInput): Promise<CustomSchemaResponse> => {
   let result: CustomSchemaResponse = { resolvers: {}, typedefs: [] };
   const modelNames = [...Object.keys(Models)];
-  const paths = await getDirectories(pathToCustomSchema); //  any file ending in index.ts or a modelName.ts
+  const paths = await getPaths(pathToCustomSchema);
 
   for (let path of paths) {
     try {

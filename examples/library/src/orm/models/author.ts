@@ -10,8 +10,8 @@ import {
   PrimaryKey,
   BelongsToMany,
 } from 'sequelize-typescript';
-import { Book } from './book';
-import { BookAuthor } from './book-author';
+import { Book } from './Book';
+import { BookAuthor } from './BookAuthor';
 
 @Table({ underscored: true, tableName: 'author', paranoid: true })
 export class Author extends Model<Author> {

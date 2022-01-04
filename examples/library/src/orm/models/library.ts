@@ -15,9 +15,9 @@ import {
   BelongsToMany,
 } from 'sequelize-typescript';
 import { LibraryStatus } from '../enums';
-import { Book } from './book';
-import { BookLibrary } from './book-library';
-import { City } from './city';
+import { Book } from './Book';
+import { BookLibrary } from './BookLibrary';
+import { City } from './City';
 
 @Table({ underscored: true, tableName: 'library', paranoid: true })
 export class Library extends Model<Library> {
