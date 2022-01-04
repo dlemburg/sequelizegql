@@ -34,6 +34,7 @@ export type InitializationOptions = {
   pathToModels?: string;
   pathToEnums?: string;
   pathToSequelize?: string;
+  pathToSchemaMap?: string;
   deleteResponseGql?: string;
   includeDeleteOptions?: boolean;
 };
@@ -126,8 +127,8 @@ export type KeyValuePairs = {
   value: string;
 };
 
-export type Models = { [key: string]: Model<any, any> };
-export type Enums = { [key: string]: string };
+export type Models = Record<string, Model<any, any>>;
+export type Enums = Record<string, string>;
 
 export enum SortDirection {
   ASC = 'ASC',

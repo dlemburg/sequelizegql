@@ -9,7 +9,7 @@ import { buildRootTypedefs } from './core/util/root-typedefs-util';
 import { buildSchema } from './core';
 import { StateFactory } from './core/classes/state';
 import { Sequelize } from 'sequelize';
-import { Enums, InitializationOptions, Models, SchemaMap } from './types';
+import { InitializationOptions, SchemaMap } from './types';
 import { buildCustomSchema } from './util/build-schema-util';
 import { getExports } from './util/export-util';
 
@@ -21,8 +21,8 @@ export type InitializeResponse = {
 
 export type InitializeInput = {
   sequelize?: Sequelize;
-  enums?: Enums;
-  models?: Models;
+  enums?: any; // Enums;
+  models?: any; // Models;
   schemaMap?: SchemaMap;
   options?: InitializationOptions;
 };
@@ -41,21 +41,32 @@ class SequelizeGraphql {
   private typedefs: string;
 
   public async schema({
-    models: inputModels = {} as Models,
-    enums: inputEmums = {} as Enums,
-    sequelize: inputSequelize = {} as Sequelize,
-    schemaMap = {} as SchemaMap,
+    models: inputModels = {},
+    enums: inputEmums = {},
+    sequelize: inputSequelize = {} as any,
+    schemaMap: inputSchemaMap = {} as SchemaMap,
     options = {} as InitializationOptions,
   }: InitializeInput): Promise<InitializeResponse> {
     const models = options.pathToModels ? await getExports(options.pathToModels) : inputModels;
     const enums = options.pathToEnums ? await getExports(options.pathToEnums) : inputEmums;
-    const sequelize = options.pathToSequelize
+    const schemaMapExport = options.pathToSchemaMap
+      ? await getExports(options.pathToSchemaMap)
+      : inputSchemaMap;
+    const sequelizeExport = options.pathToSequelize
       ? await getExports(options.pathToSequelize)
       : inputSequelize;
 
-    StateFactory({ enums, models, sequelize: sequelize?.sequelize ?? sequelize?.default });
+    StateFactory({
+      enums,
+      models,
+      sequelize: sequelizeExport?.sequelize ?? sequelizeExport?.default,
+    });
 
-    const { typedefs, resolvers } = buildSchema(models, enums, schemaMap);
+    const { typedefs, resolvers } = buildSchema(
+      models,
+      enums,
+      schemaMapExport?.schemaMap ?? schemaMapExport?.default
+    );
 
     this.typedefs = typedefs + buildRootTypedefs(options);
     this.resolvers = resolvers;
