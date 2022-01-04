@@ -18,7 +18,7 @@ const isValidCustomPath = (pathToCustomSchema: string, path: string, modelNames:
   if (isGlob(pathToCustomSchema)) {
     return (
       !(path.endsWith('/index.ts') || path.endsWith('/index.js')) &&
-      !modelNames.find((x) => x.endsWith(`/${x}.ts`) || x.endsWith(`/${x}.ts`))
+      !modelNames.find((x) => x.endsWith(`/${x}.ts`) || x.endsWith(`/${x}.js`))
     );
   }
 
@@ -37,9 +37,9 @@ export const buildCustomSchema = async ({
 
   for (let path of paths) {
     try {
-      if (!isValidCustomPath(pathToCustomSchema, path, modelNames)) {
-        continue;
-      }
+      // if (!isValidCustomPath(pathToCustomSchema, path, modelNames)) {
+      //   continue;
+      // }
 
       const exports = require(path);
 
