@@ -9,8 +9,8 @@ export const getMutationResolverFieldMap = (
   options: SchemaMapOptions
 ): ResolverFieldMap => {
   const loweredName = lowercaseFirstLetter(name);
-  const pluralizedName = maybePluralize(options, name);
-  const pluralizedLoweredName = maybePluralize(options, loweredName);
+  const pluralizedName = maybePluralize(name, options);
+  const pluralizedLoweredName = maybePluralize(loweredName, options);
 
   return {
     [GeneratedResolverField.CREATE_MUTATION]: {
@@ -56,8 +56,8 @@ export const getQueryResolverFieldMap = (
   options: SchemaMapOptions
 ): ResolverFieldMap => {
   const loweredName = lowercaseFirstLetter(name);
-  const pluralizedName = maybePluralize(options, name);
-  const pluralizedLoweredName = maybePluralize(options, loweredName);
+  const pluralizedName = maybePluralize(name, options);
+  const pluralizedLoweredName = maybePluralize(loweredName, options);
 
   return {
     [GeneratedResolverField.FIND_ONE]: {

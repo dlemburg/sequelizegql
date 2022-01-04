@@ -38,7 +38,6 @@ const schemaMap: SchemaMap = {
   },
   City: {
     omitResolvers: [GeneratedResolverField.FIND_ONE],
-    // pluralize: false,
   },
 };
 

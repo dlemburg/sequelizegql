@@ -25,7 +25,6 @@ export type InitializationOptions = {
 };
 
 type BaseOptions = {
-  pluralize?: boolean;
   generate?: boolean; // defaults true
   directive?: string;
   whereInputAttributes?: string[];
