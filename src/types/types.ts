@@ -30,7 +30,8 @@ export type ResolverMap = {
 };
 
 export type InitializationOptions = {
-  customSchemaPath?: string;
+  pathToCustomSchema?: string;
+  pathToModels?: string;
   deleteResponseGql?: string;
   includeDeleteOptions?: boolean;
 };

@@ -39,13 +39,13 @@ class SequelizeGraphql {
   private resolvers;
   private typedefs: string;
 
-  public schema({
+  public async schema({
     models = {} as Models,
     sequelize = {} as Sequelize,
     enums = {} as Enums,
     schemaMap = {} as SchemaMap,
     options = {} as InitializationOptions,
-  }: InitializeInput): InitializeResponse {
+  }: InitializeInput): Promise<InitializeResponse> {
     StateFactory({ enums, models, sequelize });
 
     const { typedefs, resolvers } = buildSchema(models, enums, schemaMap);
@@ -53,10 +53,10 @@ class SequelizeGraphql {
     this.typedefs = typedefs + buildRootTypedefs(options);
     this.resolvers = resolvers;
 
-    if (options?.customSchemaPath) {
-      const customSchema = buildCustomSchema({
+    if (options?.pathToCustomSchema) {
+      const customSchema = await buildCustomSchema({
         models,
-        customSchemaPath: options?.customSchemaPath,
+        pathToCustomSchema: options?.pathToCustomSchema,
       });
 
       const typedefs = mergeTypeDefs([

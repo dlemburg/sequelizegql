@@ -15,6 +15,7 @@
   "dependencies": {
     "@graphql-tools/merge": "^8.2.1",
     "faker": "^5.5.3",
+    "glob": "^7.2.0",
     "graphql-parse-resolve-info": "^4.12.0",
     "graphql-scalars": "^1.13.6",
     "graphql-tag": "^2.12.6",

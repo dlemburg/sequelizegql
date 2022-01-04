@@ -43,11 +43,15 @@ const schemaMap: SchemaMap = {
 
 export const getSchema = async () => {
   const graphqlSequelize = new SequelizeGraphql();
-  const schema = graphqlSequelize.schema({
+  const schema = await graphqlSequelize.schema({
     enums: Enums as any,
     models: Models as any,
     sequelize,
     schemaMap,
+    options: {
+      pathToCustomSchema: '/src/graphql/schemas/custom/index.ts',
+      // pathToModels: '/src/orm/models',
+    },
   });
 
   // graphqlSequelize.printConsole();
