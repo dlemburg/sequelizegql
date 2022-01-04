@@ -18,6 +18,17 @@ export enum GeneratedResolverField {
   FIND_MANY_PAGED = 'findManyPaged',
 }
 
+export type ResolverMap = {
+  create?: ResolverOptions;
+  createMany?: ResolverOptions;
+  update?: ResolverOptions;
+  upsert?: ResolverOptions;
+  delete?: ResolverOptions;
+  findAll?: ResolverOptions;
+  findOne?: ResolverOptions;
+  findMany?: ResolverOptions;
+};
+
 export type InitializationOptions = {
   customSchemaPath?: string;
   deleteResponseGql?: string;
@@ -42,22 +53,11 @@ export type ResolverOptions = Omit<
   'omitResolvers' | 'omitInputAttributes' | 'pluralize'
 >;
 
-export type ResolverMap = {
-  create?: ResolverOptions;
-  createMany?: ResolverOptions;
-  update?: ResolverOptions;
-  upsert?: ResolverOptions;
-  delete?: ResolverOptions;
-  findAll?: ResolverOptions;
-  findOne?: ResolverOptions;
-  findMany?: ResolverOptions;
-};
-
 export type SchemaMapOptions = BaseOptions & {
   resolvers?: ResolverMap;
 };
 
-type RootSchemaMap = { sequelizeGraphqlRoot?: SchemaMapOptions };
+type RootSchemaMap = { SEQUELIZE_GRAPHQL_ROOT?: SchemaMapOptions };
 
 export type SchemaMap = {
   [key: ModelName]: SchemaMapOptions; // defaults true
