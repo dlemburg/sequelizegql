@@ -2,9 +2,8 @@
 
 ### v1
 
-- Integrations tests against database
+- Some unit test coverage, Integrations tests against database
 - README (lightweight docs)
-- Test coverage
 
 ### v2
 
