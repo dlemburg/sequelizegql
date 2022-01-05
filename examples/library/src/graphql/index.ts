@@ -2,6 +2,7 @@ import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-co
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { applyMiddleware } from 'graphql-middleware';
 import { getSchema } from './schemas';
+import { EXAMPLES } from './schemas/example-initialization-input-options';
 
 const context = async ({ req }): Promise<Record<string, any>> => {
   return {};
@@ -9,7 +10,7 @@ const context = async ({ req }): Promise<Record<string, any>> => {
 
 export const getGraphqlSchema = async (): Promise<any> => {
   const middlewares = [];
-  const { typeDefs, resolvers } = await getSchema();
+  const { typeDefs, resolvers } = await getSchema(EXAMPLES.pathOnly);
   const schema = makeExecutableSchema({ typeDefs, resolvers });
   const schemaWithMiddleware = applyMiddleware(schema, ...middlewares);
 
