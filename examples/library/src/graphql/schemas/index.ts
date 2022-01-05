@@ -12,13 +12,11 @@ export const getSchema = async () => {
     // models: Models,
     // sequelize,
     // schemaMap,
-    options: {
-      pathToCustomSchema: '/src/graphql/schemas/custom/index.ts',
-      pathToModels: '/src/orm/models/**/*',
-      pathToEnums: '/src/orm/enums.ts',
-      pathToSequelize: '/src/orm/sequelize.ts',
-      pathToSchemaMap: '/src/graphql/schemas/schema-map.ts',
-    },
+    pathToCustomSchema: '/src/graphql/schemas/custom/index.ts',
+    pathToModels: '/src/orm/models/**/*',
+    pathToEnums: '/src/orm/enums.ts',
+    pathToSequelize: '/src/orm/sequelize.ts',
+    pathToSchemaMap: '/src/graphql/schemas/schema-map.ts',
   });
 
   // graphqlSequelize.printConsole();

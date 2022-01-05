@@ -24,8 +24,7 @@ export type InitializeInput = {
   enums?: any; // Enums;
   models?: any; // Models;
   schemaMap?: SchemaMap;
-  options?: InitializationOptions;
-};
+} & InitializationOptions;
 
 export const buildGql = (value) =>
   gql`
@@ -45,7 +44,7 @@ class SequelizeGraphql {
     enums: inputEmums = {},
     sequelize: inputSequelize = {} as any,
     schemaMap: inputSchemaMap = {} as SchemaMap,
-    options = {} as InitializationOptions,
+    ...options
   }: InitializeInput): Promise<InitializeResponse> {
     const models = options.pathToModels ? await getExports(options.pathToModels) : inputModels;
     const enums = options.pathToEnums ? await getExports(options.pathToEnums) : inputEmums;
