@@ -37,10 +37,6 @@ export const buildCustomSchema = async ({
 
   for (let path of paths) {
     try {
-      // if (!isValidCustomPath(pathToCustomSchema, path, modelNames)) {
-      //   continue;
-      // }
-
       const exports = require(path);
 
       if (exports?.default?.resolvers || exports?.resolvers) {
