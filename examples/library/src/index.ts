@@ -3,7 +3,7 @@ import { ApolloServer } from 'apollo-server-express';
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import express from 'express';
 import http from 'http';
-import { init } from './orm/sequelize';
+import { init as initDataLayer } from './orm/sequelize';
 import { getGraphqlSchema } from './graphql';
 
 export let app;
@@ -31,7 +31,7 @@ async function startApolloServer() {
 }
 
 async function main() {
-  await init();
+  await initDataLayer();
   startApolloServer();
 }
 
