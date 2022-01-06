@@ -4,6 +4,7 @@
 
 - unit test coverage, Integrations tests against database
 - README (lightweight docs)
+- code cleanup: refactor, patterns, types
 
 
 ### v1
