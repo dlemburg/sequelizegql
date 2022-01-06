@@ -46,8 +46,8 @@ class SequelizeGraphql {
     schemaMap: inputSchemaMap = {} as SchemaMap,
     ...options
   }: InitializeInput): Promise<InitializeResponse> {
-    const models = options.pathToModels ? await getExports(options.pathToModels) : inputModels;
-    const enums = options.pathToEnums ? await getExports(options.pathToEnums) : inputEmums;
+    const modelsExport = options.pathToModels ? await getExports(options.pathToModels) : inputModels;
+    const enumsExport = options.pathToEnums ? await getExports(options.pathToEnums) : inputEmums;
     const schemaMapExport = options.pathToSchemaMap
       ? await getExports(options.pathToSchemaMap)
       : { schemaMap: inputSchemaMap };
@@ -56,8 +56,8 @@ class SequelizeGraphql {
       : { sequelize: inputSequelize };
 
     StateFactory({
-      enums,
-      models,
+      models: modelsExport,
+      enums: enumsExport,
       sequelize: sequelizeExport?.sequelize ?? sequelizeExport?.default,
     });
 
