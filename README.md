@@ -1,16 +1,19 @@
 ### TODO
 
-### v1
+### alpha
 
-- Some unit test coverage, Integrations tests against database
+- unit test coverage, Integrations tests against database
 - README (lightweight docs)
 
-### v2
 
+### v1
+- recursive operators
+- recursive creates (currently 1 level of associations deep)
+- recursive updates (no associations allowed yet)
+
+### v2
 - cli
 - crawl database and generate models, types, etc
-- operators: recursive
-- Recursive creates - currently 1 level deep
 
 ### readme notes
 
