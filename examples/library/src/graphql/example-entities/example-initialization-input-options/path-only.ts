@@ -3,5 +3,5 @@ export const pathOnly = {
   pathToModels: '/src/orm/models/**/*',
   pathToEnums: '/src/orm/enums.ts',
   pathToSequelize: '/src/orm/sequelize.ts',
-  pathToSchemaMap: '/src/graphql/schemas/example-schema-maps/schema-map.ts',
+  pathToSchemaMap: '/src/graphql/example-entities/example-schema-maps/schema-map.ts',
 };

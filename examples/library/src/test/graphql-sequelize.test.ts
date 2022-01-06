@@ -1,5 +1,5 @@
-import { getSchema } from '../';
-import { init } from '../../../orm/sequelize';
+import { getSchema } from '../graphql/schemas';
+import { init } from '../orm/sequelize';
 
 jest.setTimeout(30000);
 
@@ -14,7 +14,8 @@ describe('[graphql-sequelize.test.ts] suite', () => {
       pathToModels: '/examples/library/src/orm/models/**/*',
       pathToEnums: '/examples/library/src/orm/enums.ts',
       pathToSequelize: '/examples/library/src/orm/sequelize.ts',
-      pathToSchemaMap: '/examples/library/src/graphql/schemas/example-schema-maps/schema-map.ts',
+      pathToSchemaMap:
+        '/examples/library/src/graphql/example-entities/example-schema-maps/schema-map.ts',
     });
     expect(result).toBeTruthy();
   });
