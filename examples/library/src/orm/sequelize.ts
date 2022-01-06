@@ -26,4 +26,6 @@ export const init = async () => {
   } catch (error) {
     console.log('Sequelize connection error: ', error);
   }
+
+  return sequelize;
 };

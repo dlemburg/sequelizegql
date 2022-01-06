@@ -50,10 +50,10 @@ class SequelizeGraphql {
     const enums = options.pathToEnums ? await getExports(options.pathToEnums) : inputEmums;
     const schemaMapExport = options.pathToSchemaMap
       ? await getExports(options.pathToSchemaMap)
-      : inputSchemaMap;
+      : { schemaMap: inputSchemaMap };
     const sequelizeExport = options.pathToSequelize
       ? await getExports(options.pathToSequelize)
-      : inputSequelize;
+      : { sequelize: inputSequelize };
 
     StateFactory({
       enums,
