@@ -10,7 +10,9 @@ const context = async ({ req }): Promise<Record<string, any>> => {
 
 export const getGraphqlSchema = async (): Promise<any> => {
   const middlewares = [];
-  const { typeDefs, resolvers } = await getSchema(EXAMPLE_INITIALIZATION_OPTIONS.pathOnly);
+  const { typedefs: typeDefs, resolvers } = await getSchema(
+    EXAMPLE_INITIALIZATION_OPTIONS.pathOnly
+  );
   const schema = makeExecutableSchema({ typeDefs, resolvers });
   const schemaWithMiddleware = applyMiddleware(schema, ...middlewares);
 
