@@ -9,7 +9,7 @@ const setup = async () => {
 };
 
 const pathOnlyExample = {
-  pathToCustomSchema: '/examples/library/src/graphql/schemas/custom/index.ts',
+  pathToCustomSchema: '/examples/library/src/graphql/schemas/health/index.ts',
   pathToModels: '/examples/library/src/orm/models/**/*',
   pathToEnums: '/examples/library/src/orm/enums.ts',
   pathToSequelize: '/examples/library/src/orm/sequelize.ts',

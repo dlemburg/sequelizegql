@@ -70,7 +70,7 @@ class SequelizeGraphql {
       const typedefs = mergeTypeDefs([
         ...DateTypedefs,
         buildGql(this.typedefs),
-        ...customSchemaExport.typedefs,
+        customSchemaExport.typedefs,
       ]);
 
       const resolvers = merge(

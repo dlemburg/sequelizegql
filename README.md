@@ -52,18 +52,19 @@ All filepaths from root working folder; values can be globs, i.e. `/path/to/dir/
 - we will always use `default` if no other properties are present
 - we will always use the provided export property name if present
 - matchers will always be called regardless of above (use this if you have files with multiple exports that you want ignored)
+- after all of the above have been respected, the entire object will be merged into the accumulated result (accumulated may mean one file's export or multiple files if a glob has been provided)
 
 &nbsp;
 
 ### Filepath `options`
 
-| name                 | type   | export rules                                             |
-| -------------------- | ------ | -------------------------------------------------------- |
-| `pathToCustomSchema` | string | `default`, `customSchema` or `customSchemaExportMatcher` |
-| `pathToModels`       | string | `default`, `models` or `modelsExportMatcher`             |
-| `pathToEnums`        | string | `default`, `enums` or `enumsExportMatcher`               |
-| `pathToSequelize`    | string | `default`, `sequelize` or `sequelizeExportMatcher`       |
-| `pathToSchemaMap`    | string | `default`, `schemaMap` or `schemaMapExportMatcher`       |
+| name                 | type   | export rules              |
+| -------------------- | ------ | ------------------------- |
+| `pathToCustomSchema` | string | `default`, `customSchema` |
+| `pathToModels`       | string | `default`, `models`       |
+| `pathToEnums`        | string | `default`, `enums`        |
+| `pathToSequelize`    | string | `default`, `sequelize`    |
+| `pathToSchemaMap`    | string | `default`, `schemaMap`    |
 
 &nbsp;
 
