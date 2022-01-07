@@ -1,90 +1,84 @@
 import fs from 'fs';
-import gql from 'graphql-tag';
 import merge from 'lodash/merge';
 import { typeDefs as DateTypedefs, resolvers as DateResolvers } from 'graphql-scalars';
 import GraphQLJSON, { GraphQLJSONObject } from 'graphql-type-json';
 import { mergeTypeDefs } from '@graphql-tools/merge';
-import { DocumentNode } from 'graphql';
 import { buildRootTypedefs } from './core/util/root-typedefs-util';
 import { buildSchema } from './core';
 import { StateFactory } from './core/classes/state';
 import { Sequelize } from 'sequelize';
-import { InitializationOptions, SchemaMap } from './types';
-import { buildCustomSchema } from './util/build-schema-util';
+import { InitializeInput, InitializeResponse, SchemaMap } from './types';
 import { getExports } from './util/export-util';
-
-export type InitializeResponse = {
-  typedefs: DocumentNode;
-  resolvers: any;
-  typedefsString: string;
-};
-
-export type InitializeInput = {
-  sequelize?: Sequelize;
-  enums?: any; // Enums;
-  models?: any; // Models;
-  schemaMap?: SchemaMap;
-} & InitializationOptions;
-
-export const buildGql = (value) =>
-  gql`
-    ${value}
-  `;
+import { validateInput } from './util/validate-input-util';
+import { buildGql } from './util/gql-util';
 
 const JSONResolvers = {
   JSON: GraphQLJSON,
   JSONObject: GraphQLJSONObject,
 };
+
 class SequelizeGraphql {
   private resolvers;
   private typedefs: string;
 
-  public async schema({
-    models: inputModels = {},
-    enums: inputEmums = {},
-    sequelize: inputSequelize = {} as Sequelize,
-    schemaMap: inputSchemaMap = {} as SchemaMap,
-    ...options
-  }: InitializeInput): Promise<InitializeResponse> {
-    const modelsExport = options.pathToModels
-      ? await getExports(options.pathToModels)
+  public async schema(input: InitializeInput): Promise<InitializeResponse> {
+    validateInput(input);
+
+    const {
+      models: inputModels = {},
+      enums: inputEmums = {},
+      sequelize: inputSequelize = {} as Sequelize,
+      schemaMap: inputSchemaMap = {} as SchemaMap,
+      customSchema: inputCustomSchema = {} as SchemaMap,
+      ...options
+    } = input;
+
+    const modelsPreExport = options.pathToModels
+      ? await getExports(options.pathToModels, options.modelsExportMatcher)
       : inputModels;
-    const enumsExport = options.pathToEnums ? await getExports(options.pathToEnums) : inputEmums;
-    const schemaMapExport = options.pathToSchemaMap
-      ? await getExports(options.pathToSchemaMap)
-      : { schemaMap: inputSchemaMap };
-    const sequelizeExport = options.pathToSequelize
-      ? await getExports(options.pathToSequelize)
-      : { sequelize: inputSequelize };
+    const enumsPreExport = options.pathToEnums
+      ? await getExports(options.pathToEnums, options.enumsExportMatcher)
+      : inputEmums;
+    const schemaMapPreExport = options.pathToSchemaMap
+      ? await getExports(options.pathToSchemaMap, options.schemaMapExportMatcher)
+      : inputSchemaMap;
+    const sequelizePreExport = options.pathToSequelize
+      ? await getExports(options.pathToSequelize, options.sequelizeExportMatcher)
+      : inputSequelize;
+    const customSchemaPreExport = options.pathToCustomSchema
+      ? await getExports(options.pathToCustomSchema, options.customSchemaExportMatcher)
+      : inputCustomSchema;
+
+    const modelsExport = modelsPreExport.models ?? modelsPreExport;
+    const enumsExport = enumsPreExport.enums ?? enumsPreExport;
+    const schemaMapExport = schemaMapPreExport.schemaMap ?? schemaMapPreExport;
+    const sequelizeExport = sequelizePreExport.sequelize ?? sequelizePreExport;
+    const customSchemaExport = customSchemaPreExport.customSchema ?? customSchemaPreExport;
 
     StateFactory({
       models: modelsExport,
       enums: enumsExport,
-      sequelize: sequelizeExport?.sequelize ?? sequelizeExport?.default,
+      sequelize: sequelizeExport,
     });
 
-    const { typedefs, resolvers } = buildSchema(
-      modelsExport,
-      enumsExport,
-      schemaMapExport?.schemaMap ?? schemaMapExport?.default
-    );
+    const { typedefs, resolvers } = buildSchema(modelsExport, enumsExport, schemaMapExport);
 
     this.typedefs = typedefs + buildRootTypedefs(options);
     this.resolvers = resolvers;
 
-    if (options?.pathToCustomSchema) {
-      const customSchema = await buildCustomSchema({
-        models: modelsExport,
-        pathToCustomSchema: options?.pathToCustomSchema,
-      });
-
+    if (customSchemaExport) {
       const typedefs = mergeTypeDefs([
         ...DateTypedefs,
         buildGql(this.typedefs),
-        ...customSchema.typedefs,
+        ...customSchemaExport.typedefs,
       ]);
 
-      const resolvers = merge(JSONResolvers, DateResolvers, this.resolvers, customSchema.resolvers);
+      const resolvers = merge(
+        JSONResolvers,
+        DateResolvers,
+        this.resolvers,
+        customSchemaExport.resolvers
+      );
 
       return {
         typedefs,

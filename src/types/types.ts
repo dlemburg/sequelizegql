@@ -1,4 +1,5 @@
-import { DataTypes, FindOptions, Model, WhereOptions } from 'sequelize';
+import { DataTypes, FindOptions, Model, Sequelize, WhereOptions } from 'sequelize';
+import { DocumentNode } from 'graphql';
 
 type ModelName = string;
 
@@ -29,16 +30,6 @@ export type ResolverMap = {
   findMany?: ResolverOptions;
 };
 
-export type InitializationOptions = {
-  pathToCustomSchema?: string;
-  pathToModels?: string;
-  pathToEnums?: string;
-  pathToSequelize?: string;
-  pathToSchemaMap?: string;
-  deleteResponseGql?: string;
-  includeDeleteOptions?: boolean;
-};
-
 type BaseOptions = {
   generate?: boolean; // defaults true
   directive?: string;
@@ -50,6 +41,28 @@ type BaseOptions = {
   fieldNameMappers?: {
     FILTERS: string; // defaults to 'FILTERS'
   };
+};
+
+export type ExportMatcherFn = (exports: Record<any, any>) => Record<any, any>;
+
+export type InitializeInput = {
+  sequelize?: Sequelize;
+  enums?: Record<any, any>;
+  models?: Record<any, any>;
+  schemaMap?: SchemaMap;
+  customSchema?: any;
+  pathToCustomSchema?: string;
+  pathToModels?: string;
+  pathToEnums?: string;
+  pathToSequelize?: string;
+  pathToSchemaMap?: string;
+  customSchemaExportMatcher?: ExportMatcherFn;
+  modelsExportMatcher?: ExportMatcherFn;
+  enumsExportMatcher?: ExportMatcherFn;
+  sequelizeExportMatcher?: ExportMatcherFn;
+  schemaMapExportMatcher?: ExportMatcherFn;
+  deleteResponseGql?: string;
+  includeDeleteOptions?: boolean;
 };
 
 export type ResolverOptions = Omit<
@@ -134,3 +147,14 @@ export enum SortDirection {
   ASC = 'ASC',
   DESC = 'DESC',
 }
+
+export type InitializeResponse = {
+  typedefs: DocumentNode;
+  resolvers: any;
+  typedefsString: string;
+};
+
+type CustomSchemaResponse = {
+  resolvers: ResolverOptions;
+  typedefs: DocumentNode[];
+};
