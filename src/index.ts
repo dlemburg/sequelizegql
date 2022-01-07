@@ -46,7 +46,9 @@ class SequelizeGraphql {
     schemaMap: inputSchemaMap = {} as SchemaMap,
     ...options
   }: InitializeInput): Promise<InitializeResponse> {
-    const modelsExport = options.pathToModels ? await getExports(options.pathToModels) : inputModels;
+    const modelsExport = options.pathToModels
+      ? await getExports(options.pathToModels)
+      : inputModels;
     const enumsExport = options.pathToEnums ? await getExports(options.pathToEnums) : inputEmums;
     const schemaMapExport = options.pathToSchemaMap
       ? await getExports(options.pathToSchemaMap)
@@ -62,8 +64,8 @@ class SequelizeGraphql {
     });
 
     const { typedefs, resolvers } = buildSchema(
-      models,
-      enums,
+      modelsExport,
+      enumsExport,
       schemaMapExport?.schemaMap ?? schemaMapExport?.default
     );
 
@@ -72,7 +74,7 @@ class SequelizeGraphql {
 
     if (options?.pathToCustomSchema) {
       const customSchema = await buildCustomSchema({
-        models,
+        models: modelsExport,
         pathToCustomSchema: options?.pathToCustomSchema,
       });
 
