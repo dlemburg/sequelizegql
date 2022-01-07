@@ -38,11 +38,11 @@ All filepaths from root working folder; values can be globs, i.e. `/path/to/dir/
 | ---------------------- | ------------------------ | ------- |
 | `sequelize`            | `Sequelize`              |
 | `models`               | `Record<string, Model>`  |
-| `pathToEnums`          | `Record<string, string>` |
+| `enums`                | `Record<string, string>` |
 | `customSchema`         | `CustomSchema`           |
 | `schemaMap`            | `SchemaMap`              |
-| `deleteResponseGql`    | `string`                 | -       |
-| `includeDeleteOptions` | `boolean`                | -       |
+| `deleteResponseGql`    | `string`                 |
+| `includeDeleteOptions` | `boolean`                |
 
 &nbsp;
 
@@ -64,6 +64,8 @@ All filepaths from root working folder; values can be globs, i.e. `/path/to/dir/
 | `pathToEnums`        | string | `default`, `enums` or `enumsExportMatcher`               |
 | `pathToSequelize`    | string | `default`, `sequelize` or `sequelizeExportMatcher`       |
 | `pathToSchemaMap`    | string | `default`, `schemaMap` or `schemaMapExportMatcher`       |
+
+&nbsp;
 
 ### Matchers `options`
 
