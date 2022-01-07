@@ -28,7 +28,7 @@
 
 ---
 
-All filepaths are file/directory paths from root working folder; values can be globs, i.e. `/path/to/dir/**/*`
+All filepaths from root working folder; values can be globs, i.e. `/path/to/dir/**/*`
 
 &nbsp;
 
@@ -46,12 +46,14 @@ All filepaths are file/directory paths from root working folder; values can be g
 
 &nbsp;
 
-Export Note
+### Filepath options export note
 
 - for Filepath options export naming rules, you can export `default`, use a matcher function, or use the provided object property name listed below.
 - we will always use `default` if no other properties are present
 - we will always use the provided export property name if present
 - matchers will always be called regardless of above (use this if you have files with multiple exports that you want ignored)
+
+&nbsp;
 
 ### Filepath `options`
 
@@ -79,10 +81,8 @@ Export Note
 
 - each set of properties is an _xor_ - one of each set of properties must be provided
 
-| object         | filepath             |
-| -------------- | -------------------- |
-| `customSchema` | `pathToCustomSchema` |
-| `models`       | `pathToModels`       |
-| `enums`        | `pathToEnums`        |
-| `sequelize`    | `pathToSequelize`    |
-| `schemaMap`    | `pathToSchemaMap`    |
+| object      | filepath          |
+| ----------- | ----------------- |
+| `models`    | `pathToModels`    |
+| `enums`     | `pathToEnums`     |
+| `sequelize` | `pathToSequelize` |
