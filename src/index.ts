@@ -42,7 +42,7 @@ class SequelizeGraphql {
   public async schema({
     models: inputModels = {},
     enums: inputEmums = {},
-    sequelize: inputSequelize = {} as any,
+    sequelize: inputSequelize = {} as Sequelize,
     schemaMap: inputSchemaMap = {} as SchemaMap,
     ...options
   }: InitializeInput): Promise<InitializeResponse> {
