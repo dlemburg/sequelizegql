@@ -25,29 +25,29 @@ class SequelizeGraphql {
     validateInput(input);
 
     const {
-      models: inputModels = {},
-      enums: inputEmums = {},
-      sequelize: inputSequelize = {} as Sequelize,
-      schemaMap: inputSchemaMap = {} as SchemaMap,
-      customSchema: inputCustomSchema = {} as SchemaMap,
+      models = {},
+      enums = {},
+      sequelize = {} as Sequelize,
+      schemaMap = {} as SchemaMap,
+      customSchema = {} as SchemaMap,
       ...options
     } = input;
 
     const modelsPreExport = options.pathToModels
       ? await getExports(options.pathToModels, options.modelsExportMatcher)
-      : inputModels;
+      : models;
     const enumsPreExport = options.pathToEnums
       ? await getExports(options.pathToEnums, options.enumsExportMatcher)
-      : inputEmums;
+      : enums;
     const schemaMapPreExport = options.pathToSchemaMap
       ? await getExports(options.pathToSchemaMap, options.schemaMapExportMatcher)
-      : inputSchemaMap;
+      : schemaMap;
     const sequelizePreExport = options.pathToSequelize
       ? await getExports(options.pathToSequelize, options.sequelizeExportMatcher)
-      : inputSequelize;
+      : sequelize;
     const customSchemaPreExport = options.pathToCustomSchema
       ? await getExports(options.pathToCustomSchema, options.customSchemaExportMatcher)
-      : inputCustomSchema;
+      : customSchema;
 
     const modelsExport = modelsPreExport.models ?? modelsPreExport;
     const enumsExport = enumsPreExport.enums ?? enumsPreExport;
