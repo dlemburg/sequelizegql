@@ -198,7 +198,7 @@ authors(where: AuthorWhereInput!) {
 ```
 
 &nbsp;
-will generate a sequelize query like this:
+will generate and execute a sequelize query like this:
 
 ```typescript
 Author.findAll({
