@@ -7,29 +7,117 @@ npm install sequelize sequelize-graphql
 ## Basic Example
 
 ```typescript
+@Table({ underscored: true, tableName: 'author', paranoid: true })
+export class Author extends Model<Author> {
+  @PrimaryKey
+  @AutoIncrement
+  @Column
+  id: number;
+
+  @AllowNull(false)
+  @Column
+  name: String;
+
+  @Column
+  surname: String;
+
+  // ...timestamps: createdAt, updatedAt, removedAt, etc
+
+  // ...associations
+}
+
+@Table({ underscored: true, tableName: 'book', paranoid: true })
+export class Book extends Model<Book> {
+  @PrimaryKey
+  @AutoIncrement
+  @Column
+  id: number;
+
+  @Column
+  isbn: String;
+
+  @AllowNull(false)
+  @Column
+  title: String;
+
+  // ...timestamps: createdAt, updatedAt, removedAt, etc
+
+  // ...associations
+}
+
+@Table({ underscored: true, tableName: 'book_author', paranoid: true })
+export class BookAuthor extends Model<BookAuthor> {
+  @PrimaryKey
+  @AutoIncrement
+  @Column
+  id: number;
+
+  @Column
+  @ForeignKey(() => Author)
+  authorId: number;
+
+  @Column
+  @ForeignKey(() => Book)
+  bookId: number;
+
+  // ...timestamps: createdAt, updatedAt, removedAt, etc
+
+  // ...associations
+}
+
+@Table({ underscored: true, tableName: 'city', paranoid: true })
+export class City extends Model<City> {
+  @PrimaryKey
+  @AutoIncrement
+  @Column
+  id: number;
+
+  @AllowNull(false)
+  @Column
+  name: String;
+
+  // ...timestamps: createdAt, updatedAt, removedAt, etc
+
+  // ...associations
+}
+
+
+// rootSchemaMap applies to *every* model's generated endpoints
+// all configurable options listed below
+const rootSchemaMap = {
+  generate: true,                                  // obviously
+  directive: `@acl(role: ['ADMIN', 'USER'])`;      // added to every endpoint
+  whereInputAttributes?: ['id'];                   // queries will only be able to filter on 'id'
+  omitResolvers: [GeneratedResolverField.DESTROY]; // don't generate any delete endpoints
+  omitInputAttributes?: ['id', 'createdAt', 'updatedAt', 'removedAt'];
+  onBeforeResolve?: (args) => { /* ...do some business logic */};
+  onAfterResolve?: (args) => { /* ...notify some integration */};
+  fieldNameMappers?: {
+    FILTERS: 'MY_CUSTOM_FILTERS_NAME';             // defaults to 'FILTERS'
+  };
+}
+
+// schemaMap gets applied to the specified model's generated endpoints - allows for different configurations based on model
+// *** IMPORTANT *** this config takes precedence over the root schema; under the hood, psuedo looks like `merge(rootSchemaMap, schemaMap)`
 const schemaMap = {
   // note: case-sensitivity is not strict
   author: {
-    whereInputAttributes: ['id', 'name', 'surname'],
+    whereInputAttributes: ['id', 'name', 'surname'], // i.e. these fields fulfill our fuzzy search requirements
     resolvers: {
-      findMany: { generate: false },
+      upsert: { generate: false }, // i.e. we don't ever upsert authors
     },
   },
   Book: {
     resolvers: {
-      findAll: { generate: true },
+      destroy: { generate: true }, // i.e. let's override the `rootSchemaMap`
     },
-    omitResolvers: [GeneratedResolverField.FIND_ONE],
+    omitResolvers: [GeneratedResolverField.FIND_ALL], // i.e. this will take down our servers, so we don't want it :)
   },
   BookAuthor: {
-    generate: false,
+    generate: false, // i.e. it's a join table, we don't need it
   },
   City: {
-    omitResolvers: [GeneratedResolverField.FIND_ONE],
-  },
-  // full property list below
-  Foo: {
-    // TODO
+    omitResolvers: [GeneratedResolverField.FIND_ONE], // i.e. we never query for just one city
   },
 };
 
@@ -39,10 +127,12 @@ enum LibraryStatus {
 }
 
 const options = {
+  rootSchemaMap,
   schemaMap,
   enums: { LibraryStatus },
-  models: Models,
+  models: { Author, Book, AuthorBook, City },
 };
+
 const graphqlSequelize = new SequelizeGraphql();
 const schema = await graphqlSequelize.schema(options);
 
