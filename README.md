@@ -273,23 +273,23 @@ Note: required options [here]
 | `sequelizeExportMatcher`    | `fn(exports)` | -                                                    |
 | `schemaMapExportMatcher`    | `fn(exports)` | -                                                    |
 
-### Filepath options export note
-
-- For Filepath options export naming rules, you can export `default`, use a matcher function, or use the provided object property name listed below.
-- We will always use the provided export property name if present
-- We will always use `default` if no other properties are present
-- Matchers will always be called regardless of above (use this if you have files with multiple exports that you want ignored)
-- After all of the above have been respected, the entire object will be merged into the accumulated result (accumulated may mean one file's export or multiple files if a glob has been provided)
-
-&nbsp;
-
-### Filepath options note
+### Notes on Filepath `options`
 
 - All filepaths from root working folder; values can be globs, i.e. `/path/to/dir/**/*`
 - All `pathTo<entity>` must be absolute from root directory
 - Note that for `pathToCustomSchema`, if filepath is glob, exports must be located on `resolvers` or `typedefs` property
 - Export paths can be named after entity or located on default; i.e. `pathToSequelize.sequelize | pathToSequelize.default`, `pathToSchemaMap.schemaMap | pathToSchemaMap.default`
 - Note that 'create mutations' only allow one level of associations; 'update mutations' do not allow for multiple levels yet
+
+&nbsp;
+
+### Notes on Filepath Export Matcher `options`
+
+- For Filepath options export naming rules, you can export `default`, use a matcher function, or use the provided object property name listed below.
+- We will always use the provided export property name if present
+- We will always use `default` if no other properties are present
+- Matchers will always be called regardless of above (use this if you have files with multiple exports that you want ignored)
+- After all of the above have been respected, the entire object will be merged into the accumulated result (accumulated may mean one file's export or multiple files if a glob has been provided)
 
 &nbsp;
 
@@ -310,7 +310,6 @@ Note: required options [here]
 ### alpha
 
 - unit test coverage, Integrations tests against database
-- README (lightweight docs)
 - code cleanup: refactor, patterns, types
 
 ### v1
