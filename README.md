@@ -18,15 +18,16 @@ Popular generation tools hit a ceiling very quickly when systems mature and busi
 
 ## Advantages
 
-- generated schema is similar API to sequelize itself, including APIs for query filters (sequelize operators)
-- performant (no benchmarks yet): generated resolvers do not over-fetch - the resolver layer introspects the query fields and dynamically generates one sequelize query w/ only the requested _includes_ and _attributes_ (note that the _1:many_ and _many:many_ queries get separated under the hood to boost performance [see sequelize docs here])
-- decide which endpoints you want generated via `omitResolvers, generate` options
-- supply pre-built directives to individual endpoints via `directive` option
-- limit which fields can be supplied in `input` in create/update mutations via `omitInputAttributes`
-- middleware to execute business logic via `onBeforeResolve, onAfterResolve` - would recommend using `graphql-middleware` if complex business logic is needed (cleaner code, imo)
-- works well with your own endpoints: provide your own custom schema to merge under the hood, or take the output and merge into your own custom schema
-- options discoverability via file reading in case you have old, hard-to-refactor code (refactor anyway!) - we can work around this.
-- works well with federated schemas
+- Generated schema is similar API to sequelize itself, including APIs for query filters (sequelize operators)
+- Not limited to one database client
+- Performant (no benchmarks yet): generated resolvers do not over-fetch - the resolver layer introspects the query fields and dynamically generates one sequelize query w/ only the requested _includes_ and _attributes_ (note that the _1:many_ and _many:many_ queries get separated under the hood to boost performance [see sequelize docs here])
+- Decide which endpoints you want generated via `omitResolvers, generate` options
+- Supply pre-built directives to individual endpoints via `directive` option
+- Limit which fields can be supplied in `input` in create/update mutations via `omitInputAttributes`
+- Middleware to execute business logic via `onBeforeResolve, onAfterResolve` - would recommend using `graphql-middleware` if complex business logic is needed (cleaner code, imo)
+- Works well with your own endpoints: provide your own custom schema to merge under the hood, or take the output and merge into your own custom schema
+- Options discoverability via file reading in case you have old, hard-to-refactor code (refactor anyway!) - we can work around this.
+- Works well with federated schemas
 
 ## Basic Example
 
