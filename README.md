@@ -8,6 +8,7 @@ npm install sequelize sequelize-graphql
 
 ```typescript
 const schemaMap = {
+  // note: case-sensitivity is not strict
   author: {
     whereInputAttributes: ['id', 'name', 'surname'],
     resolvers: {
@@ -73,13 +74,13 @@ note required options [here]
 
 ### Filepath `options`
 
-| name                 | type   | export rules              |
-| -------------------- | ------ | ------------------------- |
-| `pathToCustomSchema` | string | `default`, `customSchema` |
-| `pathToModels`       | string | `default`, `models`       |
-| `pathToEnums`        | string | `default`, `enums`        |
-| `pathToSequelize`    | string | `default`, `sequelize`    |
-| `pathToSchemaMap`    | string | `default`, `schemaMap`    |
+| name                 | type   | export rules                          |
+| -------------------- | ------ | ------------------------------------- |
+| `pathToCustomSchema` | string | `default`, `customSchema`, everything |
+| `pathToModels`       | string | `default`, `models`, everything       |
+| `pathToEnums`        | string | `default`, `enums`, everything        |
+| `pathToSequelize`    | string | `default`, `sequelize`, everything    |
+| `pathToSchemaMap`    | string | `default`, `schemaMap`, everything    |
 
 &nbsp;
 
@@ -88,16 +89,16 @@ note required options [here]
 | name                        | type | export rules                                         |
 | --------------------------- | ---- | ---------------------------------------------------- |
 | `customSchemaExportMatcher` | fn   | return object after omit/pick properties off exports |
-| `modelsExportMatcher`       | fn   | return object after omit/pick properties off exports |
-| `enumsExportMatcher`        | fn   | return object after omit/pick properties off exports |
-| `sequelizeExportMatcher`    | fn   | return object after omit/pick properties off exports |
-| `schemaMapExportMatcher`    | fn   | return object after omit/pick properties off exports |
+| `modelsExportMatcher`       | fn   | -                                                    |
+| `enumsExportMatcher`        | fn   | -                                                    |
+| `sequelizeExportMatcher`    | fn   | -                                                    |
+| `schemaMapExportMatcher`    | fn   | -                                                    |
 
 ### Filepath options export note
 
 - For Filepath options export naming rules, you can export `default`, use a matcher function, or use the provided object property name listed below.
-- We will always use `default` if no other properties are present
 - We will always use the provided export property name if present
+- We will always use `default` if no other properties are present
 - Matchers will always be called regardless of above (use this if you have files with multiple exports that you want ignored)
 - After all of the above have been respected, the entire object will be merged into the accumulated result (accumulated may mean one file's export or multiple files if a glob has been provided)
 
