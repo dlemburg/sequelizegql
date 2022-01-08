@@ -86,13 +86,13 @@ note required options [here]
 
 ### Matchers `options`
 
-| name                        | type | export rules                                         |
-| --------------------------- | ---- | ---------------------------------------------------- |
-| `customSchemaExportMatcher` | fn   | return object after omit/pick properties off exports |
-| `modelsExportMatcher`       | fn   | -                                                    |
-| `enumsExportMatcher`        | fn   | -                                                    |
-| `sequelizeExportMatcher`    | fn   | -                                                    |
-| `schemaMapExportMatcher`    | fn   | -                                                    |
+| name                        | type          | export rules                                         |
+| --------------------------- | ------------- | ---------------------------------------------------- |
+| `customSchemaExportMatcher` | `fn(exports)` | return object after omit/pick properties off exports |
+| `modelsExportMatcher`       | `fn(exports)` | -                                                    |
+| `enumsExportMatcher`        | `fn(exports)` | -                                                    |
+| `sequelizeExportMatcher`    | `fn(exports)` | -                                                    |
+| `schemaMapExportMatcher`    | `fn(exports)` | -                                                    |
 
 ### Filepath options export note
 
