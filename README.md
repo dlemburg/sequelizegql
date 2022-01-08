@@ -19,7 +19,7 @@ Popular generation tools hit a ceiling very quickly when systems mature and busi
 ## Advantages
 
 - generated schema is similar API to sequelize itself, including APIs for query filters (sequelize operators)
-- performant (no benchmarks yet): queries do not over-fetch - the resolver layer introspects the query fields and dynamically generates one sequelize query w/ only the requested _includes_ and _attributes_ (note that the _1:many_ and _many:many_ queries get separated under the hood to boost performance [see sequelize docs here])
+- performant (no benchmarks yet): generated resolvers do not over-fetch - the resolver layer introspects the query fields and dynamically generates one sequelize query w/ only the requested _includes_ and _attributes_ (note that the _1:many_ and _many:many_ queries get separated under the hood to boost performance [see sequelize docs here])
 - decide which endpoints you want generated via `omitResolvers, generate` options
 - supply pre-built directives to individual endpoints via `directive` option
 - limit which fields can be used in create/update mutations via `omitInputAttributes`
