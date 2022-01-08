@@ -7,6 +7,17 @@ npm install sequelize sequelize-graphql
 ## Basic Example
 
 ```typescript
+const graphqlSequelize = new SequelizeGraphql();
+const schema = await graphqlSequelize.schema(options);
+
+console.log(schema); // { resolvers, typedefs, typedefsString }
+
+// ... load returned schema into your graphql client
+```
+
+## In-Depth Example
+
+```typescript
 @Table({ underscored: true, tableName: 'author', paranoid: true })
 export class Author extends Model<Author> {
   @PrimaryKey
