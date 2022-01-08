@@ -26,6 +26,7 @@ Popular generation tools hit a ceiling very quickly when systems mature and busi
 - middleware to execute business logic via `onBeforeResolve, onAfterResolve` - would recommend using `graphql-middleware` if complex business logic is needed (cleaner code, imo)
 - works well with your own endpoints: provide your own custom schema to merge under the hood, or take the output and merge into your own custom schema
 - options discoverability via file reading in case you have old, hard-to-refactor code (refactor anyway!) - we can work around this.
+- works well with federated schemas
 
 ## Basic Example
 
@@ -232,8 +233,8 @@ Note: required options [here]
 | Name                   | Type                     | Description                                                                                                                |
 | ---------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
 | `sequelize`            | `Sequelize`              | Your Sequelize instance                                                                                                    |
-| `models`               | `Record<string, Model>`  | i.e. `{ Author, Book, Library }`                                                                                           |
-| `enums`                | `Record<string, string>` | i.e. `{ LibraryStatus: { ... } }`                                                                                          |
+| `models`               | `Record<string, Model>`  | i.e. `{ Author, Book, Library, City }`                                                                                     |
+| `enums`                | `Record<string, string>` | i.e. `{ LibraryStatus }`                                                                                                   |
 | `customSchema`         | `CustomSchema`           | i.e. `{ resolvers, typedefs }` - if provided, we will generate and merge the provided custom schema                        |
 | `schemaMap`            | `SchemaMap`              | Complex object that allows configuration and overrides for every model                                                     |
 | `rootSchemaMap`        | `SchemaMapOptions`       | Same as above, but will be applied to _all_ models: use this or add to above `schemaMap[SEQUELIZE_GRAPHQL_NAMESPACE.root]` |
