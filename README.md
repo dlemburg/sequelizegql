@@ -1,5 +1,16 @@
 # sequelize-graphql
 
+- [Installation](https://github.com/dlemburg/sequelize-graphql#installation)
+- [What is `sequelize-graphql`?](https://github.com/dlemburg/sequelize-graphql#what)
+- [Why use `sequelize-graphql`?](https://github.com/dlemburg/sequelize-graphql#why)
+- [Advantages](https://github.com/dlemburg/sequelize-graphql#advantages)
+- [Examples](https://github.com/dlemburg/sequelize-graphql#examples)
+  - [Basic Example](https://github.com/dlemburg/sequelize-graphql#basic)
+  - [In-Depth Example](https://github.com/dlemburg/sequelize-graphql#in-depth)
+  - [Query Magic Example](https://github.com/dlemburg/sequelize-graphql#in-depth)
+
+## Installation
+
 ```terminal
 npm install sequelize sequelize-graphql
 ```
@@ -29,9 +40,11 @@ Popular generation tools hit a ceiling very quickly when systems mature and busi
 - Options discoverability via file reading in case you have old, hard-to-refactor code (refactor anyway!) - we can work around this.
 - Works well with federated schemas
 
-## Basic Example
+# Examples
 
 Examples use `sequelize-typescript` but work fine with `sequelize` too (issues/PRs welcome!)
+
+## Basic
 
 ```typescript
 const graphqlSequelize = new SequelizeGraphql();
@@ -42,7 +55,7 @@ console.log(schema); // { resolvers, typedefs, typedefsString }
 // ... load returned schema into your graphql client
 ```
 
-## In-Depth Example
+## In-Depth
 
 ```typescript
 @Table({ underscored: true, tableName: 'author', paranoid: true })
@@ -178,6 +191,8 @@ console.log(schema); // { resolvers, typedefs, typedefsString }
 
 // ... load returned schema into your graphql client
 ```
+
+## Query Magic
 
 &nbsp;
 A query (pseudocode) like this:
