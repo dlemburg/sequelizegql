@@ -6,13 +6,13 @@ npm install sequelize sequelize-graphql
 
 ## What?
 
-`sequelize-graphql` generates a customizable CRUD graphql schema based on provided sequelize models.
+`sequelize-graphql` generates a customizable CRUD GraphQL schema based on provided sequelize models.
 
 ## Why?
 
 The inspiration for this library was simple: fantastic tools exist in the data-layer/graphql generation space for database first [link here], postgres first [link to postgraphile], and prisma first [link to typegraphql], but missing for sequelize users or those who lean towards code-first data-layer design.
 
-Sequelize ORM has been around nearly a decade. New projects utilizing graphql/sequelize are spun up daily; legacy REST/sequelize projects may want to bring graphql into their ecosystem.
+Sequelize ORM has been around nearly a decade. Greenfield projects utilizing graphql/sequelize are spun up daily and legacy REST/sequelize projects may want to bring GraphQL into their ecosystem.
 
 Popular generation tools hit a ceiling very quickly when systems mature and business logic becomes more complex. The allowable configuration options (on root level and model level) are an attempt to remove that barrier and scale well long-term.
 
