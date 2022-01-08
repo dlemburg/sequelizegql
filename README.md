@@ -205,13 +205,13 @@ will generate and execute a sequelize query like this:
 
 ```typescript
 Author.findAll({
-  where: authorWhereInput,
+  where: authorsWhereInput,
   attributes: ['id', 'name', 'books'],
   include: [
     {
       association: 'books',
       attributes: ['id', 'libraries'],
-      where: bookWhereInput,
+      where: booksWhereInput,
       separate: true,
       include: [
         {
