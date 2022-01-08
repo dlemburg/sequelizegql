@@ -14,8 +14,9 @@ The inspiration for this library was simple: fantastic tools exist in the data-l
 &nbsp;
 Sequelize ORM has been around nearly a decade. New projects utilizing graphql/sequelize are spun up daily; legacy REST/sequelize projects may want to bring graphql into their ecosystem.
 &nbsp;
-Popular generation tools hit a ceiling very quickly when systems mature and business logic becomes more complex. The allowable configuration options (on root level and model level) are an attempt to remove that barrier and scale well long-term. Some of the advantages:
-&nbsp;
+Popular generation tools hit a ceiling very quickly when systems mature and business logic becomes more complex. The allowable configuration options (on root level and model level) are an attempt to remove that barrier and scale well long-term.
+
+## Advantages:
 
 - generated schema is similar API to sequelize itself, including APIs for query filters (sequelize operators)
 - performant (no benchmarks yet): queries do not over-fetch - the resolver layer introspects the query fields and generates 1 dynamic sequelize query w/ only the requested includes and attributes (note that the 1:many/many:many queries get separated under the hood to boost performance [see sequelize docs here])
