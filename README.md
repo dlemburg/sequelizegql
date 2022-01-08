@@ -183,15 +183,17 @@ console.log(schema); // { resolvers, typedefs, typedefsString }
 A query (pseudocode) like this:
 
 ```graphql
-authors(where: AuthorWhereInput!) {
-  id
-  name
-  books(where: BookWhereInput!) {
+Query GetAuthors($authorsWhereInput: AuthorWhereInput!, $booksWhereInput: BookWhereInput!) {
+  authors(where: $authorsWhereInput) {
     id
-    libraries {
+    name
+    books(where: $booksWhereInput) {
       id
-      city {
-        name
+      libraries {
+        id
+        city {
+          name
+        }
       }
     }
   }
@@ -268,10 +270,10 @@ Note: required options [here]
 | Name                        | Type          | Export Rules                                         |
 | --------------------------- | ------------- | ---------------------------------------------------- |
 | `customSchemaExportMatcher` | `fn(exports)` | return object after omit/pick properties off exports |
-| `modelsExportMatcher`       | `fn(exports)` | -                                                    |
-| `enumsExportMatcher`        | `fn(exports)` | -                                                    |
-| `sequelizeExportMatcher`    | `fn(exports)` | -                                                    |
-| `schemaMapExportMatcher`    | `fn(exports)` | -                                                    |
+| `modelsExportMatcher`       | `fn(exports)` | ^ same                                               |
+| `enumsExportMatcher`        | `fn(exports)` | ^ same                                               |
+| `sequelizeExportMatcher`    | `fn(exports)` | ^ same                                               |
+| `schemaMapExportMatcher`    | `fn(exports)` | ^ same                                               |
 
 ### Notes on Filepath `options`
 
@@ -295,7 +297,8 @@ Note: required options [here]
 
 ### Required `options`
 
-- each set of properties is an _xor_ (one of each set of properties must be provided - validation will fail otherwise)
+Each set of properties is an _xor_ (one of each set of properties must be provided - validation will fail otherwise)
+&nbsp;
 
 | object      | filepath          |
 | ----------- | ----------------- |
