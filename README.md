@@ -202,14 +202,19 @@ will generate a sequelize query like this:
 ```typescript
   Author.findAll({
     where: authorWhereInput,
+    attributes: ['id', 'name', 'books'],
     include: [{
       association: 'books',
       attributes: ['id', 'library'],
       where: bookWhereInput
       separate: true,
       include: [{
-        association: 'city',
-        attributes: ['name']
+        association: 'library',
+        attributes: ['id', 'city']
+        include: [{
+          association: 'city',
+          attributes: ['name']
+        }]
       }]
     }]
   })
