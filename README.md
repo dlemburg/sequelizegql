@@ -6,7 +6,7 @@ npm install sequelize sequelize-graphql
 
 ## What?
 
-`sequelize-graphql` generates a customizable (more cusomizations coming) CRUD graphql schema based on provided sequelize data models.
+`sequelize-graphql` generates a customizable CRUD graphql schema based on provided sequelize models.
 
 ## Why?
 
