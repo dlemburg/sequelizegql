@@ -4,7 +4,31 @@
 npm install sequelize sequelize-graphql
 ```
 
+## What is this?
+
+Generates a customizable (more cusomizations coming) CRUD graphql schema based on provided sequelize data models.
+
+## Why sequelize-graphql?
+
+The inspiration for this library was simple: fantastic tools exist in the data-layer/graphql generation space for database first [link here], postgres first [link to postgraphile], and prisma first [link to typegraphql], but missing for sequelize users and for devs who lean towards code/model first data layer design.
+&nbsp;
+Sequelize ORM has been around nearly a decade. New projects utilizing graphql/sequelize are spun up daily; legacy REST/sequelize projects may want to bring graphql into their ecosystem.
+&nbsp;
+Popular generation tools hit a ceiling very quickly when systems mature and business logic becomes more complex. The allowable configuration options (on root level and model level) are an attempt to remove that barrier and scale well long-term. Some of the advantages:
+&nbsp;
+
+- generated schema is similar API to sequelize itself, including APIs for query filters (sequelize operators)
+- performant (no benchmarks yet): queries do not over-fetch - the resolver layer introspects the query fields and generates 1 dynamic sequelize query w/ only the requested includes and attributes (note that the 1:many/many:many queries get separated under the hood to boost performance [see sequelize docs here])
+- decide which endpoints you want generated via `omitResolvers, generate` options
+- supply pre-built directives to individual endpoints via `directive` option
+- limit which fields can be used in create/update mutations via `omitInputAttributes`
+- middleware to execute business logic via `onBeforeResolve, onAfterResolve` - would recommend using `graphql-middleware` if complex business logic is needed (cleaner code, imo)
+- works well with your own endpoints: provide your own custom schema to merge under the hood, or take the output and merge into your own custom schema
+- options discoverability via file reading in case you have old, hard-to-refactor code (refactor anyway!) - we can work around this.
+
 ## Basic Example
+
+Examples use `sequelize-typescript` but work fine with `sequelize` too (issues/PRs welcome!)
 
 ```typescript
 const graphqlSequelize = new SequelizeGraphql();
@@ -152,15 +176,54 @@ console.log(schema); // { resolvers, typedefs, typedefsString }
 // ... load returned schema into your graphql client
 ```
 
-See more complex examples [here]
+&nbsp;
+A query (pseudocode) like this:
+
+```graphql
+authors(where: AuthorWhereInput!) {
+  id
+  name
+  books(where: BookWhereInput!) {
+    id
+    library {
+      id
+      city {
+        name
+      }
+    }
+  }
+}
+```
+
+&nbsp;
+will generate a sequelize query like this:
+
+```typescript
+  Author.findAll({
+    where: authorWhereInput,
+    include: [{
+      association: 'books',
+      attributes: ['id', 'library'],
+      where: bookWhereInput
+      separate: true,
+      include: [{
+        association: 'city',
+        attributes: ['name']
+      }]
+    }]
+  })
+```
+
+&nbsp;
+See more complex schema examples [here]
 
 &nbsp;
 
 # API
 
-note required options [here]
+Note: required options [here]
 
-| name                   | type                     | description                                                                                                                |
+| Name                   | Type                     | Description                                                                                                                |
 | ---------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
 | `sequelize`            | `Sequelize`              | Your Sequelize instance                                                                                                    |
 | `models`               | `Record<string, Model>`  | i.e. `{ Author, Book, Library }`                                                                                           |
@@ -175,7 +238,7 @@ note required options [here]
 
 ### Filepath `options`
 
-| name                 | type   | export rules                          |
+| Name                 | Type   | Export Rules                          |
 | -------------------- | ------ | ------------------------------------- |
 | `pathToCustomSchema` | string | `default`, `customSchema`, everything |
 | `pathToModels`       | string | `default`, `models`, everything       |
@@ -187,7 +250,7 @@ note required options [here]
 
 ### Matchers `options`
 
-| name                        | type          | export rules                                         |
+| Name                        | Type          | Export Rules                                         |
 | --------------------------- | ------------- | ---------------------------------------------------- |
 | `customSchemaExportMatcher` | `fn(exports)` | return object after omit/pick properties off exports |
 | `modelsExportMatcher`       | `fn(exports)` | -                                                    |
@@ -217,7 +280,7 @@ note required options [here]
 
 ### Required `options`
 
-- each set of properties is an _xor_ - one of each set of properties must be provided
+- each set of properties is an _xor_ (one of each set of properties must be provided - validation will fail otherwise)
 
 | object      | filepath          |
 | ----------- | ----------------- |
