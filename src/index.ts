@@ -7,7 +7,7 @@ import { buildRootTypedefs } from './core/util/root-typedefs-util';
 import { buildSchema } from './core';
 import { StateFactory } from './core/classes/state';
 import { Sequelize } from 'sequelize';
-import { InitializeInput, InitializeResponse, SchemaMap } from './types';
+import { InitializeInput, InitializeResponse, SchemaMap, SchemaMapOptions } from './types';
 import { getExports } from './util/export-util';
 import { validateInput } from './util/validate-input-util';
 import { buildGql } from './util/gql-util';
@@ -29,7 +29,8 @@ class SequelizeGraphql {
       enums = {},
       sequelize = {} as Sequelize,
       schemaMap = {} as SchemaMap,
-      customSchema = {} as SchemaMap,
+      rootSchemaMap = {} as SchemaMapOptions,
+      customSchema = {} as any,
       ...options
     } = input;
 
@@ -61,7 +62,12 @@ class SequelizeGraphql {
       sequelize: sequelizeExport,
     });
 
-    const { typedefs, resolvers } = buildSchema(modelsExport, enumsExport, schemaMapExport);
+    const { typedefs, resolvers } = buildSchema(
+      modelsExport,
+      enumsExport,
+      schemaMapExport,
+      rootSchemaMap
+    );
 
     this.typedefs = typedefs + buildRootTypedefs(options);
     this.resolvers = resolvers;

@@ -24,13 +24,14 @@ const findModelOverrides = (schemaMap: SchemaMap, model): SchemaMapOptions => {
 export const buildSchema = (
   models: Models | undefined,
   enums: Enums | undefined,
-  schemaMap: SchemaMap
+  schemaMap: SchemaMap = {},
+  rootSchemaMap: SchemaMapOptions
 ): BuildSchemaResponse => {
   const enumGql = generateEnumsGql(buildEnums(enums));
   const orderGql = optionsQueryGql();
   const result: any = Object.values(models as any).reduce(
     (acc: BuildSchemaResponse, model: any): BuildSchemaResponse => {
-      const root = cloneDeep(schemaMap[SEQUELIZE_GRAPHQL_NAMESPACE.root]);
+      const root = cloneDeep(rootSchemaMap ?? schemaMap[SEQUELIZE_GRAPHQL_NAMESPACE.root]);
       const options = merge(root, findModelOverrides(schemaMap, model));
 
       if (options?.generate === false) return acc;

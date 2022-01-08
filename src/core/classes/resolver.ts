@@ -110,7 +110,11 @@ class Resolver extends BaseGql {
       ...(maybeGenerate(this.options, GeneratedResolverField.DELETE_MUTATION) && {
         [this.resolverMap[GeneratedResolverField.DELETE_MUTATION].name]: middleware(
           this.options,
-          (_, { where, options = {} }) => this.service.destroy(where, options)
+          async (_, { where, options = {} }) => {
+            const result = await this.service.destroy(where, options);
+
+            return result;
+          }
         ),
       }),
     };

@@ -1,6 +1,10 @@
 import { DataTypes, FindOptions, Model, Sequelize, WhereOptions } from 'sequelize';
 import { DocumentNode } from 'graphql';
 
+export type DeleteResponse = { id: number; deletedCount: number };
+
+export type DeleteOptions = { force: boolean };
+
 type ModelName = string;
 
 export enum SEQUELIZE_GRAPHQL_NAMESPACE {
@@ -50,6 +54,7 @@ export type InitializeInput = {
   enums?: Record<any, any>;
   models?: Record<any, any>;
   schemaMap?: SchemaMap;
+  rootSchemaMap?: SchemaMapOptions;
   customSchema?: any;
   pathToCustomSchema?: string;
   pathToModels?: string;

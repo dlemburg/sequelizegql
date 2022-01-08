@@ -1,6 +1,11 @@
 import { Model, CreateOptions, UpdateOptions, DestroyOptions } from 'sequelize';
 import { buildSortDesc } from '../../util/sequelize-util';
-import { BaseServiceFilter, BaseServiceOptions, ModelAttributes } from '../../types/types';
+import {
+  BaseServiceFilter,
+  BaseServiceOptions,
+  DeleteResponse,
+  ModelAttributes,
+} from '../../types/types';
 import { StateFactory } from '../../core/classes/state';
 import { buildAssociationCreateOptions, getAttributes } from './util';
 
@@ -72,9 +77,9 @@ const upsert =
 const destroy =
   (model) =>
   async (where, options = {}) => {
-    await model.destroy({ where, ...options });
+    const deletedCount = await model.destroy({ where, ...options });
 
-    return { id: where?.id };
+    return { id: where?.id, deletedCount };
   };
 
 const findLastCreated =
@@ -181,7 +186,7 @@ export type BaseServiceInterface<T> = {
     updateOnlyInput?: Partial<T>,
     options?: Omit<UpdateOptions<T>, 'where'>
   ) => Promise<T>;
-  destroy: (filter: BaseServiceFilter<T>, options?: DestroyOptions<T>) => Promise<{ id: number }>;
+  destroy: (filter: BaseServiceFilter<T>, options?: DestroyOptions<T>) => Promise<DeleteResponse>;
   restore: (filter: BaseServiceFilter<T>, options?: Omit<UpdateOptions<T>, 'where'>) => Promise<T>;
 };
 
