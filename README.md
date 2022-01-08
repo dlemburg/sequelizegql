@@ -10,7 +10,7 @@ npm install sequelize sequelize-graphql
 
 ## Why?
 
-The inspiration for this library was simple: fantastic tools exist in the data-layer/graphql generation space for database first [link here], postgres first [link to postgraphile], and prisma first [link to typegraphql], but missing for sequelize users and for devs who lean towards code/model first data layer design.
+The inspiration for this library was simple: fantastic tools exist in the data-layer/graphql generation space for database first [link here], postgres first [link to postgraphile], and prisma first [link to typegraphql], but missing for sequelize users or those who lean towards code-first data-layer design.
 &nbsp;
 Sequelize ORM has been around nearly a decade. New projects utilizing graphql/sequelize are spun up daily; legacy REST/sequelize projects may want to bring graphql into their ecosystem.
 &nbsp;
