@@ -187,7 +187,7 @@ authors(where: AuthorWhereInput!) {
   name
   books(where: BookWhereInput!) {
     id
-    library {
+    libraries {
       id
       city {
         name
@@ -201,24 +201,31 @@ authors(where: AuthorWhereInput!) {
 will generate a sequelize query like this:
 
 ```typescript
-  Author.findAll({
-    where: authorWhereInput,
-    attributes: ['id', 'name', 'books'],
-    include: [{
+Author.findAll({
+  where: authorWhereInput,
+  attributes: ['id', 'name', 'books'],
+  include: [
+    {
       association: 'books',
-      attributes: ['id', 'library'],
-      where: bookWhereInput
+      attributes: ['id', 'libraries'],
+      where: bookWhereInput,
       separate: true,
-      include: [{
-        association: 'library',
-        attributes: ['id', 'city']
-        include: [{
-          association: 'city',
-          attributes: ['name']
-        }]
-      }]
-    }]
-  })
+      include: [
+        {
+          association: 'libraries',
+          attributes: ['id', 'city'],
+          separate: true,
+          include: [
+            {
+              association: 'city',
+              attributes: ['name'],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+});
 ```
 
 &nbsp;
