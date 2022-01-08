@@ -7,7 +7,13 @@
 - [Examples](https://github.com/dlemburg/sequelize-graphql#examples)
   - [Basic Example](https://github.com/dlemburg/sequelize-graphql#basic)
   - [In-Depth Example](https://github.com/dlemburg/sequelize-graphql#in-depth)
-  - [Query Magic Example](https://github.com/dlemburg/sequelize-graphql#in-depth)
+  - [Query Magic Example](https://github.com/dlemburg/sequelize-graphql#query-magic)
+- [API](https://github.com/dlemburg/sequelize-graphql#api)
+  - [Object Options](https://github.com/dlemburg/sequelize-graphql#options)
+  - [Filepath Options](https://github.com/dlemburg/sequelize-graphql#filepath-options)
+  - [Export Matcher Options](https://github.com/dlemburg/sequelize-graphql#export-matcher-options)
+  - [Required Options](https://github.com/dlemburg/sequelize-graphql#required-options)
+- [TODO](https://github.com/dlemburg/sequelize-graphql#todo)
 
 ## Installation
 
@@ -21,7 +27,7 @@ npm install sequelize sequelize-graphql
 
 ## Why?
 
-The inspiration for this library was simple: fantastic tools exist in the data-layer/graphql generation space for database first [link here], postgres first [link to postgraphile], and prisma first [link to typegraphql], but missing for sequelize users or those who lean towards code-first data-layer design.
+The inspiration for this library was simple: fantastic tools exist in the data-layer/graphql generation space for database first [here](https://supabase.com/blog/2021/12/03/pg-graphql), postgres first [here](https://www.npmjs.com/package/postgraphile), and prisma first [here](https://typegraphql.com/), but missing for sequelize users or those who lean towards code-first data-layer design.
 
 Sequelize ORM has been around nearly a decade. Greenfield projects utilizing graphql/sequelize are spun up daily and legacy REST/sequelize projects may want to bring GraphQL into their ecosystem.
 
@@ -253,7 +259,9 @@ See more complex schema examples [here]
 
 # API
 
-Note: required options [here]
+Note: required options [here](https://github.com/dlemburg/sequelize-graphql#required-options)
+
+## Options
 
 | Name                   | Type                     | Description                                                                                                                |
 | ---------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
@@ -280,7 +288,7 @@ Note: required options [here]
 
 &nbsp;
 
-### Matchers `options`
+### Export Matcher `options`
 
 | Name                        | Type          | Export Rules                                         |
 | --------------------------- | ------------- | ---------------------------------------------------- |
