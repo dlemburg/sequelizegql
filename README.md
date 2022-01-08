@@ -310,7 +310,7 @@ Note: required options [here]
 ### alpha
 
 - unit test coverage, Integrations tests against database
-- code cleanup: refactor, patterns, types
+- code and docs cleanup: refactor, patterns, types
 
 ### v1
 
