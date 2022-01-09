@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
-import { Enums, Models, SchemaMap, SchemaMapOptions, SEQUELIZE_GRAPHQL_NAMESPACE } from '../types';
+import { Enums, Models, SchemaMap, SchemaMapOptions } from '../types';
 import { buildEnums } from './util/enum-util';
 import { lowercaseFirstLetter } from './util/general-util';
 import { ResolverFactory, TypedefFactory } from './classes';
@@ -31,7 +31,7 @@ export const buildSchema = (
   const orderGql = optionsQueryGql();
   const result: any = Object.values(models as any).reduce(
     (acc: BuildSchemaResponse, model: any): BuildSchemaResponse => {
-      const root = cloneDeep(rootSchemaMap ?? schemaMap[SEQUELIZE_GRAPHQL_NAMESPACE.root]);
+      const root = cloneDeep(rootSchemaMap);
       const options = merge(root, findModelOverrides(schemaMap, model));
 
       if (options?.generate === false) return acc;

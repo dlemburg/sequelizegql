@@ -7,10 +7,6 @@ export type DeleteOptions = { force: boolean };
 
 type ModelName = string;
 
-export enum SEQUELIZE_GRAPHQL_NAMESPACE {
-  root = 'SEQUELIZE_GRAPHQL_ROOT',
-}
-
 export enum GeneratedResolverField {
   CREATE_MUTATION = 'create',
   CREATE_MANY_MUTATION = 'createMany',

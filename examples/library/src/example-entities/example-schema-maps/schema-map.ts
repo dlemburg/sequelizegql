@@ -1,18 +1,15 @@
-import {
-  GeneratedResolverField,
-  SchemaMap,
-  SEQUELIZE_GRAPHQL_NAMESPACE,
-} from '../../../../../src/types';
+import { GeneratedResolverField, SchemaMap } from '../../../../../src/types';
+
+export const rootSchemaMap = {
+  resolvers: {
+    findAll: { generate: false },
+  },
+  omitResolvers: [GeneratedResolverField.FIND_ONE],
+  omitInputAttributes: ['createdAt', 'updatedAt', 'removedAt'],
+  whereInputAttributes: ['id'],
+};
 
 export const schemaMap: SchemaMap = {
-  [SEQUELIZE_GRAPHQL_NAMESPACE.root]: {
-    resolvers: {
-      findAll: { generate: false },
-    },
-    omitResolvers: [GeneratedResolverField.FIND_ONE],
-    omitInputAttributes: ['createdAt', 'updatedAt', 'removedAt'],
-    whereInputAttributes: ['id'],
-  },
   author: {
     whereInputAttributes: ['id', 'name', 'surname'],
     resolvers: {

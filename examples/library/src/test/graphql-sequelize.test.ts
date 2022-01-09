@@ -29,4 +29,17 @@ describe('[graphql-sequelize.test.ts] suite', () => {
       removeAllWhitespace(importsTypedefsString)
     );
   });
+
+  // test('[getSchema] validating schemaMap result', async () => {
+  //   const sequelize = await setup();
+
+  //   const result = await getSchema({
+  //     ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
+  //     sequelize,
+  //   });
+
+  //   const foo = removeAllWhitespace(result.typedefsString);
+
+  //   expect(foo).toEqual(removeAllWhitespace(importsTypedefsString));
+  // });
 });

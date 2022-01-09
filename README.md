@@ -355,16 +355,16 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 
 ## Options
 
-| Name                   | Type                     | Description                                                                                                                |
-| ---------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
-| `sequelize`            | `Sequelize`              | Your Sequelize instance                                                                                                    |
-| `models`               | `Record<string, Model>`  | i.e. `{ Author, Book, Library, City }`                                                                                     |
-| `enums`                | `Record<string, string>` | i.e. `{ LibraryStatus }`                                                                                                   |
-| `customSchema`         | `CustomSchema`           | i.e. `{ resolvers, typedefs }` - if provided, we will generate and merge the provided custom schema                        |
-| `schemaMap`            | `SchemaMap`              | Complex object that allows configuration and overrides for every model                                                     |
-| `rootSchemaMap`        | `SchemaMapOptions`       | Same as above, but will be applied to _all_ models: use this or add to above `schemaMap[SEQUELIZE_GRAPHQL_NAMESPACE.root]` |
-| `deleteResponseGql`    | `string`                 | Your own slimmed-down delete response; by default - `DeleteResponse`                                                       |
-| `includeDeleteOptions` | `boolean`                | This will create delete mutations that accept `options: DeleteOptions` as args                                             |
+| Name                   | Type                     | Description                                                                                         |
+| ---------------------- | ------------------------ | --------------------------------------------------------------------------------------------------- |
+| `sequelize`            | `Sequelize`              | Your Sequelize instance                                                                             |
+| `models`               | `Record<string, Model>`  | i.e. `{ Author, Book, Library, City }`                                                              |
+| `enums`                | `Record<string, string>` | i.e. `{ LibraryStatus }`                                                                            |
+| `customSchema`         | `CustomSchema`           | i.e. `{ resolvers, typedefs }` - if provided, we will generate and merge the provided custom schema |
+| `schemaMap`            | `SchemaMap`              | Complex object that allows configuration and overrides for every model                              |
+| `rootSchemaMap`        | `SchemaMapOptions`       | Same as above, but will be applied to _all_ models                                                  |
+| `deleteResponseGql`    | `string`                 | Your own slimmed-down delete response; by default - `DeleteResponse`                                |
+| `includeDeleteOptions` | `boolean`                | This will create delete mutations that accept `options: DeleteOptions` as args                      |
 
 &nbsp;
 

@@ -48,9 +48,7 @@ extend type Mutation {
 }
 
 extend type Query {
-	author(where: AuthorWhereInput, options: OptionsInput): Author 
 	authorsPaged(where: AuthorWhereInput, options: OptionsInputPaged): AuthorPaged! 
-	allAuthors: [Author]! 
 
 }
 
@@ -69,9 +67,6 @@ input  AuthorInput {
 	name: String
 	surname: String
 	birthDate: DateTime
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 	books: [BookInput]
 }
 input  UpdateAuthorInput {
@@ -79,9 +74,6 @@ input  UpdateAuthorInput {
 	name: String
 	surname: String
 	birthDate: DateTime
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 }
 type AuthorPaged {
 	entities: [Author]
@@ -90,11 +82,6 @@ type AuthorPaged {
 
 input  BookLibraryWhereInput {
 	id: Int
-	libraryId: Int
-	bookId: Int
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 	AND: [BookLibraryWhereInput]
 	OR: [BookLibraryWhereInput]
 	FILTERS: BookLibraryWhereFilterInput
@@ -128,7 +115,7 @@ input BookLibraryWhereFilterOperatorMapInput {
 }
 
 input BookLibraryWhereFilterInput {
-	id: BookLibraryWhereFilterOperatorMapInput, libraryId: BookLibraryWhereFilterOperatorMapInput, bookId: BookLibraryWhereFilterOperatorMapInput, createdAt: BookLibraryWhereFilterOperatorMapInput, updatedAt: BookLibraryWhereFilterOperatorMapInput, removedAt: BookLibraryWhereFilterOperatorMapInput
+	id: BookLibraryWhereFilterOperatorMapInput
 }
 extend type Mutation {
 	createBookLibrary(input: BookLibraryInput!): BookLibrary! 
@@ -140,10 +127,8 @@ extend type Mutation {
 }
 
 extend type Query {
-	bookLibrary(where: BookLibraryWhereInput, options: OptionsInput): BookLibrary 
 	bookLibraries(where: BookLibraryWhereInput, options: OptionsInput): [BookLibrary]! 
 	bookLibrariesPaged(where: BookLibraryWhereInput, options: OptionsInputPaged): BookLibraryPaged! 
-	allBookLibraries: [BookLibrary]! 
 
 }
 
@@ -159,17 +144,11 @@ input  BookLibraryInput {
 	id: Int
 	libraryId: Int
 	bookId: Int
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 }
 input  UpdateBookLibraryInput {
 	id: Int
 	libraryId: Int
 	bookId: Int
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 }
 type BookLibraryPaged {
 	entities: [BookLibrary]
@@ -178,12 +157,6 @@ type BookLibraryPaged {
 
 input  BookWhereInput {
 	id: Int
-	isbn: String
-	title: String
-	categoryId: Int
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 	AND: [BookWhereInput]
 	OR: [BookWhereInput]
 	FILTERS: BookWhereFilterInput
@@ -217,7 +190,7 @@ input BookWhereFilterOperatorMapInput {
 }
 
 input BookWhereFilterInput {
-	id: BookWhereFilterOperatorMapInput, isbn: BookWhereFilterOperatorMapInput, title: BookWhereFilterOperatorMapInput, categoryId: BookWhereFilterOperatorMapInput, createdAt: BookWhereFilterOperatorMapInput, updatedAt: BookWhereFilterOperatorMapInput, removedAt: BookWhereFilterOperatorMapInput
+	id: BookWhereFilterOperatorMapInput
 }
 extend type Mutation {
 	createBook(input: BookInput!): Book! 
@@ -252,9 +225,6 @@ input  BookInput {
 	isbn: String
 	title: String
 	categoryId: Int
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 	category: CategoryInput
 	authors: [AuthorInput]
 	libraries: [LibraryInput]
@@ -264,9 +234,6 @@ input  UpdateBookInput {
 	isbn: String
 	title: String
 	categoryId: Int
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 }
 type BookPaged {
 	entities: [Book]
@@ -275,10 +242,6 @@ type BookPaged {
 
 input  CategoryWhereInput {
 	id: Int
-	name: String
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 	AND: [CategoryWhereInput]
 	OR: [CategoryWhereInput]
 	FILTERS: CategoryWhereFilterInput
@@ -312,7 +275,7 @@ input CategoryWhereFilterOperatorMapInput {
 }
 
 input CategoryWhereFilterInput {
-	id: CategoryWhereFilterOperatorMapInput, name: CategoryWhereFilterOperatorMapInput, createdAt: CategoryWhereFilterOperatorMapInput, updatedAt: CategoryWhereFilterOperatorMapInput, removedAt: CategoryWhereFilterOperatorMapInput
+	id: CategoryWhereFilterOperatorMapInput
 }
 extend type Mutation {
 	createCategory(input: CategoryInput!): Category! 
@@ -324,10 +287,8 @@ extend type Mutation {
 }
 
 extend type Query {
-	category(where: CategoryWhereInput, options: OptionsInput): Category 
 	categories(where: CategoryWhereInput, options: OptionsInput): [Category]! 
 	categoriesPaged(where: CategoryWhereInput, options: OptionsInputPaged): CategoryPaged! 
-	allCategories: [Category]! 
 
 }
 
@@ -341,16 +302,10 @@ type  Category {
 input  CategoryInput {
 	id: Int
 	name: String
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 }
 input  UpdateCategoryInput {
 	id: Int
 	name: String
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 }
 type CategoryPaged {
 	entities: [Category]
@@ -359,11 +314,6 @@ type CategoryPaged {
 
 input  CityWhereInput {
 	id: Int
-	postalCode: String
-	name: String
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 	AND: [CityWhereInput]
 	OR: [CityWhereInput]
 	FILTERS: CityWhereFilterInput
@@ -397,7 +347,7 @@ input CityWhereFilterOperatorMapInput {
 }
 
 input CityWhereFilterInput {
-	id: CityWhereFilterOperatorMapInput, postalCode: CityWhereFilterOperatorMapInput, name: CityWhereFilterOperatorMapInput, createdAt: CityWhereFilterOperatorMapInput, updatedAt: CityWhereFilterOperatorMapInput, removedAt: CityWhereFilterOperatorMapInput
+	id: CityWhereFilterOperatorMapInput
 }
 extend type Mutation {
 	createCity(input: CityInput!): City! 
@@ -411,7 +361,6 @@ extend type Mutation {
 extend type Query {
 	cities(where: CityWhereInput, options: OptionsInput): [City]! 
 	citiesPaged(where: CityWhereInput, options: OptionsInputPaged): CityPaged! 
-	allCities: [City]! 
 
 }
 
@@ -427,17 +376,11 @@ input  CityInput {
 	id: Int
 	postalCode: String
 	name: String
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 }
 input  UpdateCityInput {
 	id: Int
 	postalCode: String
 	name: String
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 }
 type CityPaged {
 	entities: [City]
@@ -446,14 +389,6 @@ type CityPaged {
 
 input  LibraryWhereInput {
 	id: Int
-	cityId: Int
-	name: String
-	address: String
-	description: String
-	status: LibraryStatus
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 	AND: [LibraryWhereInput]
 	OR: [LibraryWhereInput]
 	FILTERS: LibraryWhereFilterInput
@@ -487,7 +422,7 @@ input LibraryWhereFilterOperatorMapInput {
 }
 
 input LibraryWhereFilterInput {
-	id: LibraryWhereFilterOperatorMapInput, cityId: LibraryWhereFilterOperatorMapInput, name: LibraryWhereFilterOperatorMapInput, address: LibraryWhereFilterOperatorMapInput, description: LibraryWhereFilterOperatorMapInput, status: LibraryWhereFilterOperatorMapInput, createdAt: LibraryWhereFilterOperatorMapInput, updatedAt: LibraryWhereFilterOperatorMapInput, removedAt: LibraryWhereFilterOperatorMapInput
+	id: LibraryWhereFilterOperatorMapInput
 }
 extend type Mutation {
 	createLibrary(input: LibraryInput!): Library! 
@@ -499,10 +434,8 @@ extend type Mutation {
 }
 
 extend type Query {
-	library(where: LibraryWhereInput, options: OptionsInput): Library 
 	libraries(where: LibraryWhereInput, options: OptionsInput): [Library]! 
 	librariesPaged(where: LibraryWhereInput, options: OptionsInputPaged): LibraryPaged! 
-	allLibraries: [Library]! 
 
 }
 
@@ -526,9 +459,6 @@ input  LibraryInput {
 	address: String
 	description: String
 	status: LibraryStatus
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 	city: CityInput
 	books: [BookInput]
 }
@@ -539,9 +469,6 @@ input  UpdateLibraryInput {
 	address: String
 	description: String
 	status: LibraryStatus
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
 }
 type LibraryPaged {
 	entities: [Library]
