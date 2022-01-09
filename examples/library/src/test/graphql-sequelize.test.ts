@@ -13,7 +13,7 @@ const setup = async () => {
 const removeAllWhitespace = (str: string) => str.replaceAll(/\s/g, '');
 
 describe('[graphql-sequelize.test.ts] suite', () => {
-  test('[getSchema] `pathOnly` should return a graphql schema', async () => {
+  test('[getSchema] `pathOnly` options should return a graphql schema typedefs matching `paths-typedefs-string`', async () => {
     await setup();
 
     const result = await getSchema(EXAMPLE_INITIALIZATION_OPTIONS.pathOnlyTest);
@@ -23,7 +23,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
     );
   });
 
-  test('[getSchema] `imports` should return a graphql schema', async () => {
+  test('[getSchema] `imports` options should return a graphql schema typedefs matching `imports-typedefs-string`', async () => {
     const sequelize = await setup();
 
     const result = await getSchema({
