@@ -37,7 +37,7 @@ Popular generation tools hit a ceiling very quickly when systems mature and busi
 
 - Generated schema is similar API to sequelize itself, including APIs for query filters (sequelize operators)
 - Not limited to one database client
-- Performant (no benchmarks yet): generated resolvers do not over-fetch - the resolver layer introspects the query fields and dynamically generates one sequelize query w/ only the requested _includes_ and _attributes_ (note that the _1:many_ and _many:many_ queries get separated under the hood to boost performance [see sequelize docs here])
+- Performant (no benchmarks yet): generated resolvers do not over-fetch - the resolver layer introspects the query fields and dynamically generates one sequelize query w/ only the requested _includes_ and _attributes_ (note that the _1:many_ and _many:many_ queries get separated under the hood to boost performance [see sequelize docs here and search for 'separate: true'](https://sequelize.org/master/manual/eager-loading.html))
 - Decide which endpoints you want generated via `omitResolvers, generate` options
 - Supply pre-built directives to individual endpoints via `directive` option
 - Limit which fields can be supplied in `input` in create/update mutations via `omitInputAttributes`
@@ -274,7 +274,7 @@ Author.findAll({
 ```
 
 &nbsp;
-See more complex schema examples [here]
+See full application schema example [here](https://github.com/dlemburg/sequelize-graphql/blob/main/examples/library/src/index.ts)
 
 &nbsp;
 
