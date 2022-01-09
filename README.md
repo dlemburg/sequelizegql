@@ -227,7 +227,7 @@ For the above example, the following `Author` Queries and Mutations are availabl
 
 ### Types and Inputs
 
-- `...modelFields` represents the fields on each model, i.e. `id`, `name`, `surname`, etc.
+- `...modelFields` represents the root fields on each model, i.e. `id`, `name`, `surname`, etc.
 - `...allAssociations` model's associations, i.e. `Author->Books->Libraries->City`
 - `...oneLevelOfAssociations` represents _one_ layer of associations (TODO: make recursive)
 - The following are customizable via the `schemaMap` where you can define fields to omit for both queries (where inputs) and mutations (inputs)
@@ -236,16 +236,16 @@ For the above example, the following `Author` Queries and Mutations are availabl
 
 &nbsp;
 
-| Name                | Fields                                                  |
-| ------------------- | ------------------------------------------------------- |
-| `AuthorWhereInput`  | `...modelFields, ...allAssociations, OR, AND, FILTERS`  |
-| `AuthorInput`       | `...modelFields`, `...oneLevelOfAssociations`           |
-| `UpdateAuthorInput` | `...modelFields`                                        |
-| `DeleteOptions`     | `force: boolean` (setting force: true will hard delete) |
-| `DeleteResponse`    | `{ id: JSON, deletedCount: Int }`                       |
-| `AND`               | `[AuthorWhereInput]`                                    |
-| `OR`                | `[AuthorWhereInput]`                                    |
-| `FILTERS`           | see below                                               |
+| Name                | Fields                                                      |
+| ------------------- | ----------------------------------------------------------- |
+| `AuthorWhereInput`  | `...modelFields, ...allAssociations, OR, AND, FILTERS`      |
+| `AuthorInput`       | `...modelFields`, `...oneLevelOfAssociations`               |
+| `UpdateAuthorInput` | `...modelFields`                                            |
+| `DeleteOptions`     | `{ force: boolean }` (setting force: true will hard delete) |
+| `DeleteResponse`    | `{ id: JSON, deletedCount: Int }`                           |
+| `AND`               | `[AuthorWhereInput]`                                        |
+| `OR`                | `[AuthorWhereInput]`                                        |
+| `FILTERS`           | see below                                                   |
 
 ### FILTERS
 
