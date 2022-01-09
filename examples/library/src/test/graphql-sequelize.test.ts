@@ -1,14 +1,8 @@
 import { EXAMPLE_INITIALIZATION_OPTIONS } from '../example-entities/example-initialization-input-options';
 import { getSchema } from '../graphql/schemas';
-import { init } from '../orm/sequelize';
+import { setup } from './setup';
 import { typedefsString as importsTypedefsString } from './snapshots/imports-typedefs-string';
 import { typedefsString as pathsTypedefsString } from './snapshots/paths-typedefs-string';
-
-jest.setTimeout(30000);
-
-const setup = async () => {
-  return init();
-};
 
 const removeAllWhitespace = (str: string) => str.replaceAll(/\s/g, '');
 
