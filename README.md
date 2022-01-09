@@ -7,7 +7,7 @@
 - [Examples](https://github.com/dlemburg/sequelize-graphql#examples)
   - [Basic Example](https://github.com/dlemburg/sequelize-graphql#basic)
   - [In-Depth Example](https://github.com/dlemburg/sequelize-graphql#in-depth)
-  - [Query Magic Example](https://github.com/dlemburg/sequelize-graphql#query-magic-example)
+  - [Generated Example](https://github.com/dlemburg/sequelize-graphql#generated-example)
     - [Queries](https://github.com/dlemburg/sequelize-graphql#queries)
     - [Mutations](https://github.com/dlemburg/sequelize-graphql#mutations)
     - [Types and Inputs](https://github.com/dlemburg/sequelize-graphql#types-and-inputs)
@@ -33,7 +33,7 @@ npm install sequelize sequelize-graphql
 
 The inspiration for this library was simple: fantastic tools exist in the data-layer/graphql generation space for database first [here](https://supabase.com/blog/2021/12/03/pg-graphql), postgres first [here](https://www.npmjs.com/package/postgraphile), and prisma first [here](https://typegraphql.com/), but missing for sequelize users or those who lean towards code-first data-layer design.
 
-Sequelize ORM has been around nearly a decade. Greenfield projects utilizing graphql/sequelize are spun up daily and legacy REST/sequelize projects may want to bring GraphQL into their ecosystem.
+[Sequelize ORM](https://sequelize.org/) is battle-tested and mature. Greenfield projects utilizing graphql/sequelize are spun up daily and legacy REST/sequelize projects may want to bring GraphQL into their ecosystem.
 
 Popular generation tools hit a ceiling very quickly when systems mature and business logic becomes more complex. The allowable configuration options (on root level and model level) are an attempt to remove that barrier and scale well long-term.
 
@@ -42,12 +42,12 @@ Popular generation tools hit a ceiling very quickly when systems mature and busi
 - Generated schema is similar API to sequelize itself, including APIs for query filters (sequelize operators)
 - Not limited to one database client
 - Performant (no benchmarks yet): generated resolvers do not over-fetch - the resolver layer introspects the query fields and dynamically generates one sequelize query w/ only the requested _includes_ and _attributes_ (note that the _1:many_ and _many:many_ queries get separated under the hood to boost performance [see sequelize docs here and search for 'separate: true'](https://sequelize.org/master/manual/eager-loading.html))
-- Decide which endpoints you want generated via `omitResolvers, generate` options
+- Configure which endpoints you want generated via `omitResolvers, generate` options
 - Supply pre-built directives to individual endpoints via `directive` option
 - Limit which fields can be supplied in `input` in create/update mutations via `omitInputAttributes`
-- Middleware to execute business logic via `onBeforeResolve, onAfterResolve` - would recommend using `graphql-middleware` if complex business logic is needed (cleaner code, imo)
-- Works well with your own endpoints: provide your own custom schema to merge under the hood, or take the output and merge into your own custom schema
-- Options discoverability via file reading in case you have old, hard-to-refactor code (refactor anyway!) - we can work around this.
+- Execute business logic with middleware via `onBeforeResolve, onAfterResolve` - would recommend using `graphql-middleware` if complex business logic is needed (cleaner code, imo)
+- Works well with your own endpoints: take the output and merge into your own custom schema
+- Flexible discoverability via file reading in case you have old, hard-to-refactor code (refactor anyway!) - we can work around this.
 - Works well with federated schemas
 
 # Examples
@@ -188,10 +188,15 @@ export class City extends Model<City> {
 }
 
 
-// rootSchemaMap applies to *every* model's generated endpoints
-// all configurable options listed below
+/***
+ * IMPORTANT
+ *
+ * `schemaMap`` config takes precedence over the `rootSchemaMap`;
+ *  under the hood, psuedocode looks like `merge(rootSchemaMap, schemaMap)`
+ */
+
+// `rootSchemaMap` applies to *every* model's generated endpoints
 const rootSchemaMap = {
-  generate: true,                                  // obviously
   directive: `@acl(role: ['ADMIN', 'USER'])`;      // added to every endpoint
   whereInputAttributes?: ['id'];                   // queries will only be able to filter on 'id'
   omitResolvers: [GeneratedResolverField.DELETE_MUTATION]; // don't generate any delete endpoints
@@ -203,27 +208,26 @@ const rootSchemaMap = {
   };
 }
 
-// schemaMap gets applied to the specified model's generated endpoints - allows for different configurations based on model
-// *** IMPORTANT *** this config takes precedence over the root schema; under the hood, psuedo looks like `merge(rootSchemaMap, schemaMap)`
+// `schemaMap` applies to *specified* model's generated endpoints
 const schemaMap = {
   // note: case-sensitivity is not strict
   author: {
-    whereInputAttributes: ['id', 'name', 'surname'], // i.e. these fields fulfill our fuzzy search requirements
+    whereInputAttributes: ['id', 'name', 'surname'], // i.e. now 'name' and 'surname' are searchable for 'Author' model
     resolvers: {
-      upsert: { generate: false }, // i.e. we don't ever upsert authors
+      [GeneratedResolverField.UPSERT]: { generate: false }, // i.e. `upsertAuthor` endpoint will not be generated
     },
   },
   Book: {
     resolvers: {
-      delete: { generate: true }, // i.e. let's override the `rootSchemaMap`
+      [GeneratedResolverField.DELETE]: { generate: true }, // i.e. override the `rootSchemaMap`
     },
-    omitResolvers: [GeneratedResolverField.FIND_ALL], // i.e. this will take down our servers, so we don't want it :)
+    omitResolvers: [GeneratedResolverField.FIND_ALL], // i.e. `allBooks` endpoint not generated
   },
   BookAuthor: {
-    generate: false, // i.e. it's a join table, we don't need it
+    generate: false, // i.e. all `bookAuthor` queries and mutations will not be generated
   },
   City: {
-    omitResolvers: [GeneratedResolverField.FIND_ONE], // i.e. we never query for just one city
+    omitResolvers: [GeneratedResolverField.FIND_ONE], // i.e. `city` query will not be generated
   },
 };
 
@@ -235,6 +239,7 @@ enum LibraryStatus {
 const options = {
   rootSchemaMap,
   schemaMap,
+  sequelize: Sequelize,
   enums: { LibraryStatus },
   models: { Author, Book, AuthorBook, City },
 };
@@ -247,7 +252,7 @@ console.log(schema); // { resolvers, typedefs, typedefsString }
 // ... load returned schema into your graphql client
 ```
 
-## Query Magic Example
+## Generated Example
 
 For the above example, the following `Author` Queries and Mutations are available (_and similar for every other model_);
 
@@ -359,7 +364,7 @@ and payload like:
 ```
 
 &nbsp;
-will generate and execute a sequelize query like this:
+Will generate and execute a sequelize query like this:
 
 ```typescript
 Author.findAll({
@@ -400,40 +405,37 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 
 ## Options
 
-| Name                   | Type                     | Description                                                                                         |
-| ---------------------- | ------------------------ | --------------------------------------------------------------------------------------------------- |
-| `sequelize`            | `Sequelize`              | Your Sequelize instance                                                                             |
-| `models`               | `Record<string, Model>`  | i.e. `{ Author, Book, Library, City }`                                                              |
-| `enums`                | `Record<string, string>` | i.e. `{ LibraryStatus }`                                                                            |
-| `customSchema`         | `CustomSchema`           | i.e. `{ resolvers, typedefs }` - if provided, we will generate and merge the provided custom schema |
-| `schemaMap`            | `SchemaMap`              | Complex object that allows configuration and overrides for every model                              |
-| `rootSchemaMap`        | `SchemaMapOptions`       | Same as above, but will be applied to _all_ models                                                  |
-| `deleteResponseGql`    | `string`                 | Your own slimmed-down delete response; by default - `DeleteResponse`                                |
-| `includeDeleteOptions` | `boolean`                | This will create delete mutations that accept `options: DeleteOptions` as args                      |
+| Name                   | Type                     | Description                                                            |
+| ---------------------- | ------------------------ | ---------------------------------------------------------------------- |
+| `sequelize`            | `Sequelize`              | Your Sequelize instance                                                |
+| `models`               | `Record<string, Model>`  | i.e. `{ Author, Book, Library, City }`                                 |
+| `enums`                | `Record<string, string>` | i.e. `{ LibraryStatus }`                                               |
+| `schemaMap`            | `SchemaMap`              | Complex object that allows configuration and overrides for every model |
+| `rootSchemaMap`        | `SchemaMapOptions`       | Same as above, but will be applied to _all_ models                     |
+| `deleteResponseGql`    | `string`                 | Your own slimmed-down delete response; by default - `DeleteResponse`   |
+| `includeDeleteOptions` | `boolean`                | Allows for extra arg `options: DeleteOptions` on `delete<*>` endpoints |
 
 &nbsp;
 
 ### Filepath `options`
 
-| Name                 | Type   | Export Naming Rules                   |
-| -------------------- | ------ | ------------------------------------- |
-| `pathToCustomSchema` | string | `default`, `customSchema`, everything |
-| `pathToModels`       | string | `default`, `models`, everything       |
-| `pathToEnums`        | string | `default`, `enums`, everything        |
-| `pathToSequelize`    | string | `default`, `sequelize`, everything    |
-| `pathToSchemaMap`    | string | `default`, `schemaMap`, everything    |
+| Name              | Type   | Export Naming Rules                |
+| ----------------- | ------ | ---------------------------------- |
+| `pathToModels`    | string | `default`, `models`, everything    |
+| `pathToEnums`     | string | `default`, `enums`, everything     |
+| `pathToSequelize` | string | `default`, `sequelize`, everything |
+| `pathToSchemaMap` | string | `default`, `schemaMap`, everything |
 
 &nbsp;
 
 ### Export Matcher `options`
 
-| Name                        | Type          | Export Rules                                         |
-| --------------------------- | ------------- | ---------------------------------------------------- |
-| `customSchemaExportMatcher` | `fn(exports)` | return object after omit/pick properties off exports |
-| `modelsExportMatcher`       | `fn(exports)` | ^ same                                               |
-| `enumsExportMatcher`        | `fn(exports)` | ^ same                                               |
-| `sequelizeExportMatcher`    | `fn(exports)` | ^ same                                               |
-| `schemaMapExportMatcher`    | `fn(exports)` | ^ same                                               |
+| Name                     | Type          | Export Rules |
+| ------------------------ | ------------- | ------------ |
+| `modelsExportMatcher`    | `fn(exports)` | ^ same       |
+| `enumsExportMatcher`     | `fn(exports)` | ^ same       |
+| `sequelizeExportMatcher` | `fn(exports)` | ^ same       |
+| `schemaMapExportMatcher` | `fn(exports)` | ^ same       |
 
 ### Notes on Filepath Export Matcher `options`
 

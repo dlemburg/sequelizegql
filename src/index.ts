@@ -28,7 +28,6 @@ class SequelizeGraphql {
       sequelize = {} as Sequelize,
       schemaMap = {} as SchemaMap,
       rootSchemaMap = {} as SchemaMapOptions,
-      customSchema = {} as any,
       ...options
     } = input;
 
@@ -44,15 +43,11 @@ class SequelizeGraphql {
     const sequelizePreExport = options.pathToSequelize
       ? await getExports(options.pathToSequelize, options.sequelizeExportMatcher)
       : sequelize;
-    const customSchemaPreExport = options.pathToCustomSchema
-      ? await getExports(options.pathToCustomSchema, options.customSchemaExportMatcher)
-      : customSchema;
 
     const modelsExport = modelsPreExport.models ?? modelsPreExport;
     const enumsExport = enumsPreExport.enums ?? enumsPreExport;
     const schemaMapExport = schemaMapPreExport.schemaMap ?? schemaMapPreExport;
     const sequelizeExport = sequelizePreExport.sequelize ?? sequelizePreExport;
-    const customSchemaExport = customSchemaPreExport.customSchema ?? customSchemaPreExport;
 
     StateFactory({
       models: modelsExport,
@@ -69,27 +64,6 @@ class SequelizeGraphql {
 
     this.typedefs = typedefs + buildRootTypedefs(options);
     this.resolvers = resolvers;
-
-    if (customSchemaExport) {
-      const typedefs = mergeTypeDefs([
-        ...DateTypedefs,
-        buildGql(this.typedefs),
-        customSchemaExport.typedefs,
-      ]);
-
-      const resolvers = merge(
-        JSONResolvers,
-        DateResolvers,
-        this.resolvers,
-        customSchemaExport.resolvers
-      );
-
-      return {
-        typedefs,
-        resolvers,
-        typedefsString: this.typedefs,
-      };
-    }
 
     return {
       typedefs: buildGql(this.typedefs),

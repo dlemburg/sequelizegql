@@ -51,13 +51,10 @@ export type InitializeInput = {
   models?: Record<any, any>;
   schemaMap?: SchemaMap;
   rootSchemaMap?: SchemaMapOptions;
-  customSchema?: any;
-  pathToCustomSchema?: string;
   pathToModels?: string;
   pathToEnums?: string;
   pathToSequelize?: string;
   pathToSchemaMap?: string;
-  customSchemaExportMatcher?: ExportMatcherFn;
   modelsExportMatcher?: ExportMatcherFn;
   enumsExportMatcher?: ExportMatcherFn;
   sequelizeExportMatcher?: ExportMatcherFn;
@@ -153,9 +150,4 @@ export type InitializeResponse = {
   typedefs: DocumentNode;
   resolvers: any;
   typedefsString: string;
-};
-
-type CustomSchemaResponse = {
-  resolvers: ResolverOptions;
-  typedefs: DocumentNode[];
 };
