@@ -230,8 +230,8 @@ For the above example, the following `Author` Queries and Mutations are availabl
 - `...modelFields` represents the root fields on each model, i.e. `id`, `name`, `surname`, etc.
 - `...allAssociations` model's associations, i.e. `Author->Books->Libraries->City`
 - `...oneLevelOfAssociations` represents _one_ layer of associations (TODO: make recursive)
-- The following are customizable via the `schemaMap` where you can define fields to omit for both queries (where inputs) and mutations (inputs)
-- `AND` and `OR` are available at the root level to combine the root where input fields conditionally
+- The following are customizable via the `schemaMap` where you can define fields to omit for both queries (`WhereInput`) and mutations (`Input`)
+- `AND` and `OR` are available at the root level of the `WhereInput` to combine the root where input fields conditionally
 - `FILTERS` is a map of where input fields where sequelize operators (mostly similar w/ exception to polymorphic operators) can be applied
 
 &nbsp;
