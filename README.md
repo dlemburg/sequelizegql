@@ -23,7 +23,7 @@ npm install sequelize sequelize-graphql
 
 ## What?
 
-`sequelize-graphql` generates a customizable CRUD GraphQL schema based on provided sequelize models.
+`sequelize-graphql` generates a full CRUD GraphQL API (types, inputs, enums, queries, mutations, and resolvers) based on the provided sequelize models.
 
 ## Why?
 
@@ -200,26 +200,26 @@ console.log(schema); // { resolvers, typedefs, typedefsString }
 
 ## Query Magic Example
 
-For the above example, the following `Author` Queries and Mutations are available (and similar for every other model);
+For the above example, the following `Author` Queries and Mutations are available (_and similar for every other model_);
 
 ### Queries
 
-| Name           | Args                      | Return Type                                                         |
-| -------------- | ------------------------- | ------------------------------------------------------------------- |
-| `author`       | `where: AuthorWhereInput` | `Author`                                                            |
-| `authors`      | `where: AuthorWhereInput` | `[Author]`                                                          |
-| `authorsPaged` | `where: AuthorWhereInput` | `AuthorPagedResponse` i.e.`{ totalCount: Int, entities: [Author] }` |
-| `allAuthors`   | none                      | `[Author]`                                                          |
+| Name           | Args                                                  | Return Type                                                         |
+| -------------- | ----------------------------------------------------- | ------------------------------------------------------------------- |
+| `author`       | `where: AuthorWhereInput, options: OptionsInput`      | `Author`                                                            |
+| `authors`      | `where: AuthorWhereInput, options: OptionsInput`      | `[Author]`                                                          |
+| `authorsPaged` | `where: AuthorWhereInput, options: OptionsInputPaged` | `AuthorPagedResponse` i.e.`{ totalCount: Int, entities: [Author] }` |
+| `allAuthors`   | none                                                  | `[Author]`                                                          |
 
 ### Mutations
 
-| Name                | Args                      | Return Type                 |
-| ------------------- | ------------------------- | --------------------------- |
-| `createAuthor`      | `where: AuthorWhereInput` | `Author!`                   |
-| `createManyAuthors` | `where: AuthorWhereInput` | `[Author!]!`                |
-| `updateAuthor`      | `where: AuthorWhereInput` | `Author`                    |
-| `upsertAuthor`      | `where: AuthorWhereInput` | `Author`                    |
-| `deleteAuthor`      | `where: AuthorWhereInput` | `DeleteResponse` by default |
+| Name                | Args                                                 | Return Type                 |
+| ------------------- | ---------------------------------------------------- | --------------------------- |
+| `createAuthor`      | `input: AuthorInput!`                                | `Author!`                   |
+| `createManyAuthors` | `input: [AuthorInput!]!`                             | `[Author!]!`                |
+| `updateAuthor`      | `where: AuthorWhereInput, input: UpdateAuthorInput!` | `Author`                    |
+| `upsertAuthor`      | `where: AuthorWhereInput, input: AuthorInput!`       | `Author`                    |
+| `deleteAuthor`      | `where: AuthorWhereInput, options: DeleteOptions`    | `DeleteResponse` by default |
 
 &nbsp;
 A query (pseudocode) like this:
