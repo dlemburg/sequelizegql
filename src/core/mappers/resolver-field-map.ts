@@ -1,5 +1,5 @@
 import { GeneratedResolverField, ResolverFieldMap, SchemaMapOptions } from '../../types';
-import { lowercaseFirstLetter } from '../../util/general-util';
+import { lowercaseFirstLetter } from '../util/general-util';
 import { pagedGql, whereInputNameGql } from '../graphql';
 import { optionsPagedQueryInputNameGql, optionsQueryInputNameGql } from '../graphql/options';
 import { maybePluralize } from '../util/pluralize';

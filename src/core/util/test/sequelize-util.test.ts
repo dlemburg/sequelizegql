@@ -1,4 +1,4 @@
-import { SortDirection } from '../../types';
+import { SortDirection } from '../../../types';
 import { buildSort, buildSortAsc, buildSortDesc } from '../sequelize-util';
 
 describe('[sequelize-util.test.ts] suite', () => {

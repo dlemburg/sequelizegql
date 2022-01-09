@@ -1,7 +1,7 @@
 import { BaseInput, GeneratedResolverField, SchemaMapOptions } from '../../types/types';
 import { QueryAttributeBuilder } from './query-attribute';
 import { BaseGql } from './base-gql';
-import { buildSort } from '../../util/sequelize-util';
+import { buildSort } from '../util/sequelize-util';
 import { parseWhere } from '../util/parse-where-util';
 import { maybeGenerate } from '../util/generate';
 

@@ -9,10 +9,10 @@ import { buildSchema } from './core';
 import { StateFactory } from './core/classes/state';
 import { Sequelize } from 'sequelize';
 import { InitializeInput, InitializeResponse, SchemaMap, SchemaMapOptions } from './types';
-import { getExports } from './util/export-util';
-import { validateInput } from './util/validate-input-util';
-import { buildGql } from './util/gql-util';
+import { validateInput } from './core/util/validate-input-util';
+import { buildGql } from './core/util/gql-util';
 import { newLine } from './core/graphql';
+import { getExports } from './core/util/export-util';
 
 const JSONResolvers = {
   JSON: GraphQLJSON,

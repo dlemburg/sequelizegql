@@ -1,5 +1,5 @@
 import { Model, CreateOptions, UpdateOptions, DestroyOptions } from 'sequelize';
-import { buildSortDesc } from '../../util/sequelize-util';
+import { buildSortDesc } from '../../core/util/sequelize-util';
 import {
   BaseServiceFilter,
   BaseServiceOptions,

@@ -1,5 +1,5 @@
 import { merge } from 'lodash';
-import { ExportMatcherFn } from '../types';
+import { ExportMatcherFn } from '../../types';
 import { getPaths } from './glob-util';
 
 export const getExports = async (path: string, exportMatcherFn?: ExportMatcherFn) => {

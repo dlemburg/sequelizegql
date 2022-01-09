@@ -1,4 +1,4 @@
-import { Enums } from '../types';
+import { Enums } from '../../types';
 
 export const enumToArray = (e) => [...Object.values(e)];
 

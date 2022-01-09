@@ -1,4 +1,4 @@
-import { InitializeInput } from '../types';
+import { InitializeInput } from '../../types';
 
 export const validateInput = (input: InitializeInput): Error | void => {
   const errs: string[] = [];

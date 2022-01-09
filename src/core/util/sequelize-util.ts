@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { SortDirection } from '../types';
+import { SortDirection } from '../../types';
 
 type MultiDimensionalSortDesc = [[string, SortDirection.DESC]];
 type MultiDimensionalSortAsc = [[string, SortDirection.ASC]];
