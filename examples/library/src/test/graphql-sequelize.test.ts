@@ -3,8 +3,7 @@ import { getSchema } from '../graphql/schemas';
 import { setup } from './setup';
 import { typedefsString as importsTypedefsString } from './snapshots/imports-typedefs-string';
 import { typedefsString as pathsTypedefsString } from './snapshots/paths-typedefs-string';
-
-const removeAllWhitespace = (str: string) => str.replaceAll(/\s/g, '');
+import { removeAllWhitespace } from './util/remove-whitespace';
 
 describe('[graphql-sequelize.test.ts] suite', () => {
   test('[getSchema] `pathOnly` options should return a graphql schema typedefs matching `paths-typedefs-string`', async () => {
@@ -28,29 +27,5 @@ describe('[graphql-sequelize.test.ts] suite', () => {
     expect(removeAllWhitespace(result.typedefsString)).toEqual(
       removeAllWhitespace(importsTypedefsString)
     );
-  });
-
-  test('[getSchema] validating schemaMap result', async () => {
-    const sequelize = await setup();
-
-    const result = await getSchema({
-      ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
-      sequelize,
-    });
-
-    const authorWhereInputs = removeAllWhitespace(result.typedefsString).includes(
-      removeAllWhitespace(`input  AuthorWhereInput {
-        id: Int
-        name: String
-        surname: String
-        AND: [AuthorWhereInput]
-        OR: [AuthorWhereInput]
-        FILTERS: AuthorWhereFilterInput
-      }`)
-    );
-
-    // TODO more checks
-
-    expect(authorWhereInputs).toBeTruthy();
   });
 });
