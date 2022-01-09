@@ -435,18 +435,9 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 | `sequelizeExportMatcher`    | `fn(exports)` | ^ same                                               |
 | `schemaMapExportMatcher`    | `fn(exports)` | ^ same                                               |
 
-### Notes on Filepath `options`
-
-- All filepaths from root working folder; values can be globs, i.e. `/path/to/dir/**/*`
-- All `pathTo<entity>` must be absolute from root directory
-- Note that for `pathToCustomSchema`, if filepath is glob, exports must be located on `resolvers` or `typedefs` property
-- Export paths can be named after entity or located on default; i.e. `pathToSequelize.sequelize | pathToSequelize.default`, `pathToSchemaMap.schemaMap | pathToSchemaMap.default`
-- Note that 'create mutations' only allow one level of associations; 'update mutations' do not allow for multiple levels yet
-
-&nbsp;
-
 ### Notes on Filepath Export Matcher `options`
 
+- All filepaths from root working folder; values can be globs, i.e. `/path/to/dir/**/*`
 - For Filepath options export naming rules, you can export `default`, use a matcher function, or use the provided object property name listed below.
 - We will always use the provided export property name if present
 - We will always use `default` if no other properties are present
