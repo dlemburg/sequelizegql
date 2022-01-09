@@ -299,7 +299,7 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 
 ### Filepath `options`
 
-| Name                 | Type   | Export Rules                          |
+| Name                 | Type   | Export Naming Rules                   |
 | -------------------- | ------ | ------------------------------------- |
 | `pathToCustomSchema` | string | `default`, `customSchema`, everything |
 | `pathToModels`       | string | `default`, `models`, everything       |
