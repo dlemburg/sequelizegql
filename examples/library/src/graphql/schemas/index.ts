@@ -6,7 +6,7 @@ export const getSchema = async (options: InitializeInput): Promise<InitializeRes
   const schema = await graphqlSequelize.schema(options);
 
   // graphqlSequelize.printConsole();
-  graphqlSequelize.outputTypedefs();
+  // graphqlSequelize.outputTypedefs();
 
   return schema;
 };

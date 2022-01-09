@@ -1,4 +1,4 @@
-export const pathOnly = {
+export const pathOnlyApplicationExample = {
   pathToCustomSchema: '/src/graphql/schemas/health/index.ts',
   pathToModels: '/src/orm/models/**/*',
   pathToEnums: '/src/orm/enums.ts',

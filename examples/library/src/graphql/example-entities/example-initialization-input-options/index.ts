@@ -1,7 +1,9 @@
 import { imports } from './imports';
-import { pathOnly } from './path-only';
+import { pathOnlyApplicationExample } from './path-only-application-example';
+import { pathOnlyTest } from './path-only-test';
 
 export const EXAMPLE_INITIALIZATION_OPTIONS = {
-  pathOnly,
+  pathOnlyApplicationExample,
+  pathOnlyTest,
   imports,
 };
