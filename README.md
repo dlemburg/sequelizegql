@@ -439,7 +439,7 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 
 ### Notes on Filepath Export Matcher `options`
 
-- All filepaths from root working folder; values can be globs, i.e. `/path/to/dir/**/*`
+- All filepaths should be from root working folder; values can be globs, i.e. `/path/to/dir/**/*`
 - For Filepath options export naming rules, you can export `default`, use a matcher function, or use the provided object property name listed below.
 - We will always use the provided export property name if present
 - We will always use `default` if no other properties are present
@@ -472,7 +472,6 @@ Each set of properties is an _xor_ (one of each set of properties must be provid
 
 - recursive operators
 - recursive creates (currently 1 level of associations deep)
-- recursive updates (no associations allowed yet)
 
 ### v2
 
