@@ -8,6 +8,10 @@
   - [Basic Example](https://github.com/dlemburg/sequelize-graphql#basic)
   - [In-Depth Example](https://github.com/dlemburg/sequelize-graphql#in-depth)
   - [Query Magic Example](https://github.com/dlemburg/sequelize-graphql#query-magic-example)
+    - [Queries](https://github.com/dlemburg/sequelize-graphql#queries)
+    - [Mutations](https://github.com/dlemburg/sequelize-graphql#mutations)
+    - [Types and Inputs](https://github.com/dlemburg/sequelize-graphql#types-and-inputs)
+    - [FILTERS](https://github.com/dlemburg/sequelize-graphql#filters)
 - [API](https://github.com/dlemburg/sequelize-graphql#api)
   - [Object Options](https://github.com/dlemburg/sequelize-graphql#options)
   - [Filepath Options](https://github.com/dlemburg/sequelize-graphql#filepath-options)
@@ -220,6 +224,56 @@ For the above example, the following `Author` Queries and Mutations are availabl
 | `updateAuthor`      | `where: AuthorWhereInput, input: UpdateAuthorInput!` | `Author`                    |
 | `upsertAuthor`      | `where: AuthorWhereInput, input: AuthorInput!`       | `Author`                    |
 | `deleteAuthor`      | `where: AuthorWhereInput, options: DeleteOptions`    | `DeleteResponse` by default |
+
+### Types and Inputs
+
+- `...modelFields` represents the fields on each model, i.e. `id`, `name`, `surname`, etc.
+- `...modelAssociations` represents _one_ layer of associations (TODO: make recursive)
+- The following are customizable via the `schemaMap` where you can define fields to omit for both queries (where inputs) and mutations (inputs).
+- `AND` and `OR` are available at the root level to combine the root where input fields conditionally
+- `FILTERS` is a map of where input fields where sequelize operators (mostly similar w/ exception to polymorphic operators) can be applied
+
+&nbsp;
+
+| Name                | Fields                                                  |
+| ------------------- | ------------------------------------------------------- |
+| `AuthorWhereInput`  | `...modelFields, OR, AND, FILTERS`                      |
+| `AuthorInput`       | `...modelFields`, `...modelAssociations`                |
+| `UpdateAuthorInput` | `...modelFields`                                        |
+| `DeleteOptions`     | `force: boolean` (setting force: true will hard delete) |
+| `DeleteResponse`    | `{ id: JSON, deletedCount: Int }`                       |
+| `AND`               | `[AuthorWhereInput]`                                    |
+| `OR`                | `[AuthorWhereInput]`                                    |
+| `FILTERS`           | see below                                               |
+
+### FILTERS
+
+| Name               | Fields      |
+| ------------------ | ----------- |
+| `NOT_LIKE`         | `String!`   |
+| `STARTS_WITH`      | `String!`   |
+| `ENDS_WITH`        | `String!`   |
+| `SUBSTRING`        | `String!`   |
+| `EQ_STRING`        | `String!`   |
+| `NE_STRING`        | `String!`   |
+| `EQ_INT`           | `Int!`      |
+| `NE_INT`           | `Int!`      |
+| `NE_INT`           | `Int!`      |
+| `IS_NULL`          | `String!`   |
+| `NOT_STRING`       | `String!`   |
+| `NOT_INT`          | `Int!`      |
+| `GT`               | `Int!`      |
+| `GTE`              | `Int!`      |
+| `LT`               | `Int!`      |
+| `LTE`              | `Int!`      |
+| `BETWEEN_INT`      | `Int!`      |
+| `BETWEEN_DATE`     | `Int!`      |
+| `NOT_BETWEEN_INT`  | `Int!`      |
+| `NOT_BETWEEN_DATE` | `DateTime!` |
+| `IN_INT`           | `Int!`      |
+| `IN_STRING`        | `String!`   |
+| `NOT_IN_INT`       | `Int!`      |
+| `NOT_IN_STRING`    | `String!`   |
 
 &nbsp;
 A query (pseudocode) like this:
