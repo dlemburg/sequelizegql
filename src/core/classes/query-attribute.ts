@@ -4,7 +4,7 @@ import {
 } from 'graphql-parse-resolve-info';
 import { getAttributes } from '../services/base-service/util';
 import { ModelAttributes, SchemaMapOptions } from '../../types';
-import { parseWhere } from '../util/parse-where-util';
+import { parseWhere } from '../util';
 import { StateFactory } from './state';
 
 type RecursiveInclude = {

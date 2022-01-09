@@ -1,4 +1,4 @@
-import { buildEnums } from '../util/enum-util';
+import { buildEnums } from '../util';
 import { StateFactory } from '../classes/state';
 import { newLine } from './new-line';
 

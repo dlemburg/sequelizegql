@@ -1,6 +1,6 @@
 import { ModelAttributes } from '../../types';
 import { mapSequelizeToGraphql } from '../mappers';
-import { stringBuilder } from '../util/string-util';
+import { stringBuilder } from '../util';
 import { newLine } from './new-line';
 import { pagedGql } from './paged';
 import { whereInputNameGql } from './where-input';

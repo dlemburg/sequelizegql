@@ -1,8 +1,7 @@
 import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
 import { Enums, Models, SchemaMap, SchemaMapOptions } from '../types';
-import { buildEnums } from './util/enum-util';
-import { lowercaseFirstLetter } from './util/general-util';
+import { buildEnums, lowercaseFirstLetter } from './util';
 import { ResolverFactory, TypedefFactory } from './classes';
 import { generateEnumsGql } from './graphql/enums';
 import { optionsQueryGql } from './graphql/options';

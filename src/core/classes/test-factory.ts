@@ -1,7 +1,7 @@
 import omit from 'lodash/omit';
 import { BaseTestFactoryInput, GeneratedResolverField } from '../../types';
 import { BaseService } from '../services';
-import { buildTests } from '../util/testing-util';
+import { buildTests } from '../util';
 
 export const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
 

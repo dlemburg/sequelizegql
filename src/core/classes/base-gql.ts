@@ -7,7 +7,7 @@ import {
   getQueryResolverFieldMap,
   getResolverFieldMap,
 } from '../mappers';
-import { maybeGenerate } from '../util/generate';
+import { maybeGenerate } from '../util';
 
 export class BaseGql {
   public name: string;

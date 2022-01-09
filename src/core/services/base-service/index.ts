@@ -1,5 +1,4 @@
 import { Model, CreateOptions, UpdateOptions, DestroyOptions } from 'sequelize';
-import { buildSortDesc } from '../../util/sequelize-util';
 import {
   BaseServiceFilter,
   BaseServiceOptions,
@@ -7,6 +6,7 @@ import {
   ModelAttributes,
 } from '../../../types';
 import { StateFactory } from '../../classes/state';
+import { buildSortDesc } from '../../util/sequelize-util';
 import { buildAssociationCreateOptions, getAttributes } from './util';
 
 const findAll =
