@@ -2,7 +2,7 @@ import {
   parseResolveInfo,
   simplifyParsedResolveInfoFragmentWithType,
 } from 'graphql-parse-resolve-info';
-import { getAttributes } from '../../services/base-service/util';
+import { getAttributes } from '../services/base-service/util';
 import { ModelAttributes, SchemaMapOptions } from '../../types';
 import { parseWhere } from '../util/parse-where-util';
 import { StateFactory } from './state';

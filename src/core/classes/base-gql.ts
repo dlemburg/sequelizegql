@@ -1,5 +1,5 @@
 import { Model } from 'sequelize';
-import { BaseService, BaseServiceInterface } from '../../services';
+import { BaseService, BaseServiceInterface } from '../services';
 import { BaseInput, ResolverFieldMap, SchemaMapOptions } from '../../types';
 import { argsGql, newLine } from '../graphql';
 import {

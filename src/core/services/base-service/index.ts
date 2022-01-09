@@ -1,12 +1,12 @@
 import { Model, CreateOptions, UpdateOptions, DestroyOptions } from 'sequelize';
-import { buildSortDesc } from '../../core/util/sequelize-util';
+import { buildSortDesc } from '../../util/sequelize-util';
 import {
   BaseServiceFilter,
   BaseServiceOptions,
   DeleteResponse,
   ModelAttributes,
-} from '../../types/types';
-import { StateFactory } from '../../core/classes/state';
+} from '../../../types/types';
+import { StateFactory } from '../../classes/state';
 import { buildAssociationCreateOptions, getAttributes } from './util';
 
 const findAll =
