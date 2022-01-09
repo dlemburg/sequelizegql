@@ -30,16 +30,27 @@ describe('[graphql-sequelize.test.ts] suite', () => {
     );
   });
 
-  // test('[getSchema] validating schemaMap result', async () => {
-  //   const sequelize = await setup();
+  test('[getSchema] validating schemaMap result', async () => {
+    const sequelize = await setup();
 
-  //   const result = await getSchema({
-  //     ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
-  //     sequelize,
-  //   });
+    const result = await getSchema({
+      ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
+      sequelize,
+    });
 
-  //   const foo = removeAllWhitespace(result.typedefsString);
+    const authorWhereInputs = removeAllWhitespace(result.typedefsString).includes(
+      removeAllWhitespace(`input  AuthorWhereInput {
+        id: Int
+        name: String
+        surname: String
+        AND: [AuthorWhereInput]
+        OR: [AuthorWhereInput]
+        FILTERS: AuthorWhereFilterInput
+      }`)
+    );
 
-  //   expect(foo).toEqual(removeAllWhitespace(importsTypedefsString));
-  // });
+    // TODO more checks
+
+    expect(authorWhereInputs).toBeTruthy();
+  });
 });
