@@ -12,7 +12,7 @@ export const init = async () => {
 
   sequelize = new Sequelize({
     dialect: 'postgres',
-    database: 'libraries',
+    database: 'library',
     username: 'postgres',
     password: 'postgres',
     host: 'localhost',
