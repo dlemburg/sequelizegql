@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { StateFactory } from '../../classes/state';
-import { ModelAttributes } from '../../../types/types';
+import { ModelAttributes } from '../../../types';
 
 export const getEnumType = (values) => {
   const result = Object.entries(StateFactory().getEnums()).find(

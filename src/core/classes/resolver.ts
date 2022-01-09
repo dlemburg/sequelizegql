@@ -1,4 +1,4 @@
-import { BaseInput, GeneratedResolverField, SchemaMapOptions } from '../../types/types';
+import { BaseInput, GeneratedResolverField, SchemaMapOptions } from '../../types';
 import { QueryAttributeBuilder } from './query-attribute';
 import { BaseGql } from './base-gql';
 import { buildSort } from '../util/sequelize-util';

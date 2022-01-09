@@ -5,7 +5,7 @@ import {
   BaseServiceOptions,
   DeleteResponse,
   ModelAttributes,
-} from '../../../types/types';
+} from '../../../types';
 import { StateFactory } from '../../classes/state';
 import { buildAssociationCreateOptions, getAttributes } from './util';
 

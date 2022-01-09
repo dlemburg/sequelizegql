@@ -1,5 +1,5 @@
 import omit from 'lodash/omit';
-import { BaseInput, ModelAttributes } from '../../types/types';
+import { BaseInput, ModelAttributes } from '../../types';
 import { MutationFactory } from './mutation';
 import { whereInputGql } from '../graphql/where-input';
 import {
