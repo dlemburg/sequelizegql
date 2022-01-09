@@ -89,8 +89,8 @@ class Resolver extends BaseGql {
           (_, { input }) => this.service.create(input)
         ),
       }),
-      ...(maybeGenerate(this.options, GeneratedResolverField.CREATE_BULK_MUTATION) && {
-        [this.resolverMap[GeneratedResolverField.CREATE_BULK_MUTATION].name]: middleware(
+      ...(maybeGenerate(this.options, GeneratedResolverField.CREATE_MANY_MUTATION) && {
+        [this.resolverMap[GeneratedResolverField.CREATE_MANY_MUTATION].name]: middleware(
           this.options,
           (_, { input }) => this.service.bulkCreate(input)
         ),

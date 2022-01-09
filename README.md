@@ -7,7 +7,7 @@
 - [Examples](https://github.com/dlemburg/sequelize-graphql#examples)
   - [Basic Example](https://github.com/dlemburg/sequelize-graphql#basic)
   - [In-Depth Example](https://github.com/dlemburg/sequelize-graphql#in-depth)
-  - [Query Magic Example](https://github.com/dlemburg/sequelize-graphql#query-magic)
+  - [Query Magic Example](https://github.com/dlemburg/sequelize-graphql#query-magic-example)
 - [API](https://github.com/dlemburg/sequelize-graphql#api)
   - [Object Options](https://github.com/dlemburg/sequelize-graphql#options)
   - [Filepath Options](https://github.com/dlemburg/sequelize-graphql#filepath-options)
@@ -198,7 +198,28 @@ console.log(schema); // { resolvers, typedefs, typedefsString }
 // ... load returned schema into your graphql client
 ```
 
-## Query Magic
+## Query Magic Example
+
+For the above example, the following `Author` Queries and Mutations are available (and similar for every other model);
+
+### Queries
+
+| Name           | Args                      | Return Type                                                         |
+| -------------- | ------------------------- | ------------------------------------------------------------------- |
+| `author`       | `where: AuthorWhereInput` | `Author`                                                            |
+| `authors`      | `where: AuthorWhereInput` | `[Author]`                                                          |
+| `authorsPaged` | `where: AuthorWhereInput` | `AuthorPagedResponse` i.e.`{ totalCount: Int, entities: [Author] }` |
+| `allAuthors`   | none                      | `[Author]`                                                          |
+
+### Mutations
+
+| Name                | Args                      | Return Type                 |
+| ------------------- | ------------------------- | --------------------------- |
+| `createAuthor`      | `where: AuthorWhereInput` | `Author!`                   |
+| `createManyAuthors` | `where: AuthorWhereInput` | `[Author!]!`                |
+| `updateAuthor`      | `where: AuthorWhereInput` | `Author`                    |
+| `upsertAuthor`      | `where: AuthorWhereInput` | `Author`                    |
+| `deleteAuthor`      | `where: AuthorWhereInput` | `DeleteResponse` by default |
 
 &nbsp;
 A query (pseudocode) like this:

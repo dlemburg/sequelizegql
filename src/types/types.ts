@@ -13,7 +13,7 @@ export enum SEQUELIZE_GRAPHQL_NAMESPACE {
 
 export enum GeneratedResolverField {
   CREATE_MUTATION = 'create',
-  CREATE_BULK_MUTATION = 'bulkCreate',
+  CREATE_MANY_MUTATION = 'createMany',
   UPDATE_MUTATION = 'update',
   UPSERT_MUTATION = 'upsert',
   DELETE_MUTATION = 'delete',
