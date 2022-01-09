@@ -2,7 +2,7 @@ import {
   GeneratedResolverField,
   SchemaMap,
   SEQUELIZE_GRAPHQL_NAMESPACE,
-} from '../../../../../../src/types';
+} from '../../../../../src/types';
 
 export const schemaMap: SchemaMap = {
   [SEQUELIZE_GRAPHQL_NAMESPACE.root]: {

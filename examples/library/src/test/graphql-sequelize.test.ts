@@ -1,4 +1,4 @@
-import { EXAMPLE_INITIALIZATION_OPTIONS } from '../graphql/example-entities/example-initialization-input-options';
+import { EXAMPLE_INITIALIZATION_OPTIONS } from '../example-entities/example-initialization-input-options';
 import { getSchema } from '../graphql/schemas';
 import { init } from '../orm/sequelize';
 import { typedefsString as importsTypedefsString } from './snapshots/imports-typedefs-string';
