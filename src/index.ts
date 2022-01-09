@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { format } from 'graphql-formatter';
 import merge from 'lodash/merge';
 import { typeDefs as DateTypedefs, resolvers as DateResolvers } from 'graphql-scalars';
 import GraphQLJSON, { GraphQLJSONObject } from 'graphql-type-json';
@@ -95,7 +94,7 @@ class SequelizeGraphql {
     return {
       typedefs: buildGql(this.typedefs),
       resolvers: this.resolvers,
-      typedefsString: format(this.typedefs),
+      typedefsString: this.typedefs,
     };
   }
 
@@ -104,8 +103,7 @@ class SequelizeGraphql {
   }
 
   public outputTypedefs(filepath?: string) {
-    const output =
-      'export const typedefsString =' + ' `' + newLine() + format(this.typedefs) + '`;';
+    const output = 'export const typedefsString =' + ' `' + newLine() + this.typedefs + '`;';
 
     fs.writeFileSync(filepath || `${__dirname}/generated-typedefs.js`, output, 'utf-8');
   }
