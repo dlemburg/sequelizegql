@@ -307,6 +307,7 @@ and payload like:
     }
   },
   "booksWhereInput": {
+    "createdAt": "01-01-2020",
     "OR": [{ "name": "Foo" }, { "name": "Bar" }]
   }
 }
