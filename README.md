@@ -242,18 +242,33 @@ Query GetAuthors($authorsWhereInput: AuthorWhereInput!, $booksWhereInput: BookWh
 }
 ```
 
+and payload like:
+
+```json
+{
+  "authorsWhereInput": {
+    "FILTERS": {
+      "name": { "LIKE": "daniel" }
+    }
+  },
+  "booksWhereInput": {
+    "OR": [{ "name": "Foo" }, { "name": "Bar" }]
+  }
+}
+```
+
 &nbsp;
 will generate and execute a sequelize query like this:
 
 ```typescript
 Author.findAll({
-  where: authorsWhereInput,
+  where: { ...authorsWhereInput, [Op.like]: '%daniel%' },
   attributes: ['id', 'name', 'books'],
   include: [
     {
       association: 'books',
       attributes: ['id', 'libraries'],
-      where: booksWhereInput,
+      where: { ...booksWhereInput, [Op.or]: [{ name: 'Foo' }, { name: 'Bar' }] },
       separate: true,
       include: [
         {
