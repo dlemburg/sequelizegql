@@ -63,7 +63,6 @@ export class Library extends Model<Library> {
   @BelongsTo(() => City)
   city?: City;
 
-  // Associations
   @BelongsToMany(() => Book, () => BookLibrary)
   books?: Book[];
 }

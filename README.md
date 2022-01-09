@@ -84,7 +84,9 @@ export class Author extends Model<Author> {
 
   // ...timestamps: createdAt, updatedAt, removedAt, etc
 
-  // ...associations
+  // Associations
+  @BelongsToMany(() => Book, () => BookAuthor)
+  books?: Book[];
 }
 
 @Table({ underscored: true, tableName: 'book', paranoid: true })
@@ -103,7 +105,15 @@ export class Book extends Model<Book> {
 
   // ...timestamps: createdAt, updatedAt, removedAt, etc
 
-  // ...associations
+  // Associations
+  @BelongsTo(() => Category)
+  category?: Category;
+
+  @BelongsToMany(() => Author, () => BookAuthor)
+  authors?: Author[];
+
+  @BelongsToMany(() => Library, () => BookLibrary)
+  libraries?: Library[];
 }
 
 @Table({ underscored: true, tableName: 'book_author', paranoid: true })
@@ -126,6 +136,43 @@ export class BookAuthor extends Model<BookAuthor> {
   // ...associations
 }
 
+@Table({ underscored: true, tableName: 'library', paranoid: true })
+export class Library extends Model<Library> {
+  @PrimaryKey
+  @AutoIncrement
+  @Column
+  id: number;
+
+  @Column
+  @ForeignKey(() => City)
+  cityId: number;
+
+  @AllowNull(false)
+  @Column
+  name: String;
+
+  @Column
+  address: String;
+
+  @Column
+  description: String;
+
+  @AllowNull(false)
+  @Default(LibraryStatus.ACTIVE)
+  @Column(DataType.ENUM(...Object.values(LibraryStatus)))
+  status: LibraryStatus;
+
+  // ...timestamps: createdAt, updatedAt, removedAt, etc
+
+  // Associations
+  @BelongsTo(() => City)
+  city?: City;
+
+  @BelongsToMany(() => Book, () => BookLibrary)
+  books?: Book[];
+}
+
+
 @Table({ underscored: true, tableName: 'city', paranoid: true })
 export class City extends Model<City> {
   @PrimaryKey
@@ -138,8 +185,6 @@ export class City extends Model<City> {
   name: String;
 
   // ...timestamps: createdAt, updatedAt, removedAt, etc
-
-  // ...associations
 }
 
 
