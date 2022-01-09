@@ -228,8 +228,9 @@ For the above example, the following `Author` Queries and Mutations are availabl
 ### Types and Inputs
 
 - `...modelFields` represents the fields on each model, i.e. `id`, `name`, `surname`, etc.
-- `...modelAssociations` represents _one_ layer of associations (TODO: make recursive)
-- The following are customizable via the `schemaMap` where you can define fields to omit for both queries (where inputs) and mutations (inputs).
+- `...allAssociations` model's associations, i.e. `Author->Books->Libraries->City`
+- `...oneLevelOfAssociations` represents _one_ layer of associations (TODO: make recursive)
+- The following are customizable via the `schemaMap` where you can define fields to omit for both queries (where inputs) and mutations (inputs)
 - `AND` and `OR` are available at the root level to combine the root where input fields conditionally
 - `FILTERS` is a map of where input fields where sequelize operators (mostly similar w/ exception to polymorphic operators) can be applied
 
@@ -237,8 +238,8 @@ For the above example, the following `Author` Queries and Mutations are availabl
 
 | Name                | Fields                                                  |
 | ------------------- | ------------------------------------------------------- |
-| `AuthorWhereInput`  | `...modelFields, OR, AND, FILTERS`                      |
-| `AuthorInput`       | `...modelFields`, `...modelAssociations`                |
+| `AuthorWhereInput`  | `...modelFields, ...allAssociations, OR, AND, FILTERS`  |
+| `AuthorInput`       | `...modelFields`, `...oneLevelOfAssociations`           |
 | `UpdateAuthorInput` | `...modelFields`                                        |
 | `DeleteOptions`     | `force: boolean` (setting force: true will hard delete) |
 | `DeleteResponse`    | `{ id: JSON, deletedCount: Int }`                       |
