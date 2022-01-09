@@ -1,5 +1,6 @@
 import { KeyValuePairs, SchemaMapOptions } from '../../types';
 import { newLine } from './new-line';
+import { tab } from './tab';
 import { inputGql } from './types';
 import { whereOperatorFiltersInputGql } from './where-operator-filters';
 
@@ -21,7 +22,7 @@ export const whereInputGql = (
 
   const whereInputAttributesFieldsGql = whereInputAttributes
     .map((x) => `${x.key}: ${x.value}`)
-    .join(`${newLine()}`);
+    .join(`${newLine()}${tab()}`);
 
   return `
     ${inputGql()} ${whereInputName} {

@@ -32,6 +32,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
       ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
       sequelize,
     });
+
     expect(result).toBeTruthy();
   });
 });

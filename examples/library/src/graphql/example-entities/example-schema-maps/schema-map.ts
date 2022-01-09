@@ -12,9 +12,6 @@ export const schemaMap: SchemaMap = {
     omitResolvers: [GeneratedResolverField.FIND_ONE],
     omitInputAttributes: ['createdAt', 'updatedAt', 'removedAt'],
     whereInputAttributes: ['id'],
-    fieldNameMappers: {
-      FILTERS: 'MY_FOO_FILTERS_NAME',
-    },
   },
   author: {
     whereInputAttributes: ['id', 'name', 'surname'],

@@ -10,7 +10,7 @@ const mapFields = (attributes, options) =>
     .map(([key, value]) => {
       return `${key}: ${mapSequelizeToGraphql(value, options)}`;
     })
-    .join(` ${newLine()} `);
+    .join(`${newLine()}`);
 
 const mapAssociationTypes = (name, attributes, options) =>
   Object.entries(attributes)
@@ -19,8 +19,8 @@ const mapAssociationTypes = (name, attributes, options) =>
     })
     .join(`${newLine()}`);
 
-export const typeGql = () => 'type';
-export const inputGql = () => 'input';
+export const typeGql = () => 'type ';
+export const inputGql = () => 'input ';
 
 export const typeGqlUpper = () => 'Type';
 export const inputGqlUpper = () => 'Input';

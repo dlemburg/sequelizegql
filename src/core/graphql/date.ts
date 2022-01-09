@@ -1,1 +1,4 @@
-export const dateGql = () => `scalar DateTime \n scalar Date`
+export const dateGql = () => `
+  scalar DateTime
+  scalar Date
+`;

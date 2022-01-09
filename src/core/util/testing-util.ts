@@ -31,7 +31,7 @@ export const buildTests = ({
     const bodyRaw = `${value.name}${args(value.args)} { ${
       resolverKey === GeneratedResolverField.DELETE_MUTATION
         ? ['id']
-        : [...returnAttributes, ...pickedReturnAttributes].join(` ${newLine()} `)
+        : [...returnAttributes, ...pickedReturnAttributes].join(`${newLine()}`)
     } }`;
 
     const vars = args.reduce((acc, x) => {
@@ -58,7 +58,7 @@ export const buildTests = ({
         ${name}${operationArgs} { ${
       resolverKey === GeneratedResolverField.DELETE_MUTATION
         ? ['id']
-        : [...returnAttributes, ...pickedReturnAttributes].join(` ${newLine()} `)
+        : [...returnAttributes, ...pickedReturnAttributes].join(`${newLine()}`)
     } }
       }
     `;

@@ -6,7 +6,7 @@ export const generateEnumsGql = (enums) => {
   return Object.entries(enums).reduce((acc, [key, value]: [string, { values: string[] }]) => {
     const enumGql = `
       enum ${key} {
-        ${value.values.join(` ${newLine()} `)}
+        ${value.values.join(`${newLine()}`)}
       }
     `;
     return acc + enumGql;

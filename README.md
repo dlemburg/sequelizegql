@@ -149,7 +149,7 @@ const rootSchemaMap = {
   generate: true,                                  // obviously
   directive: `@acl(role: ['ADMIN', 'USER'])`;      // added to every endpoint
   whereInputAttributes?: ['id'];                   // queries will only be able to filter on 'id'
-  omitResolvers: [GeneratedResolverField.DESTROY]; // don't generate any delete endpoints
+  omitResolvers: [GeneratedResolverField.DELETE_MUTATION]; // don't generate any delete endpoints
   omitInputAttributes?: ['id', 'createdAt', 'updatedAt', 'removedAt'];
   onBeforeResolve?: (args) => { /* ...do some business logic */};
   onAfterResolve?: (args) => { /* ...notify some integration */};
@@ -170,7 +170,7 @@ const schemaMap = {
   },
   Book: {
     resolvers: {
-      destroy: { generate: true }, // i.e. let's override the `rootSchemaMap`
+      delete: { generate: true }, // i.e. let's override the `rootSchemaMap`
     },
     omitResolvers: [GeneratedResolverField.FIND_ALL], // i.e. this will take down our servers, so we don't want it :)
   },
