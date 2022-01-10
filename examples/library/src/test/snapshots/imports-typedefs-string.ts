@@ -57,7 +57,9 @@ upsertAuthor(where: AuthorWhereInput, input: AuthorInput!): Author!
 
         
   extend type Query {
-    authorsPaged(where: AuthorWhereInput, options: OptionsInputPaged): AuthorPaged! 
+    author(where: AuthorWhereInput, options: OptionsInput): Author 
+authorsPaged(where: AuthorWhereInput, options: OptionsInputPaged): AuthorPaged! 
+allAuthors: [Author]! 
 
   }
 
@@ -79,6 +81,9 @@ removedAt: DateTime
 name: String
 surname: String
 birthDate: DateTime
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
       books: [BookInput]
     }
   
@@ -88,6 +93,9 @@ birthDate: DateTime
 name: String
 surname: String
 birthDate: DateTime
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
       
     }
   
@@ -101,6 +109,11 @@ birthDate: DateTime
         
     input  BookLibraryWhereInput {
       id: Int
+	libraryId: Int
+	bookId: Int
+	createdAt: DateTime
+	updatedAt: DateTime
+	removedAt: DateTime
       
       AND: [BookLibraryWhereInput]
 OR: [BookLibraryWhereInput]
@@ -137,7 +150,7 @@ NOT_IN_STRING: String!
       }
 
       input BookLibraryWhereFilterInput {
-        id: BookLibraryWhereFilterOperatorMapInput
+        id: BookLibraryWhereFilterOperatorMapInput,libraryId: BookLibraryWhereFilterOperatorMapInput,bookId: BookLibraryWhereFilterOperatorMapInput,createdAt: BookLibraryWhereFilterOperatorMapInput,updatedAt: BookLibraryWhereFilterOperatorMapInput,removedAt: BookLibraryWhereFilterOperatorMapInput
       }
     
   
@@ -153,8 +166,10 @@ upsertBookLibrary(where: BookLibraryWhereInput, input: BookLibraryInput!): BookL
 
         
   extend type Query {
-    bookLibraries(where: BookLibraryWhereInput, options: OptionsInput): [BookLibrary]! 
+    bookLibrary(where: BookLibraryWhereInput, options: OptionsInput): BookLibrary 
+bookLibraries(where: BookLibraryWhereInput, options: OptionsInput): [BookLibrary]! 
 bookLibrariesPaged(where: BookLibraryWhereInput, options: OptionsInputPaged): BookLibraryPaged! 
+allBookLibraries: [BookLibrary]! 
 
   }
 
@@ -174,6 +189,9 @@ removedAt: DateTime
       id: Int
 libraryId: Int
 bookId: Int
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
       
     }
   
@@ -182,6 +200,9 @@ bookId: Int
       id: Int
 libraryId: Int
 bookId: Int
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
       
     }
   
@@ -195,6 +216,12 @@ bookId: Int
         
     input  BookWhereInput {
       id: Int
+	isbn: String
+	title: String
+	categoryId: Int
+	createdAt: DateTime
+	updatedAt: DateTime
+	removedAt: DateTime
       
       AND: [BookWhereInput]
 OR: [BookWhereInput]
@@ -231,7 +258,7 @@ NOT_IN_STRING: String!
       }
 
       input BookWhereFilterInput {
-        id: BookWhereFilterOperatorMapInput
+        id: BookWhereFilterOperatorMapInput,isbn: BookWhereFilterOperatorMapInput,title: BookWhereFilterOperatorMapInput,categoryId: BookWhereFilterOperatorMapInput,createdAt: BookWhereFilterOperatorMapInput,updatedAt: BookWhereFilterOperatorMapInput,removedAt: BookWhereFilterOperatorMapInput
       }
     
   
@@ -273,6 +300,9 @@ libraries(where: BookWhereInput): [Library]
 isbn: String
 title: String
 categoryId: Int
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
       category: CategoryInput
 authors: [AuthorInput]
 libraries: [LibraryInput]
@@ -284,6 +314,9 @@ libraries: [LibraryInput]
 isbn: String
 title: String
 categoryId: Int
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
       
     }
   
@@ -297,6 +330,10 @@ categoryId: Int
         
     input  CategoryWhereInput {
       id: Int
+	name: String
+	createdAt: DateTime
+	updatedAt: DateTime
+	removedAt: DateTime
       
       AND: [CategoryWhereInput]
 OR: [CategoryWhereInput]
@@ -333,7 +370,7 @@ NOT_IN_STRING: String!
       }
 
       input CategoryWhereFilterInput {
-        id: CategoryWhereFilterOperatorMapInput
+        id: CategoryWhereFilterOperatorMapInput,name: CategoryWhereFilterOperatorMapInput,createdAt: CategoryWhereFilterOperatorMapInput,updatedAt: CategoryWhereFilterOperatorMapInput,removedAt: CategoryWhereFilterOperatorMapInput
       }
     
   
@@ -349,8 +386,10 @@ upsertCategory(where: CategoryWhereInput, input: CategoryInput!): Category!
 
         
   extend type Query {
-    categories(where: CategoryWhereInput, options: OptionsInput): [Category]! 
+    category(where: CategoryWhereInput, options: OptionsInput): Category 
+categories(where: CategoryWhereInput, options: OptionsInput): [Category]! 
 categoriesPaged(where: CategoryWhereInput, options: OptionsInputPaged): CategoryPaged! 
+allCategories: [Category]! 
 
   }
 
@@ -368,6 +407,9 @@ removedAt: DateTime
     input  CategoryInput {
       id: Int
 name: String
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
       
     }
   
@@ -375,6 +417,9 @@ name: String
     input  UpdateCategoryInput {
       id: Int
 name: String
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
       
     }
   
@@ -388,6 +433,11 @@ name: String
         
     input  CityWhereInput {
       id: Int
+	postalCode: String
+	name: String
+	createdAt: DateTime
+	updatedAt: DateTime
+	removedAt: DateTime
       
       AND: [CityWhereInput]
 OR: [CityWhereInput]
@@ -424,7 +474,7 @@ NOT_IN_STRING: String!
       }
 
       input CityWhereFilterInput {
-        id: CityWhereFilterOperatorMapInput
+        id: CityWhereFilterOperatorMapInput,postalCode: CityWhereFilterOperatorMapInput,name: CityWhereFilterOperatorMapInput,createdAt: CityWhereFilterOperatorMapInput,updatedAt: CityWhereFilterOperatorMapInput,removedAt: CityWhereFilterOperatorMapInput
       }
     
   
@@ -442,6 +492,7 @@ upsertCity(where: CityWhereInput, input: CityInput!): City!
     city(where: CityWhereInput, options: OptionsInput): City 
 cities(where: CityWhereInput, options: OptionsInput): [City]! 
 citiesPaged(where: CityWhereInput, options: OptionsInputPaged): CityPaged! 
+allCities: [City]! 
 
   }
 
@@ -461,6 +512,9 @@ removedAt: DateTime
       id: Int
 postalCode: String
 name: String
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
       
     }
   
@@ -469,6 +523,9 @@ name: String
       id: Int
 postalCode: String
 name: String
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
       
     }
   
@@ -482,6 +539,14 @@ name: String
         
     input  LibraryWhereInput {
       id: Int
+	cityId: Int
+	name: String
+	address: String
+	description: String
+	status: LibraryStatus
+	createdAt: DateTime
+	updatedAt: DateTime
+	removedAt: DateTime
       
       AND: [LibraryWhereInput]
 OR: [LibraryWhereInput]
@@ -518,7 +583,7 @@ NOT_IN_STRING: String!
       }
 
       input LibraryWhereFilterInput {
-        id: LibraryWhereFilterOperatorMapInput
+        id: LibraryWhereFilterOperatorMapInput,cityId: LibraryWhereFilterOperatorMapInput,name: LibraryWhereFilterOperatorMapInput,address: LibraryWhereFilterOperatorMapInput,description: LibraryWhereFilterOperatorMapInput,status: LibraryWhereFilterOperatorMapInput,createdAt: LibraryWhereFilterOperatorMapInput,updatedAt: LibraryWhereFilterOperatorMapInput,removedAt: LibraryWhereFilterOperatorMapInput
       }
     
   
@@ -534,8 +599,10 @@ upsertLibrary(where: LibraryWhereInput, input: LibraryInput!): Library!
 
         
   extend type Query {
-    libraries(where: LibraryWhereInput, options: OptionsInput): [Library]! 
+    library(where: LibraryWhereInput, options: OptionsInput): Library 
+libraries(where: LibraryWhereInput, options: OptionsInput): [Library]! 
 librariesPaged(where: LibraryWhereInput, options: OptionsInputPaged): LibraryPaged! 
+allLibraries: [Library]! 
 
   }
 
@@ -562,6 +629,9 @@ name: String
 address: String
 description: String
 status: LibraryStatus
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
       city: CityInput
 books: [BookInput]
     }
@@ -574,6 +644,9 @@ name: String
 address: String
 description: String
 status: LibraryStatus
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
       
     }
   

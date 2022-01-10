@@ -107,6 +107,113 @@ removedAt: DateTime
 
       
         
+    input  BookLibraryWhereInput {
+      id: Int
+	libraryId: Int
+	bookId: Int
+	createdAt: DateTime
+	updatedAt: DateTime
+	removedAt: DateTime
+      
+      AND: [BookLibraryWhereInput]
+OR: [BookLibraryWhereInput]
+      FILTERS: BookLibraryWhereFilterInput
+    
+    }
+
+    
+      input BookLibraryWhereFilterOperatorMapInput {
+        LIKE: String!
+NOT_LIKE: String!
+STARTS_WITH: String!
+ENDS_WITH: String!
+SUBSTRING: String!
+EQ_STRING: String!
+NE_STRING: String!
+EQ_INT: Int!
+NE_INT: Int!
+IS_NULL: String!
+NOT_STRING: String!
+NOT_INT: Int!
+GT: Int!
+GTE: Int!
+LT: Int!
+LTE: Int!
+BETWEEN_INT: Int!
+BETWEEN_DATE: DateTime!
+NOT_BETWEEN_INT: Int!
+NOT_BETWEEN_DATE: DateTime!
+IN_INT: Int!
+IN_STRING: String!
+NOT_IN_INT: Int!
+NOT_IN_STRING: String!
+      }
+
+      input BookLibraryWhereFilterInput {
+        id: BookLibraryWhereFilterOperatorMapInput,libraryId: BookLibraryWhereFilterOperatorMapInput,bookId: BookLibraryWhereFilterOperatorMapInput,createdAt: BookLibraryWhereFilterOperatorMapInput,updatedAt: BookLibraryWhereFilterOperatorMapInput,removedAt: BookLibraryWhereFilterOperatorMapInput
+      }
+    
+  
+        
+  extend type Mutation {
+    createBookLibrary(input: BookLibraryInput!): BookLibrary! 
+createManyBookLibraries(input: [BookLibraryInput!]!): [BookLibrary!]! 
+updateBookLibrary(where: BookLibraryWhereInput, input: UpdateBookLibraryInput!): BookLibrary! 
+deleteBookLibrary(where: BookLibraryWhereInput, options: DeleteOptions): DeleteResponse 
+upsertBookLibrary(where: BookLibraryWhereInput, input: BookLibraryInput!): BookLibrary! 
+
+  }
+
+        
+  extend type Query {
+    bookLibrary(where: BookLibraryWhereInput, options: OptionsInput): BookLibrary 
+bookLibraries(where: BookLibraryWhereInput, options: OptionsInput): [BookLibrary]! 
+bookLibrariesPaged(where: BookLibraryWhereInput, options: OptionsInputPaged): BookLibraryPaged! 
+allBookLibraries: [BookLibrary]! 
+
+  }
+
+        
+    type  BookLibrary {
+      id: Int
+libraryId: Int
+bookId: Int
+createdAt: DateTime!
+updatedAt: DateTime!
+removedAt: DateTime
+      
+    }
+  
+        
+    input  BookLibraryInput {
+      id: Int
+libraryId: Int
+bookId: Int
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
+      
+    }
+  
+        
+    input  UpdateBookLibraryInput {
+      id: Int
+libraryId: Int
+bookId: Int
+createdAt: DateTime
+updatedAt: DateTime
+removedAt: DateTime
+      
+    }
+  
+        
+  type BookLibraryPaged {
+    entities: [BookLibrary]
+    totalCount: Int
+  }
+
+      
+        
     input  BookWhereInput {
       id: Int
 	isbn: String
@@ -216,113 +323,6 @@ removedAt: DateTime
         
   type BookPaged {
     entities: [Book]
-    totalCount: Int
-  }
-
-      
-        
-    input  BookLibraryWhereInput {
-      id: Int
-	libraryId: Int
-	bookId: Int
-	createdAt: DateTime
-	updatedAt: DateTime
-	removedAt: DateTime
-      
-      AND: [BookLibraryWhereInput]
-OR: [BookLibraryWhereInput]
-      FILTERS: BookLibraryWhereFilterInput
-    
-    }
-
-    
-      input BookLibraryWhereFilterOperatorMapInput {
-        LIKE: String!
-NOT_LIKE: String!
-STARTS_WITH: String!
-ENDS_WITH: String!
-SUBSTRING: String!
-EQ_STRING: String!
-NE_STRING: String!
-EQ_INT: Int!
-NE_INT: Int!
-IS_NULL: String!
-NOT_STRING: String!
-NOT_INT: Int!
-GT: Int!
-GTE: Int!
-LT: Int!
-LTE: Int!
-BETWEEN_INT: Int!
-BETWEEN_DATE: DateTime!
-NOT_BETWEEN_INT: Int!
-NOT_BETWEEN_DATE: DateTime!
-IN_INT: Int!
-IN_STRING: String!
-NOT_IN_INT: Int!
-NOT_IN_STRING: String!
-      }
-
-      input BookLibraryWhereFilterInput {
-        id: BookLibraryWhereFilterOperatorMapInput,libraryId: BookLibraryWhereFilterOperatorMapInput,bookId: BookLibraryWhereFilterOperatorMapInput,createdAt: BookLibraryWhereFilterOperatorMapInput,updatedAt: BookLibraryWhereFilterOperatorMapInput,removedAt: BookLibraryWhereFilterOperatorMapInput
-      }
-    
-  
-        
-  extend type Mutation {
-    createBookLibrary(input: BookLibraryInput!): BookLibrary! 
-createManyBookLibraries(input: [BookLibraryInput!]!): [BookLibrary!]! 
-updateBookLibrary(where: BookLibraryWhereInput, input: UpdateBookLibraryInput!): BookLibrary! 
-deleteBookLibrary(where: BookLibraryWhereInput, options: DeleteOptions): DeleteResponse 
-upsertBookLibrary(where: BookLibraryWhereInput, input: BookLibraryInput!): BookLibrary! 
-
-  }
-
-        
-  extend type Query {
-    bookLibrary(where: BookLibraryWhereInput, options: OptionsInput): BookLibrary 
-bookLibraries(where: BookLibraryWhereInput, options: OptionsInput): [BookLibrary]! 
-bookLibrariesPaged(where: BookLibraryWhereInput, options: OptionsInputPaged): BookLibraryPaged! 
-allBookLibraries: [BookLibrary]! 
-
-  }
-
-        
-    type  BookLibrary {
-      id: Int
-libraryId: Int
-bookId: Int
-createdAt: DateTime!
-updatedAt: DateTime!
-removedAt: DateTime
-      
-    }
-  
-        
-    input  BookLibraryInput {
-      id: Int
-libraryId: Int
-bookId: Int
-createdAt: DateTime
-updatedAt: DateTime
-removedAt: DateTime
-      
-    }
-  
-        
-    input  UpdateBookLibraryInput {
-      id: Int
-libraryId: Int
-bookId: Int
-createdAt: DateTime
-updatedAt: DateTime
-removedAt: DateTime
-      
-    }
-  
-        
-  type BookLibraryPaged {
-    entities: [BookLibrary]
     totalCount: Int
   }
 

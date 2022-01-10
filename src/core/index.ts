@@ -28,7 +28,11 @@ export const buildSchema = (
 ): BuildSchemaResponse => {
   const enumGql = generateEnumsGql(buildEnums(enums));
   const orderGql = optionsQueryGql();
-  const result: any = Object.values(models as any).reduce(
+  const modelsArr = Object.values(models as any).sort(
+    (a: any, b: any) => a?.tableName - b?.tableName
+  );
+
+  const result: any = modelsArr.reduce(
     (acc: BuildSchemaResponse, model: any): BuildSchemaResponse => {
       const root = cloneDeep(rootSchemaMap);
       const options = merge(root, findModelOverrides(schemaMap, model));
