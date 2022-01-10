@@ -12,16 +12,16 @@ type BuildSchemaResponse = {
   resolvers: ResolverResponse;
 };
 
-const findModelOverrides = (schemaMap: SchemaMap, model): SchemaMapOptions => {
+const findModelOverrides = (modelMap: SchemaMap, model): SchemaMapOptions => {
   const loweredName = lowercaseFirstLetter(model.name);
-  const modelOverrides = schemaMap?.[model.name] || schemaMap?.[loweredName] || {};
+  const modelOverrides = modelMap?.[model.name] || modelMap?.[loweredName] || {};
 
   return modelOverrides;
 };
 
 export const buildSchema = (
   models: any,
-  schemaMap: SchemaMap = {},
+  modelMap: SchemaMap = {},
   rootSchemaMap: SchemaMapOptions
 ): BuildSchemaResponse => {
   const orderGql = optionsQueryGql();
@@ -32,7 +32,7 @@ export const buildSchema = (
   const result: any = modelsArr.reduce(
     (acc: BuildSchemaResponse, model: any): BuildSchemaResponse => {
       const root = cloneDeep(rootSchemaMap);
-      const options = merge(root, findModelOverrides(schemaMap, model));
+      const options = merge(root, findModelOverrides(modelMap, model));
 
       if (options?.generate === false) return acc;
 

@@ -20,7 +20,7 @@ type QueryAttributes = {
 const recurseQueryFields = (
   fieldEntries: any,
   modelAttributes: ModelAttribute,
-  schemaMapOptions: SchemaMapOptions
+  modelMapOptions: SchemaMapOptions
 ): QueryAttributes => {
   const models = StateFactory().getModels();
 
@@ -28,7 +28,7 @@ const recurseQueryFields = (
     (acc, [key, value]: any) => {
       const associationValue = modelAttributes?.associations?.[key];
       const attributeValue = modelAttributes?.[key];
-      const where = parseWhere(value?.fieldsByTypeName?.args?.where, schemaMapOptions);
+      const where = parseWhere(value?.fieldsByTypeName?.args?.where, modelMapOptions);
 
       if (associationValue?.type) {
         const Model = associationValue?.type && models?.[associationValue?.type];
@@ -52,7 +52,7 @@ const recurseQueryFields = (
                 const { attributes, include: associatedInclude } = recurseQueryFields(
                   nextFields,
                   nextAttributes,
-                  schemaMapOptions
+                  modelMapOptions
                 );
 
                 const baseInclude = [

@@ -4,7 +4,7 @@ import { setup } from './setup';
 import { removeAllWhitespace } from './util/remove-whitespace';
 
 describe('[graphql-sequelize.test.ts] suite', () => {
-  test('[getSchema] validating schemaMap.whereInputAttributes result', async () => {
+  test('[getSchema] validating modelMap.whereInputAttributes result', async () => {
     const sequelize = await setup();
 
     const result = await getSchema({
@@ -26,7 +26,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
     expect(authorWhereInputs).toBeTruthy();
   });
 
-  test('[getSchema] validating schemaMap `all` queries generated result to be 1', async () => {
+  test('[getSchema] validating modelMap `all` queries generated result to be 1', async () => {
     const sequelize = await setup();
 
     const result = await getSchema({
@@ -39,7 +39,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
     expect(numberOfAllQueries).toEqual(1);
   });
 
-  test('[getSchema] validating schemaMap `allBooks` query not generated', async () => {
+  test('[getSchema] validating modelMap `allBooks` query not generated', async () => {
     const sequelize = await setup();
 
     const result = await getSchema({
@@ -52,7 +52,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
     expect(hasAllBooksQuery).toBeTruthy();
   });
 
-  test('[getSchema] validating schemaMap `authors` query not generated', async () => {
+  test('[getSchema] validating modelMap `authors` query not generated', async () => {
     const sequelize = await setup();
 
     const result = await getSchema({
@@ -67,7 +67,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
     expect(hasAuthorsQuery).toBeFalsy();
   });
 
-  test('[getSchema] validating schemaMap no BookAuthor queries generated', async () => {
+  test('[getSchema] validating modelMap no BookAuthor queries generated', async () => {
     const sequelize = await setup();
 
     const result = await getSchema({
@@ -95,7 +95,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
     expect(bookAuthorsPaged).toBeFalsy();
   });
 
-  test('[getSchema] validating schemaMap no BookAuthor mutations generated', async () => {
+  test('[getSchema] validating modelMap no BookAuthor mutations generated', async () => {
     const sequelize = await setup();
 
     const result = await getSchema({
@@ -125,7 +125,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
     expect(deleteBookAuthor).toBeFalsy();
   });
 
-  test('[getSchema] validating schemaMap `upsertBook` mutation not generated', async () => {
+  test('[getSchema] validating modelMap `upsertBook` mutation not generated', async () => {
     const sequelize = await setup();
 
     const result = await getSchema({
@@ -138,7 +138,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
     expect(upsertBook).toBeFalsy();
   });
 
-  test('[getSchema] validating schemaMap `deleteCity` mutation not generated', async () => {
+  test('[getSchema] validating modelMap `deleteCity` mutation not generated', async () => {
     const sequelize = await setup();
 
     const result = await getSchema({

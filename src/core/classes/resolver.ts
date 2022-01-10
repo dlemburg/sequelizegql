@@ -4,15 +4,15 @@ import { BaseGql } from './base-gql';
 import { buildSort, parseWhere, maybeGenerate } from '../util';
 
 const resolveQuery =
-  (model, serviceMethod, schemaMapOptions: SchemaMapOptions) =>
+  (model, serviceMethod, modelMapOptions: SchemaMapOptions) =>
   (_, { where, options }, context, resolveInfo) => {
     let include, attributes;
     const order =
       options?.order?.length ?? options?.order.map(({ field, dir }) => buildSort(field, dir));
-    const filter = parseWhere(where, schemaMapOptions);
+    const filter = parseWhere(where, modelMapOptions);
 
     if (resolveInfo) {
-      ({ include, attributes } = QueryAttributeBuilder.build(model, resolveInfo, schemaMapOptions));
+      ({ include, attributes } = QueryAttributeBuilder.build(model, resolveInfo, modelMapOptions));
     }
 
     return serviceMethod(filter, {

@@ -22,7 +22,7 @@ const buildWhereFilters = (entries) => {
   return whereFilters;
 };
 
-export const parseWhere = (where: any, schemaMapOptions: SchemaMapOptions) => {
+export const parseWhere = (where: any, modelMapOptions: SchemaMapOptions) => {
   const whereEntries = Object.entries(where);
 
   if (!whereEntries?.length) return where;
@@ -37,7 +37,7 @@ export const parseWhere = (where: any, schemaMapOptions: SchemaMapOptions) => {
     }
 
     if (
-      key === (schemaMapOptions?.fieldNameMappers?.FILTERS || Constants.FILTERS) &&
+      key === (modelMapOptions?.fieldNameMappers?.FILTERS || Constants.FILTERS) &&
       Object.keys(whereEntries[key])?.length
     ) {
       const whereOperatorFilters = buildWhereFilters(whereEntries[key]);

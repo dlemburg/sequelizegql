@@ -1,6 +1,6 @@
-import { rootSchemaMap, schemaMap } from '../example-schema-maps/schema-map';
+import { rootSchemaMap, modelMap } from '../example-schema-maps/schema-map';
 
 export const imports = {
-  schemaMap,
+  modelMap,
   rootSchemaMap,
 };

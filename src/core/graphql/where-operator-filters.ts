@@ -10,7 +10,7 @@ export const whereOperatorFiltersInputGql = (
   name: string,
   whereInputName: string,
   whereInputAttributes: KeyValuePairs[],
-  schemaMapOptions: SchemaMapOptions
+  modelMapOptions: SchemaMapOptions
 ) => {
   const filterInputName = `${name}WhereFilterInput`;
   const filterOperatorMapInputName = `${name}WhereFilterOperatorMapInput`;
@@ -35,7 +35,7 @@ export const whereOperatorFiltersInputGql = (
     `,
     whereInputFilterFields: `
       ${topLevelOperatorsInput}
-      ${schemaMapOptions?.fieldNameMappers?.FILTERS || Constants.FILTERS}: ${filterInputName}
+      ${modelMapOptions?.fieldNameMappers?.FILTERS || Constants.FILTERS}: ${filterInputName}
     `,
   };
 };

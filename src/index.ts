@@ -24,19 +24,19 @@ class SequelizeGraphql {
 
     const {
       sequelize = {} as Sequelize,
-      schemaMap = {} as SchemaMap,
+      modelMap = {} as SchemaMap,
       rootSchemaMap = {} as SchemaMapOptions,
       ...options
     } = input;
 
-    const schemaMapPreExport = options.pathToSchemaMap
-      ? await getExports(options.pathToSchemaMap, options.schemaMapExportMatcher)
-      : schemaMap;
+    const modelMapPreExport = options.pathToSchemaMap
+      ? await getExports(options.pathToSchemaMap, options.modelMapExportMatcher)
+      : modelMap;
     const sequelizePreExport = options.pathToSequelize
       ? await getExports(options.pathToSequelize, options.sequelizeExportMatcher)
       : sequelize;
 
-    const schemaMapExport = schemaMapPreExport.schemaMap ?? schemaMapPreExport;
+    const modelMapExport = modelMapPreExport.modelMap ?? modelMapPreExport;
     const sequelizeExport = sequelizePreExport.sequelize ?? sequelizePreExport;
 
     StateFactory({
@@ -45,7 +45,7 @@ class SequelizeGraphql {
 
     const { typedefs, resolvers } = buildSchema(
       sequelizeExport.models,
-      schemaMapExport,
+      modelMapExport,
       rootSchemaMap
     );
 

@@ -9,7 +9,7 @@ export const whereInputNameGql = (name) => `${name}WhereInput`;
 export const whereInputGql = (
   name: string,
   whereInputAttributes: KeyValuePairs[],
-  schemaMapOptions: SchemaMapOptions
+  modelMapOptions: SchemaMapOptions
 ): string => {
   const whereInputName = whereInputNameGql(name);
 
@@ -17,7 +17,7 @@ export const whereInputGql = (
     name,
     whereInputName,
     whereInputAttributes,
-    schemaMapOptions
+    modelMapOptions
   );
 
   const whereInputAttributesFieldsGql = whereInputAttributes

@@ -192,16 +192,16 @@ export class City extends Model<City> {
 /***
  * IMPORTANT
  *
- * `schemaMap`` config takes precedence over the `rootSchemaMap`;
- *  under the hood, psuedocode looks like `merge(rootSchemaMap, schemaMap)`
+ * `modelMap`` config takes precedence over the `rootSchemaMap`;
+ *  under the hood, psuedocode looks like `merge(rootSchemaMap, modelMap)`
  */
 
 // `rootSchemaMap` applies to *every* model's generated endpoints
 const rootSchemaMap = {
   directive: `@acl(role: ['ADMIN', 'USER'])`;      // added to every endpoint
   whereInputAttributes?: ['id'];                   // queries will only be able to filter on 'id'
+  omitInputAttributes?: ['id', 'createdAt', 'updatedAt', 'removedAt']; // applies to 'create', 'update' and 'upsert'
   omitResolvers: [GeneratedResolverField.DELETE_MUTATION]; // don't generate any delete endpoints
-  omitInputAttributes?: ['id', 'createdAt', 'updatedAt', 'removedAt'];
   onBeforeResolve?: (args) => { /* ...do some business logic */};
   onAfterResolve?: (args) => { /* ...notify some integration */};
   fieldNameMappers?: {
@@ -209,8 +209,8 @@ const rootSchemaMap = {
   };
 }
 
-// `schemaMap` applies to *specified* model's generated endpoints
-const schemaMap = {
+// `modelMap` applies to *specified* model's generated endpoints
+const modelMap = {
   // note: case-sensitivity is not strict
   author: {
     whereInputAttributes: ['id', 'name', 'surname'], // i.e. now 'name' and 'surname' are searchable for 'Author' model
@@ -234,7 +234,7 @@ const schemaMap = {
 
 const options = {
   rootSchemaMap,
-  schemaMap,
+  modelMap,
   sequelize: Sequelize,
 };
 
@@ -274,7 +274,7 @@ For the above example, the following `Author` Queries and Mutations are availabl
 - `...modelFields` represents the root fields on each model, i.e. `id`, `name`, `surname`, etc.
 - `...allAssociations` model's associations, i.e. `Author->Books->Libraries->City`
 - `...oneLevelOfAssociations` represents _one_ layer of associations (TODO: make recursive)
-- The following are customizable via the `schemaMap` where you can define fields to omit for both queries (`WhereInput`) and mutations (`Input`)
+- The following are customizable via the `modelMap` where you can define fields to omit for both queries (`WhereInput`) and mutations (`Input`)
 - `AND` and `OR` are available at the root level of the `WhereInput` to combine the root where input fields conditionally
 - `FILTERS` is a map of where input fields where sequelize operators (mostly similar w/ exception to polymorphic operators) can be applied
 
@@ -402,7 +402,7 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 | Name                   | Type               | Description                                                            |
 | ---------------------- | ------------------ | ---------------------------------------------------------------------- |
 | `sequelize`            | `Sequelize`        | Your Sequelize instance                                                |
-| `schemaMap`            | `SchemaMap`        | Complex object that allows configuration and overrides for every model |
+| `modelMap`             | `SchemaMap`        | Complex object that allows configuration and overrides for every model |
 | `rootSchemaMap`        | `SchemaMapOptions` | Same as above, but will be applied to _all_ models                     |
 | `deleteResponseGql`    | `string`           | Your own slimmed-down delete response; by default - `DeleteResponse`   |
 | `includeDeleteOptions` | `boolean`          | Allows for extra arg `options: DeleteOptions` on `delete<*>` endpoints |
@@ -414,7 +414,7 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 | Name              | Type   | Export Naming Rules                |
 | ----------------- | ------ | ---------------------------------- |
 | `pathToSequelize` | string | `default`, `sequelize`, everything |
-| `pathToSchemaMap` | string | `default`, `schemaMap`, everything |
+| `pathToSchemaMap` | string | `default`, `modelMap`, everything  |
 
 &nbsp;
 
@@ -424,7 +424,7 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 | ------------------------ | ------------- | ------------ |
 | `modelsExportMatcher`    | `fn(exports)` | ^ same       |
 | `sequelizeExportMatcher` | `fn(exports)` | ^ same       |
-| `schemaMapExportMatcher` | `fn(exports)` | ^ same       |
+| `modelMapExportMatcher`  | `fn(exports)` | ^ same       |
 
 ### Notes on Filepath Export Matcher `options`
 

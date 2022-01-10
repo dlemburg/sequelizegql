@@ -9,7 +9,7 @@ export const rootSchemaMap = {
   whereInputAttributes: ['id'],
 };
 
-export const schemaMap: SchemaMap = {
+export const modelMap: SchemaMap = {
   author: {
     whereInputAttributes: ['id', 'name', 'surname'],
     resolvers: {
