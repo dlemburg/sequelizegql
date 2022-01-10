@@ -23,6 +23,7 @@ export const init = async () => {
   try {
     await sequelize.authenticate();
     console.log('Sequelize connected');
+    // sequelize.sync({ force: true });
   } catch (error) {
     console.log('Sequelize connection error: ', error);
   }
