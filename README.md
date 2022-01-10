@@ -22,7 +22,7 @@
 ## Installation
 
 ```terminal
-npm install sequelize sequelize-graphql
+npm install sequelize-graphql
 ```
 
 ## What?
