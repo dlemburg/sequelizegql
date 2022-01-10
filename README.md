@@ -35,7 +35,7 @@ The inspiration for this library was simple: fantastic tools exist in the data-l
 
 [Sequelize ORM](https://sequelize.org/) is battle-tested and mature. Greenfield graphql/sequelize projects are common and legacy REST/sequelize projects may want to bring GraphQL into their ecosystem.
 
-Popular generation tools hit a ceiling very quickly when systems mature and business logic becomes more complex. The allowable configuration options (on root level and model level) are an attempt to remove that barrier and scale well long-term.
+Popular generation tools hit a ceiling very quickly when systems mature and business logic becomes more complex. The allowable configuration options (on root and model level) are an attempt to remove that barrier and scale well long-term.
 
 ## Advantages
 
