@@ -33,7 +33,7 @@ npm install sequelize-graphql
 
 The inspiration for this library was simple: fantastic tools exist in the data-layer/graphql generation space for database-first [here](https://supabase.com/blog/2021/12/03/pg-graphql), postgres-first [here](https://www.npmjs.com/package/postgraphile), and prisma-first [here](https://typegraphql.com/), but missing for sequelize users or those who lean towards code-first data-layer design.
 
-[Sequelize ORM](https://sequelize.org/) is battle-tested and mature. Greenfield projects utilizing graphql/sequelize are spun up daily and legacy REST/sequelize projects may want to bring GraphQL into their ecosystem.
+[Sequelize ORM](https://sequelize.org/) is battle-tested and mature. Greenfield graphql/sequelize projects are common and legacy REST/sequelize projects may want to bring GraphQL into their ecosystem.
 
 Popular generation tools hit a ceiling very quickly when systems mature and business logic becomes more complex. The allowable configuration options (on root level and model level) are an attempt to remove that barrier and scale well long-term.
 
