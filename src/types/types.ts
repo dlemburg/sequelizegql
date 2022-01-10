@@ -48,14 +48,11 @@ export type ExportMatcherFn = (exports: Record<any, any>) => Record<any, any>;
 export type InitializeInput = {
   sequelize?: Sequelize;
   enums?: Record<any, any>;
-  models?: Record<any, any>;
   schemaMap?: SchemaMap;
   rootSchemaMap?: SchemaMapOptions;
-  pathToModels?: string;
   pathToEnums?: string;
   pathToSequelize?: string;
   pathToSchemaMap?: string;
-  modelsExportMatcher?: ExportMatcherFn;
   enumsExportMatcher?: ExportMatcherFn;
   sequelizeExportMatcher?: ExportMatcherFn;
   schemaMapExportMatcher?: ExportMatcherFn;
@@ -138,7 +135,6 @@ export type KeyValuePairs = {
   value: string;
 };
 
-export type Models = Record<string, Model<any, any>>;
 export type Enums = Record<string, string>;
 
 export enum SortDirection {

@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
-import { Enums, Models, SchemaMap, SchemaMapOptions } from '../types';
+import { Enums, SchemaMap, SchemaMapOptions } from '../types';
 import { buildEnums, lowercaseFirstLetter } from './util';
 import { ResolverFactory, TypedefFactory } from './classes';
 import { generateEnumsGql } from './graphql/enums';
@@ -21,7 +21,7 @@ const findModelOverrides = (schemaMap: SchemaMap, model): SchemaMapOptions => {
 };
 
 export const buildSchema = (
-  models: Models | undefined,
+  models: any,
   enums: Enums | undefined,
   schemaMap: SchemaMap = {},
   rootSchemaMap: SchemaMapOptions

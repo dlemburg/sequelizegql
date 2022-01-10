@@ -64,12 +64,12 @@ export const getAttributes = (model) => (): ModelAttributes => {
 
 export const buildAssociationCreateOptions = (model) => (input) => {
   try {
-    const Models = StateFactory().getModels();
+    const models = StateFactory().getModels();
     const attributes = getAttributes(model)();
     const associationOptions = Object.keys(input)?.reduce((acc, key) => {
       const value = attributes?.associations?.[key];
       const type = value?.type;
-      const Model = type && Models?.[type];
+      const Model = type ? models?.[type] : null;
 
       if (Model) {
         const include = [Model];

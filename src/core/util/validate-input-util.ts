@@ -8,10 +8,6 @@ export const validateInput = (input: InitializeInput): Error | void => {
     errs.push('pathToEnums, enums');
   }
 
-  if (!input.pathToModels && !input.models) {
-    errs.push('pathToModels, models');
-  }
-
   if (!input.pathToSequelize && !input.sequelize) {
     errs.push('pathToSequelize, sequelize');
   }

@@ -187,6 +187,7 @@ export class City extends Model<City> {
   // ...timestamps: createdAt, updatedAt, removedAt, etc
 }
 
+// sequelize.addModels[Author, Book, AuthorBook, City];
 
 /***
  * IMPORTANT
@@ -241,7 +242,6 @@ const options = {
   schemaMap,
   sequelize: Sequelize,
   enums: { LibraryStatus },
-  models: { Author, Book, AuthorBook, City },
 };
 
 const graphqlSequelize = new SequelizeGraphql();
@@ -408,7 +408,6 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 | Name                   | Type                     | Description                                                            |
 | ---------------------- | ------------------------ | ---------------------------------------------------------------------- |
 | `sequelize`            | `Sequelize`              | Your Sequelize instance                                                |
-| `models`               | `Record<string, Model>`  | i.e. `{ Author, Book, Library, City }`                                 |
 | `enums`                | `Record<string, string>` | i.e. `{ LibraryStatus }`                                               |
 | `schemaMap`            | `SchemaMap`              | Complex object that allows configuration and overrides for every model |
 | `rootSchemaMap`        | `SchemaMapOptions`       | Same as above, but will be applied to _all_ models                     |
@@ -421,7 +420,6 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 
 | Name              | Type   | Export Naming Rules                |
 | ----------------- | ------ | ---------------------------------- |
-| `pathToModels`    | string | `default`, `models`, everything    |
 | `pathToEnums`     | string | `default`, `enums`, everything     |
 | `pathToSequelize` | string | `default`, `sequelize`, everything |
 | `pathToSchemaMap` | string | `default`, `schemaMap`, everything |
@@ -455,7 +453,6 @@ Each set of properties is an _xor_ (one of each set of properties must be provid
 
 | object      | filepath          |
 | ----------- | ----------------- |
-| `models`    | `pathToModels`    |
 | `enums`     | `pathToEnums`     |
 | `sequelize` | `pathToSequelize` |
 
