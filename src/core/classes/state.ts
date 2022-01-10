@@ -1,17 +1,10 @@
 import { Sequelize } from 'sequelize';
-import { Enums } from '../../types';
 
 class State {
-  private enums: Enums;
   private sequelize: Sequelize;
 
-  constructor({ enums, sequelize }) {
-    this.enums = enums;
+  constructor({ sequelize }) {
     this.sequelize = sequelize;
-  }
-
-  public getEnums() {
-    return this.enums;
   }
 
   public getModels() {

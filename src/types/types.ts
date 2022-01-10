@@ -47,13 +47,10 @@ export type ExportMatcherFn = (exports: Record<any, any>) => Record<any, any>;
 
 export type InitializeInput = {
   sequelize?: Sequelize;
-  enums?: Record<any, any>;
   schemaMap?: SchemaMap;
   rootSchemaMap?: SchemaMapOptions;
-  pathToEnums?: string;
   pathToSequelize?: string;
   pathToSchemaMap?: string;
-  enumsExportMatcher?: ExportMatcherFn;
   sequelizeExportMatcher?: ExportMatcherFn;
   schemaMapExportMatcher?: ExportMatcherFn;
   deleteResponseGql?: string;
@@ -85,20 +82,21 @@ export type BaseInput<T = any> = {
   options?: SchemaMapOptions;
 };
 
-export type BaseAttributes = {
-  [key: string]: {
-    allowNull?: boolean;
-    sequelizeType?: typeof DataTypes;
-    type?: string;
-  };
+export type Attribute = {
+  sequelizeType: typeof DataTypes;
+  type: string;
+  isArray: boolean;
+  isEnum: boolean;
+  allowNull: boolean;
+  values: string[];
 };
 
-export type AssociationAttributes = {
-  isArray?: boolean;
+export type KeyedAttribute = {
+  [key: string]: Attribute;
 };
 
-export type ModelAttributes = BaseAttributes & {
-  associations?: BaseAttributes & AssociationAttributes;
+export type ModelAttribute = KeyedAttribute & {
+  associations?: KeyedAttribute;
 };
 
 export type BaseServiceFilter<T> = WhereOptions<T>;
@@ -134,8 +132,6 @@ export type KeyValuePairs = {
   key: string;
   value: string;
 };
-
-export type Enums = Record<string, string>;
 
 export enum SortDirection {
   ASC = 'ASC',

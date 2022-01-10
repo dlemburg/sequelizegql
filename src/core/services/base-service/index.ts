@@ -3,7 +3,7 @@ import {
   BaseServiceFilter,
   BaseServiceOptions,
   DeleteResponse,
-  ModelAttributes,
+  ModelAttribute,
 } from '../../../types';
 import { StateFactory } from '../../classes/state';
 import { buildSortDesc } from '../../util/sequelize-util';
@@ -148,7 +148,7 @@ const restore = (model) => async (where, options) => {
 export type BaseServiceInterface<T> = {
   getModelName: () => string;
   getModel: () => T;
-  getAttributes: () => ModelAttributes;
+  getAttributes: () => ModelAttribute;
   findAll: (filter?: BaseServiceFilter<T>, options?: BaseServiceOptions<T>) => Promise<T[]>;
   findAndCountAll: (
     filter?: BaseServiceFilter<T>,

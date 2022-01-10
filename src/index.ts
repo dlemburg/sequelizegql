@@ -23,16 +23,12 @@ class SequelizeGraphql {
     validateInput(input);
 
     const {
-      enums = {},
       sequelize = {} as Sequelize,
       schemaMap = {} as SchemaMap,
       rootSchemaMap = {} as SchemaMapOptions,
       ...options
     } = input;
 
-    const enumsPreExport = options.pathToEnums
-      ? await getExports(options.pathToEnums, options.enumsExportMatcher)
-      : enums;
     const schemaMapPreExport = options.pathToSchemaMap
       ? await getExports(options.pathToSchemaMap, options.schemaMapExportMatcher)
       : schemaMap;
@@ -40,18 +36,15 @@ class SequelizeGraphql {
       ? await getExports(options.pathToSequelize, options.sequelizeExportMatcher)
       : sequelize;
 
-    const enumsExport = enumsPreExport.enums ?? enumsPreExport;
     const schemaMapExport = schemaMapPreExport.schemaMap ?? schemaMapPreExport;
     const sequelizeExport = sequelizePreExport.sequelize ?? sequelizePreExport;
 
     StateFactory({
-      enums: enumsExport,
       sequelize: sequelizeExport,
     });
 
     const { typedefs, resolvers } = buildSchema(
       sequelizeExport.models,
-      enumsExport,
       schemaMapExport,
       rootSchemaMap
     );

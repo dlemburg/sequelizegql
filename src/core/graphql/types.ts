@@ -1,4 +1,4 @@
-import { ModelAttributes } from '../../types';
+import { ModelAttribute } from '../../types';
 import { mapSequelizeToGraphql } from '../mappers';
 import { stringBuilder } from '../util';
 import { newLine } from './new-line';
@@ -32,7 +32,7 @@ export const updateInputNameGql = (name: string) => stringBuilder('Update', inpu
 export const typesGql = (
   gqlKeyword,
   name,
-  { associations = {}, ...attributes } = {} as ModelAttributes
+  { associations = {}, ...attributes } = {} as ModelAttribute
 ) => {
   const input = inputGql();
   const generateNullable = gqlKeyword !== input;

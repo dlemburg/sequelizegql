@@ -3,7 +3,7 @@ import {
   simplifyParsedResolveInfoFragmentWithType,
 } from 'graphql-parse-resolve-info';
 import { getAttributes } from '../services/base-service/util';
-import { ModelAttributes, SchemaMapOptions } from '../../types';
+import { ModelAttribute, SchemaMapOptions } from '../../types';
 import { parseWhere } from '../util';
 import { StateFactory } from './state';
 
@@ -19,7 +19,7 @@ type QueryAttributes = {
 
 const recurseQueryFields = (
   fieldEntries: any,
-  modelAttributes: ModelAttributes,
+  modelAttributes: ModelAttribute,
   schemaMapOptions: SchemaMapOptions
 ): QueryAttributes => {
   const models = StateFactory().getModels();

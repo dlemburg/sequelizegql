@@ -232,16 +232,10 @@ const schemaMap = {
   },
 };
 
-enum LibraryStatus {
-  ACTIVE = 'ACTIVE',
-  INACTIVE = 'INACTIVE',
-}
-
 const options = {
   rootSchemaMap,
   schemaMap,
   sequelize: Sequelize,
-  enums: { LibraryStatus },
 };
 
 const graphqlSequelize = new SequelizeGraphql();
@@ -405,14 +399,13 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 
 ## Options
 
-| Name                   | Type                     | Description                                                            |
-| ---------------------- | ------------------------ | ---------------------------------------------------------------------- |
-| `sequelize`            | `Sequelize`              | Your Sequelize instance                                                |
-| `enums`                | `Record<string, string>` | i.e. `{ LibraryStatus }`                                               |
-| `schemaMap`            | `SchemaMap`              | Complex object that allows configuration and overrides for every model |
-| `rootSchemaMap`        | `SchemaMapOptions`       | Same as above, but will be applied to _all_ models                     |
-| `deleteResponseGql`    | `string`                 | Your own slimmed-down delete response; by default - `DeleteResponse`   |
-| `includeDeleteOptions` | `boolean`                | Allows for extra arg `options: DeleteOptions` on `delete<*>` endpoints |
+| Name                   | Type               | Description                                                            |
+| ---------------------- | ------------------ | ---------------------------------------------------------------------- |
+| `sequelize`            | `Sequelize`        | Your Sequelize instance                                                |
+| `schemaMap`            | `SchemaMap`        | Complex object that allows configuration and overrides for every model |
+| `rootSchemaMap`        | `SchemaMapOptions` | Same as above, but will be applied to _all_ models                     |
+| `deleteResponseGql`    | `string`           | Your own slimmed-down delete response; by default - `DeleteResponse`   |
+| `includeDeleteOptions` | `boolean`          | Allows for extra arg `options: DeleteOptions` on `delete<*>` endpoints |
 
 &nbsp;
 
@@ -420,7 +413,6 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 
 | Name              | Type   | Export Naming Rules                |
 | ----------------- | ------ | ---------------------------------- |
-| `pathToEnums`     | string | `default`, `enums`, everything     |
 | `pathToSequelize` | string | `default`, `sequelize`, everything |
 | `pathToSchemaMap` | string | `default`, `schemaMap`, everything |
 
@@ -431,7 +423,6 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 | Name                     | Type          | Export Rules |
 | ------------------------ | ------------- | ------------ |
 | `modelsExportMatcher`    | `fn(exports)` | ^ same       |
-| `enumsExportMatcher`     | `fn(exports)` | ^ same       |
 | `sequelizeExportMatcher` | `fn(exports)` | ^ same       |
 | `schemaMapExportMatcher` | `fn(exports)` | ^ same       |
 
@@ -453,7 +444,6 @@ Each set of properties is an _xor_ (one of each set of properties must be provid
 
 | object      | filepath          |
 | ----------- | ----------------- |
-| `enums`     | `pathToEnums`     |
 | `sequelize` | `pathToSequelize` |
 
 &nbsp;

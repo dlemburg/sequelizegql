@@ -105,6 +105,7 @@ removedAt: DateTime
     totalCount: Int
   }
 
+        
       
         
     input  BookLibraryWhereInput {
@@ -212,6 +213,7 @@ removedAt: DateTime
     totalCount: Int
   }
 
+        
       
         
     input  BookWhereInput {
@@ -326,6 +328,7 @@ removedAt: DateTime
     totalCount: Int
   }
 
+        
       
         
     input  CategoryWhereInput {
@@ -429,6 +432,7 @@ removedAt: DateTime
     totalCount: Int
   }
 
+        
       
         
     input  CityWhereInput {
@@ -535,6 +539,7 @@ removedAt: DateTime
     totalCount: Int
   }
 
+        
       
         
     input  LibraryWhereInput {
@@ -543,7 +548,7 @@ removedAt: DateTime
 	name: String
 	address: String
 	description: String
-	status: LibraryStatus
+	status: StatusEnum
 	createdAt: DateTime
 	updatedAt: DateTime
 	removedAt: DateTime
@@ -613,7 +618,7 @@ cityId: Int
 name: String!
 address: String
 description: String
-status: LibraryStatus!
+status: StatusEnum!
 createdAt: DateTime!
 updatedAt: DateTime!
 removedAt: DateTime
@@ -628,7 +633,7 @@ cityId: Int
 name: String
 address: String
 description: String
-status: LibraryStatus
+status: StatusEnum
 createdAt: DateTime
 updatedAt: DateTime
 removedAt: DateTime
@@ -643,7 +648,7 @@ cityId: Int
 name: String
 address: String
 description: String
-status: LibraryStatus
+status: StatusEnum
 createdAt: DateTime
 updatedAt: DateTime
 removedAt: DateTime
@@ -656,12 +661,13 @@ removedAt: DateTime
     totalCount: Int
   }
 
-      
-      enum LibraryStatus {
+        
+      enum StatusEnum {
         ACTIVE
 INACTIVE
       }
     
+      
   enum OrderDirection {
     ASC
     DESC

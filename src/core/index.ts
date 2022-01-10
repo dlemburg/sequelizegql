@@ -1,9 +1,8 @@
 import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
-import { Enums, SchemaMap, SchemaMapOptions } from '../types';
-import { buildEnums, lowercaseFirstLetter } from './util';
+import { SchemaMap, SchemaMapOptions } from '../types';
+import { lowercaseFirstLetter } from './util';
 import { ResolverFactory, TypedefFactory } from './classes';
-import { generateEnumsGql } from './graphql/enums';
 import { optionsQueryGql } from './graphql/options';
 
 type ResolverResponse = { Query?: Record<any, any>; Mutation?: Record<any, any> };
@@ -22,11 +21,9 @@ const findModelOverrides = (schemaMap: SchemaMap, model): SchemaMapOptions => {
 
 export const buildSchema = (
   models: any,
-  enums: Enums | undefined,
   schemaMap: SchemaMap = {},
   rootSchemaMap: SchemaMapOptions
 ): BuildSchemaResponse => {
-  const enumGql = generateEnumsGql(buildEnums(enums));
   const orderGql = optionsQueryGql();
   const modelsArr = Object.values(models as any).sort(
     (a: any, b: any) => a?.tableName - b?.tableName
@@ -53,7 +50,7 @@ export const buildSchema = (
     { typedefs: '', resolvers: {} }
   );
 
-  result.typedefs = result.typedefs + enumGql + orderGql;
+  result.typedefs = result.typedefs + orderGql;
 
   return result;
 };

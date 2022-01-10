@@ -1,4 +1,4 @@
-import { KeyValuePairs, ModelAttributes } from '../../types';
+import { KeyValuePairs, ModelAttribute } from '../../types';
 import { mapSequelizeToGraphql } from '../mappers';
 
 class whereInputAttributes {
@@ -8,7 +8,7 @@ class whereInputAttributes {
 
   public keyValuePairs(
     whereInputAttributes: string[] | undefined,
-    modelwhereInputAttributes: ModelAttributes
+    modelwhereInputAttributes: ModelAttribute
   ): KeyValuePairs[] {
     const attributes = whereInputAttributes?.length
       ? whereInputAttributes

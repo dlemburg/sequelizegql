@@ -1,5 +1,5 @@
 import omit from 'lodash/omit';
-import { BaseInput, ModelAttributes } from '../../types';
+import { BaseInput, KeyedAttribute, ModelAttribute, Attribute } from '../../types';
 import { MutationFactory } from './mutation';
 import { whereInputGql } from '../graphql/where-input';
 import {
@@ -13,16 +13,31 @@ import {
 import { WhereAttributeFactory } from './where-attributes';
 import { QueryFactory } from './query';
 import { BaseGql } from './base-gql';
+import { generateEnumsGql } from '../graphql';
 
+const buildEnums = (attributes: KeyedAttribute) => {
+  return Object.entries(attributes).reduce(
+    (acc: Attribute[], [key, value]: [string, Attribute]) => {
+      if (value.isEnum) {
+        acc.push(attributes[key]);
+      }
+
+      return acc;
+    },
+    []
+  );
+};
 class Typedef extends BaseGql {
-  attributes: ModelAttributes;
+  attributes: ModelAttribute;
   omitInputAttributes: string[] | undefined;
+  enums;
 
   constructor(input: BaseInput) {
     super(input);
 
     this.attributes = this.service?.getAttributes();
     this.omitInputAttributes = input.options?.omitInputAttributes;
+    this.enums = buildEnums(this.attributes);
 
     return this;
   }
@@ -82,6 +97,7 @@ class Typedef extends BaseGql {
     const baseWhereInput = this.whereInputGql();
     const baseMutation = this.mutationGql();
     const baseQuery = this.queryGql();
+    const enumsGql = generateEnumsGql(this.enums);
 
     return {
       baseWhereInput,
@@ -106,6 +122,7 @@ class Typedef extends BaseGql {
         ${baseInput}
         ${baseUpdateInput}
         ${basePagedType}
+        ${enumsGql}
       `,
     };
   }

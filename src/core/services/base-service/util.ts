@@ -1,31 +1,33 @@
 import _ from 'lodash';
 import { StateFactory } from '../../classes/state';
-import { ModelAttributes } from '../../../types';
+import { KeyedAttribute, ModelAttribute } from '../../../types';
+import { uppercaseFirstLetter } from '../../util';
 
-export const getEnumType = (values) => {
-  const result = Object.entries(StateFactory().getEnums()).find(
-    ([, aEnum]: any) => _.difference(values, Object.values(aEnum))?.length === 0
-  );
+const getEnumName = (value) => {
+  const name = `${uppercaseFirstLetter(value.fieldName)}Enum`;
 
-  return result?.[0];
+  return name;
 };
 
-export const buildModelAttributes = (rawAttributes) => {
+export const buildModelAttributes = (rawAttributes): KeyedAttribute => {
   return Object.entries(rawAttributes ?? {}).reduce((acc, [property, value]: any) => {
-    let type = value.type.key;
+    const values = value.values ?? [];
+    let type = value.type.key ?? '';
     let sequelizeType = type;
     let isArray = false;
+    let isEnum = false;
 
     switch (type) {
       case 'ENUM': {
-        type = getEnumType(value.type.values);
+        isEnum = true;
+        type = getEnumName(value);
         break;
       }
       case 'ARRAY': {
         isArray = true;
         type =
           value.type?.options?.type?.key === 'ENUM'
-            ? getEnumType(value?.type?.type?.values)
+            ? getEnumName(value)
             : value.type?.options?.type?.key;
         break;
       }
@@ -37,29 +39,33 @@ export const buildModelAttributes = (rawAttributes) => {
         sequelizeType,
         type,
         isArray,
+        isEnum,
         allowNull: value.allowNull === false ? false : true,
+        values,
       },
     };
   }, {});
 };
 
-export const buildModelAssociations = (associations) => {
+export const buildModelAssociations = (associations): KeyedAttribute => {
   return Object.entries(associations ?? []).reduce((acc, [property, value]: any) => {
     acc[property] = {
       sequelizeType: 'ASSOCIATION',
       type: value.target.name,
       isArray: value.associationType === 'HasMany' || value.associationType === 'BelongsToMany',
       allowNull: true,
+      values: [],
     };
     return acc;
   }, {});
 };
 
-export const getAttributes = (model) => (): ModelAttributes => {
+export const getAttributes = (model) => (): ModelAttribute => {
   const associations = buildModelAssociations(model.associations);
   const attributes = buildModelAttributes(model.rawAttributes);
+  const result = { ...attributes, associations };
 
-  return { ...attributes, associations };
+  return result as ModelAttribute;
 };
 
 export const buildAssociationCreateOptions = (model) => (input) => {
