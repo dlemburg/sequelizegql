@@ -192,7 +192,7 @@ export class City extends Model<City> {
 /***
  * IMPORTANT
  *
- * `modelMap`` config takes precedence over the `rootSchemaMap`;
+ * `modelMap` config takes precedence over the `rootSchemaMap`;
  *  under the hood, psuedocode looks like `merge(rootSchemaMap, modelMap)`
  */
 
