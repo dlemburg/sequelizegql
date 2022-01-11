@@ -23,7 +23,7 @@ const buildWhereFilters = (entries) => {
 };
 
 export const parseWhere = (where: any, modelMapOptions: SchemaMapOptions) => {
-  const whereEntries = Object.entries(where);
+  const whereEntries = Object.entries(where ?? {});
 
   if (!whereEntries?.length) return where;
 

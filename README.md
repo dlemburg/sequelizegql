@@ -49,7 +49,7 @@ Popular generation tools hit a ceiling very quickly when systems mature and busi
 
 # Examples
 
-Example here uses `sequelize-typescript` but work fine with `sequelize` too. You can see [examples of both here](https://github.com/dlemburg/sequelize-graphql/tree/main/examples/library/src/orm/models)
+Example here uses `sequelize-typescript` but this library works fine with `sequelize` too. You can see [examples of both here](https://github.com/dlemburg/sequelize-graphql/tree/main/examples/library/src/orm/models)
 
 ## Basic
 
