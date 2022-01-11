@@ -24,6 +24,3 @@ export const Author = sequelize.define(
     timestamps: true,
   }
 );
-// Associations
-// @BelongsToMany(() => Book, () => BookAuthor)
-// books?: Book[];

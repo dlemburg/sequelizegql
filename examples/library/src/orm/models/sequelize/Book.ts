@@ -24,12 +24,3 @@ export const Book = sequelize.define(
     timestamps: true,
   }
 );
-// Associations
-// @BelongsTo(() => Category)
-// category?: Category;
-
-// @BelongsToMany(() => Author, () => BookAuthor)
-// authors?: Author[];
-
-// @BelongsToMany(() => Library, () => BookLibrary)
-// libraries?: Library[];

@@ -33,10 +33,3 @@ export const Library = sequelize.define(
     timestamps: true,
   }
 );
-
-// Associations
-// @BelongsTo(() => City)
-// city?: City;
-
-// @BelongsToMany(() => Book, () => BookLibrary)
-// books?: Book[];
