@@ -246,7 +246,7 @@ const modelMap = {
 const options = {
   rootMap,
   modelMap,
-  sequelize: Sequelize,
+  sequelize, // your sequelize instance
 };
 
 const graphqlSequelize = SequelizeGraphql();
