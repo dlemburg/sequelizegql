@@ -15,7 +15,7 @@ export const getGraphqlSchema = async (): Promise<any> => {
     sequelize,
     ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
   });
-  const schema = makeExecutableSchema({ typeDefs, resolvers });
+  const schema = makeExecutableSchema({ typeDefs, resolvers } as any);
   const schemaWithMiddleware = applyMiddleware(schema, ...middlewares);
 
   return {

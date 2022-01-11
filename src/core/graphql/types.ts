@@ -1,6 +1,6 @@
 import { ModelAttribute } from '../../types';
 import { mapSequelizeToGraphql } from '../mappers';
-import { stringBuilder } from '../util';
+import { lowercaseFirstLetter, stringBuilder } from '../util';
 import { newLine } from './new-line';
 import { pagedGql } from './paged';
 import { whereInputNameGql } from './where-input';
@@ -15,7 +15,9 @@ const mapFields = (attributes, options) =>
 const mapAssociationTypes = (name, attributes, options) =>
   Object.entries(attributes)
     .map(([key, value]) => {
-      return `${key}(where: ${whereInputNameGql(name)}): ${mapSequelizeToGraphql(value, options)}`;
+      return `${lowercaseFirstLetter(key)}(where: ${whereInputNameGql(
+        name
+      )}): ${mapSequelizeToGraphql(value, options)}`;
     })
     .join(`${newLine()}`);
 

@@ -25,7 +25,7 @@ const buildWhereFilters = (entries) => {
 export const parseWhere = (where: any, modelMapOptions: SchemaMapOptions) => {
   const whereEntries = Object.entries(where ?? {});
 
-  if (!whereEntries?.length) return where;
+  // if (!whereEntries?.length) return where;
 
   const filter = whereEntries.reduce((acc, [key, value]) => {
     const topLevelOperatorResult = TOP_LEVEL_OPERATORS_GQL_MAP[key]?.();

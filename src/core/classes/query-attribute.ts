@@ -94,7 +94,7 @@ const recurseQueryFields = (
 };
 
 export class QueryAttributeBuilder {
-  public static build(model, resolveInfo, schemamapOptions: SchemaMapOptions): QueryAttributes {
+  public static build(model, resolveInfo, schemaMapOptions: SchemaMapOptions): QueryAttributes {
     try {
       const modelAttributes = getAttributes(model)();
       const parsedResolveInfoFragment = parseResolveInfo(resolveInfo) as any;
@@ -104,7 +104,7 @@ export class QueryAttributeBuilder {
       );
 
       const fields = Object.entries(info.fields);
-      const { attributes, include } = recurseQueryFields(fields, modelAttributes, schemamapOptions);
+      const { attributes, include } = recurseQueryFields(fields, modelAttributes, schemaMapOptions);
 
       return { attributes, include };
     } catch (err) {

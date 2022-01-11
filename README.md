@@ -1,5 +1,6 @@
 # sequelize-graphql
 
+- [Author Note](https://github.com/dlemburg/sequelize-graphql#author-note)
 - [Installation](https://github.com/dlemburg/sequelize-graphql#installation)
 - [What is `sequelize-graphql`?](https://github.com/dlemburg/sequelize-graphql#what)
 - [Why use `sequelize-graphql`?](https://github.com/dlemburg/sequelize-graphql#why)
@@ -15,6 +16,19 @@
 - [API](https://github.com/dlemburg/sequelize-graphql#api)
   - [Object Options](https://github.com/dlemburg/sequelize-graphql#options)
 - [TODO](https://github.com/dlemburg/sequelize-graphql#todo)
+
+## Author Note
+
+_This is not yet stable_
+
+Just a few personal points - you can find out the technical reasons for building this project [below](https://github.com/dlemburg/sequelize-graphql#why). Personally, I do enjoy building these sorts of abstractions and find them useful. I do plan on continuing development and gain production-level stability. That said, I have a family and plenty of things I enjoy doing away from screens. So if you'd like to contribute, I'd love help! Please hit me up here or email daniel.lemburg1 at gmail. Thanks!
+
+### TODO
+
+- unit test coverage, Integrations tests against database
+- code and docs cleanup: refactor, patterns, types
+- recursive creates (currently 1 level of associations deep)
+- recursive operators
 
 ## Installation
 
@@ -405,20 +419,3 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 | `includeDeleteOptions` | `boolean`          | Allows for extra arg `options: DeleteOptions` on `delete<*>` endpoints |
 
 &nbsp;
-
-# TODO
-
-### alpha
-
-- unit test coverage, Integrations tests against database
-- code and docs cleanup: refactor, patterns, types
-
-### v1
-
-- recursive operators
-- recursive creates (currently 1 level of associations deep)
-
-### v2
-
-- cli
-- crawl database and generate models, types, etc
