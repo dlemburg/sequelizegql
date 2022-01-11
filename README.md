@@ -378,13 +378,13 @@ Author.findAll({
   include: [
     {
       association: 'books',
-      attributes: ['id', 'libraries'],
+      attributes: ['id'],
       where: { ...booksWhereInput, [Op.or]: [{ name: 'Foo' }, { name: 'Bar' }] },
       separate: true,
       include: [
         {
           association: 'libraries',
-          attributes: ['id', 'city'],
+          attributes: ['id'],
           separate: true,
           include: [
             {

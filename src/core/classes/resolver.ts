@@ -1,5 +1,5 @@
 import { BaseInput, GeneratedResolverField, SchemaMapOptions } from '../../types';
-import { QueryAttributeBuilder } from './query-attribute';
+import { QueryAttributeBuilder } from './query-builder';
 import { BaseGql } from './base-gql';
 import { buildSort, parseWhere, maybeGenerate } from '../util';
 
