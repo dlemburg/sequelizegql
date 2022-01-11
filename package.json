@@ -8,13 +8,13 @@
   "description": "",
   "scripts": {
     "test": "jest",
-    "start:examples": "cd examples/library && npm run start"
+    "start:examples:sequelize": "cd examples/library && npm run start:sequelize",
+    "start:examples:sequelize-ts": "cd examples/library && npm run start:sequelize-ts"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "@graphql-tools/merge": "^8.2.1",
-    "faker": "^5.5.3",
     "glob": "^7.2.0",
     "graphql-parse-resolve-info": "^4.12.0",
     "graphql-scalars": "^1.13.6",

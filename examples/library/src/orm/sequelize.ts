@@ -8,8 +8,6 @@ import { Sequelize } from 'sequelize-typescript';
 
 export let sequelize;
 export const init = async () => {
-  // const models = Object.values(Models);
-
   sequelize = new Sequelize({
     dialect: 'postgres',
     database: 'library',
@@ -18,11 +16,13 @@ export const init = async () => {
     host: 'localhost',
   });
 
+  require('./models/sequelize');
+
   // sequelize.addModels(models);
+  // const models = Object.values(Models);
 
   try {
     await sequelize.authenticate();
-    require('./models/sequelize');
     console.log('Sequelize connected');
     // sequelize.sync({ force: true });
   } catch (error) {

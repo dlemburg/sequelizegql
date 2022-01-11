@@ -1,6 +1,5 @@
 export * from './enum-util';
 export * from './export-util';
-export * from './faker-util';
 export * from './general-util';
 export * from './generate-util';
 export * from './glob-util';
@@ -10,5 +9,4 @@ export * from './pluralize-util';
 export * from './root-typedefs-util';
 export * from './sequelize-util';
 export * from './string-util';
-export * from './testing-util';
 export * from './validate-input-util';
