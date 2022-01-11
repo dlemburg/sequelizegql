@@ -14,7 +14,7 @@ import {
   ForeignKey,
   BelongsToMany,
 } from 'sequelize-typescript';
-import { LibraryStatus } from '../enums';
+import { LibraryStatus } from '../../enums';
 import { Book } from './Book';
 import { BookLibrary } from './BookLibrary';
 import { City } from './City';

@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize-typescript';
-import * as Models from './models';
+import * as Models from './models/sequelize-typescript';
 
 // workaround for this: https://github.com/sequelize/sequelize/issues/8019
 (Sequelize as any).postgres.DECIMAL.parse = function (value) {
