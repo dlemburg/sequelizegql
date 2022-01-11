@@ -62,11 +62,9 @@ export type SchemaMapOptions = BaseOptions & {
   resolvers?: ResolverMap;
 };
 
-type RootSchemaMap = { SEQUELIZE_GRAPHQL_ROOT?: SchemaMapOptions };
-
 export type SchemaMap = {
   [key: ModelName]: SchemaMapOptions; // defaults true
-} & RootSchemaMap;
+};
 
 export type BuildQueryMutation = {
   name: string;

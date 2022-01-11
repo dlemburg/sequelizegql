@@ -408,12 +408,12 @@ See full application schema example [here](https://github.com/dlemburg/sequelize
 
 ## Options
 
-| Name                   | Type               | Description                                                            |
-| ---------------------- | ------------------ | ---------------------------------------------------------------------- |
-| `sequelize`            | `Sequelize`        | Your Sequelize instance. **The only required option**                  |
-| `modelMap`             | `SchemaMap`        | Complex object that allows configuration and overrides for every model |
-| `rootMap`              | `SchemaMapOptions` | Same as above, but will be applied to _all_ models                     |
-| `deleteResponseGql`    | `string`           | Your own slimmed-down delete response; by default - `DeleteResponse`   |
-| `includeDeleteOptions` | `boolean`          | Allows for extra arg `options: DeleteOptions` on `delete<*>` endpoints |
+| Name                   | Type                                                                                               | Description                                                            |
+| ---------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `sequelize`            | `Sequelize`                                                                                        | Your Sequelize instance. **The only required option**                  |
+| `modelMap`             | `SchemaMap` [here](https://github.com/dlemburg/sequelize-graphql/blob/main/src/types/types.ts#L67) | Complex object that allows configuration and overrides for every model |
+| `rootMap`              | `SchemaMapOptions`                                                                                 | Same as above, but will be applied to _all_ models                     |
+| `deleteResponseGql`    | `string`                                                                                           | Your own slimmed-down delete response; by default - `DeleteResponse`   |
+| `includeDeleteOptions` | `boolean`                                                                                          | Allows for extra arg `options: DeleteOptions` on `delete<*>` endpoints |
 
 &nbsp;
