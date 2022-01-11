@@ -22,7 +22,7 @@ const recurseQueryFields = (
   modelAttributes: ModelAttribute,
   modelMapOptions: SchemaMapOptions
 ): QueryAttributes => {
-  const models = SequelizeGraphql().getSequelize();
+  const models = SequelizeGraphql().getSequelize().models;
 
   const result = (fieldEntries ?? [])?.reduce(
     (acc, [key, value]: any) => {

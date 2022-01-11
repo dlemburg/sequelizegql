@@ -26,7 +26,7 @@ Just a few personal points - you can find out the technical reasons for building
 ### TODO
 
 - unit test coverage, Integrations tests against database
-- code and docs cleanup: refactor, patterns, types
+- include (association) attributes not added
 - recursive creates (currently 1 level of associations deep)
 - recursive operators
 
