@@ -1,6 +1,7 @@
 # sequelize-graphql
 
 - [Author Note](https://github.com/dlemburg/sequelize-graphql#author-note)
+  - [TODO](https://github.com/dlemburg/sequelize-graphql#todo)
 - [Installation](https://github.com/dlemburg/sequelize-graphql#installation)
 - [What is `sequelize-graphql`?](https://github.com/dlemburg/sequelize-graphql#what)
 - [Why use `sequelize-graphql`?](https://github.com/dlemburg/sequelize-graphql#why)
@@ -15,7 +16,6 @@
     - [FILTERS](https://github.com/dlemburg/sequelize-graphql#filters)
 - [API](https://github.com/dlemburg/sequelize-graphql#api)
   - [Object Options](https://github.com/dlemburg/sequelize-graphql#options)
-- [TODO](https://github.com/dlemburg/sequelize-graphql#todo)
 
 ## Author Note
 
