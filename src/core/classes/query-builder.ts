@@ -23,6 +23,8 @@ type BuildIncludeInput = {
 
 type FieldIntrospectionTuple = [string, any];
 
+// type NestedFieldFieldIntrospectionTuple = [FieldIntrospectionTuple];
+
 const BASE_ACC = () => ({ attributes: [], include: undefined });
 
 const buildInclude = ({ association, include, attributes = [] }: BuildIncludeInput) => {
@@ -38,37 +40,37 @@ const buildInclude = ({ association, include, attributes = [] }: BuildIncludeInp
 const recurseQueryFields = (
   fieldEntries: any = [],
   modelAttributes: ModelAttribute,
-  modelMapOptions: SchemaMapOptions
+  modelMapOptions: SchemaMapOptions,
+  entityName: string
 ): QueryAttributes => {
   const models = SequelizeGraphql().getSequelize().models;
-  // const associationFields = fieldEntries.filter(([xKey, xValue]: FieldIntrospectionTuple) => {
-  //   const result = Object.keys(xValue?.fieldsByTypeName ?? {});
-  //   return result?.length && models?.[result[0]];
-  // });
-  // const attributeFields = fieldEntries.filter(([xKey, xValue]: FieldIntrospectionTuple) => {
-  //   const result = Object.keys(xValue?.fieldsByTypeName ?? {});
-  //   return !result?.length && !models?.[result[0]];
-  // });
 
   const result = fieldEntries?.reduce((acc, [key, value]: [string, any]) => {
     const associationValue = modelAttributes?.associations?.[key];
     const attributeValue = modelAttributes?.[key];
     const where = parseWhere(value?.fieldsByTypeName?.args?.where, modelMapOptions);
 
+    console.log('entityName: ', entityName);
+    console.log('fieldEntries: ', fieldEntries);
+
     if (attributeValue) {
       acc.attributes.push(key);
-    } else if (associationValue?.type) {
-      const Model = associationValue?.type && models?.[associationValue?.type];
-      const fields = value?.fieldsByTypeName?.[associationValue?.type];
+    }
 
-      if (Model) {
+    if (associationValue?.type) {
+      const model = associationValue?.type && models?.[associationValue?.type];
+      const fields = value?.fieldsByTypeName?.[associationValue?.type];
+      const attributeFields = Object.entries(fields)
+        .filter(([xKey, xValue]: FieldIntrospectionTuple) => {
+          const result = Object.keys(xValue?.fieldsByTypeName ?? {});
+          return !result?.length && !models?.[result[0]];
+        })
+        .map((x) => x[0]);
+
+      if (model) {
         const nextAssociationFields = Object.entries(fields).filter(([xKey, xValue]: any) => {
           const result = Object.keys(xValue?.fieldsByTypeName ?? {});
           return result?.length && models?.[result[0]];
-        });
-        const attributeFields = Object.keys(fields).filter((field) => {
-          const result = nextAssociationFields.find((y) => y[0] === field);
-          return !result;
         });
 
         const associationFields = nextAssociationFields.reduce(
@@ -80,7 +82,7 @@ const recurseQueryFields = (
             const nextModelAttributes = getAttributes(models[modelName])();
 
             const { attributes: includeAttributes, include: associatedInclude } =
-              recurseQueryFields(nextQueryFields, nextModelAttributes, modelMapOptions);
+              recurseQueryFields(nextQueryFields, nextModelAttributes, modelMapOptions, fieldName);
 
             const baseInclude = buildInclude({
               association: fieldName,
@@ -100,13 +102,14 @@ const recurseQueryFields = (
         const baseInclude = buildInclude({
           association: key,
           include: associationFields?.include,
+          attributes: attributeFields,
         });
         acc.include = acc?.include ? [...acc.include, ...baseInclude] : baseInclude;
       }
     }
 
     return acc;
-  }, BASE_ACC() as any);
+  }, BASE_ACC());
 
   return result;
 };
@@ -122,7 +125,12 @@ export class QueryAttributeBuilder {
       );
 
       const fields = Object.entries(info.fields);
-      const { attributes, include } = recurseQueryFields(fields, modelAttributes, schemaMapOptions);
+      const { attributes, include } = recurseQueryFields(
+        fields,
+        modelAttributes,
+        schemaMapOptions,
+        ''
+      );
 
       return { attributes, include };
     } catch (err) {
