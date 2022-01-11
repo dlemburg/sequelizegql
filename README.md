@@ -406,13 +406,11 @@ See full application schema example [here](https://github.com/dlemburg/sequelize
 
 # API
 
-Note: required options [here](https://github.com/dlemburg/sequelize-graphql#required-options)
-
 ## Options
 
 | Name                   | Type               | Description                                                            |
 | ---------------------- | ------------------ | ---------------------------------------------------------------------- |
-| `sequelize`            | `Sequelize`        | Your Sequelize instance                                                |
+| `sequelize`            | `Sequelize`        | Your Sequelize instance. **_ The only required option_**               |
 | `modelMap`             | `SchemaMap`        | Complex object that allows configuration and overrides for every model |
 | `rootMap`              | `SchemaMapOptions` | Same as above, but will be applied to _all_ models                     |
 | `deleteResponseGql`    | `string`           | Your own slimmed-down delete response; by default - `DeleteResponse`   |
