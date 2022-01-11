@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p .",
-    "start:sequelize": "ts-node src/index.ts",
-    "start:sequelize-ts": "ts-node src/index.ts"
+    "start:sequelize": "ts-node src/index.ts sequelize",
+    "start:sequelize-ts": "ts-node src/index.ts sequelize-ts"
   },
   "author": "",
   "license": "MIT",

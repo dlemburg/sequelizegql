@@ -1,5 +1,4 @@
 import { Sequelize } from 'sequelize-typescript';
-// import * as Models from './models/sequelize';
 
 // workaround for this: https://github.com/sequelize/sequelize/issues/8019
 (Sequelize as any).postgres.DECIMAL.parse = function (value) {
@@ -16,10 +15,16 @@ export const init = async () => {
     host: 'localhost',
   });
 
-  require('./models/sequelize');
+  const orm = process.argv[2];
 
-  // sequelize.addModels(models);
-  // const models = Object.values(Models);
+  if (orm === 'sequelize') {
+    require('./models/sequelize');
+  } else {
+    const modelsExport = require('./models/sequelize-typescript');
+    const models = Object.values(modelsExport);
+
+    sequelize.addModels(models);
+  }
 
   try {
     await sequelize.authenticate();
