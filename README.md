@@ -410,7 +410,7 @@ See full application schema example [here](https://github.com/dlemburg/sequelize
 
 | Name                   | Type               | Description                                                            |
 | ---------------------- | ------------------ | ---------------------------------------------------------------------- |
-| `sequelize`            | `Sequelize`        | Your Sequelize instance. **_ The only required option_**               |
+| `sequelize`            | `Sequelize`        | Your Sequelize instance. **The only required option**                  |
 | `modelMap`             | `SchemaMap`        | Complex object that allows configuration and overrides for every model |
 | `rootMap`              | `SchemaMapOptions` | Same as above, but will be applied to _all_ models                     |
 | `deleteResponseGql`    | `string`           | Your own slimmed-down delete response; by default - `DeleteResponse`   |
