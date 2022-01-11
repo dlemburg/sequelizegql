@@ -17,7 +17,21 @@ type QueryAttributes = {
   attributes?: string[];
 };
 
+type BuildIncludeInput = {
+  association: string;
+} & QueryAttributes;
+
 type FieldIntrospectionTuple = [string, any];
+
+const buildInclude = ({ association, include, attributes = [] }: BuildIncludeInput) => {
+  return [
+    {
+      association,
+      attributes,
+      ...(include?.length && { include }),
+    },
+  ];
+};
 
 const recurseQueryFields = (
   fieldEntries: any = [],
@@ -56,10 +70,6 @@ const recurseQueryFields = (
             return !result;
           });
 
-          // if (attributeFields?.length) {
-          //   acc.attributes.push(...attributeFields);
-          // }
-
           const associationFields = nextAssociationFields.reduce(
             (acc: any, x: FieldIntrospectionTuple) => {
               const fieldName = x[1].name;
@@ -68,24 +78,15 @@ const recurseQueryFields = (
               const nextQueryFields = Object.entries(fieldsByType[modelName]);
               const nextModelAttributes = getAttributes(models[modelName])();
 
-              const { attributes, include: associatedInclude } = recurseQueryFields(
-                nextQueryFields,
-                nextModelAttributes,
-                modelMapOptions
-              );
+              const { attributes: includeAttributes, include: associatedInclude } =
+                recurseQueryFields(nextQueryFields, nextModelAttributes, modelMapOptions);
 
-              console.log('attributeFields: ', attributeFields);
+              const baseInclude = buildInclude({
+                association: fieldName,
+                include: associatedInclude,
+                attributes: includeAttributes,
+              });
 
-              const baseInclude = [
-                {
-                  association: fieldName,
-                  ...(associatedInclude?.length && {
-                    include: associatedInclude,
-                  }),
-                  attributes,
-                },
-              ];
-              acc.attributes = attributes;
               acc.include = acc?.include ? [...acc.include, ...baseInclude] : baseInclude;
 
               return acc;
@@ -93,15 +94,10 @@ const recurseQueryFields = (
             { attributes: [], include: undefined }
           );
 
-          const baseInclude = [
-            {
-              association: key,
-              ...(associationFields?.include?.length && {
-                include: associationFields?.include,
-              }),
-              attributes: [],
-            },
-          ];
+          const baseInclude = buildInclude({
+            association: key,
+            include: associationFields?.include,
+          });
           acc.include = acc?.include ? [...acc.include, ...baseInclude] : baseInclude;
         }
       }
