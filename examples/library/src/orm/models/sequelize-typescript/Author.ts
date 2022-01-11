@@ -42,7 +42,7 @@ export class Author extends Model<Author> {
 
   @DeletedAt
   @Column
-  removedAt: Date;
+  deletedAt: Date;
 
   // Associations
   @BelongsToMany(() => Book, () => BookAuthor)

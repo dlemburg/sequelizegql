@@ -33,5 +33,5 @@ export class Category extends Model<Category> {
 
   @DeletedAt
   @Column
-  removedAt: Date;
+  deletedAt: Date;
 }

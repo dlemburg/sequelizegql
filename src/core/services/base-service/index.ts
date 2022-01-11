@@ -5,7 +5,7 @@ import {
   DeleteResponse,
   ModelAttribute,
 } from '../../../types';
-import { StateFactory } from '../../classes/state';
+import SequelizeGraphql from '../../..';
 import { buildSortDesc } from '../../util/sequelize-util';
 import { buildAssociationCreateOptions, getAttributes } from './util';
 
@@ -53,7 +53,7 @@ const update =
 const upsert =
   (model) =>
   async (input, where = {}, options = {} as any) => {
-    const sequelize = StateFactory().getSequelize();
+    const sequelize = SequelizeGraphql().getSequelize();
     return sequelize.transaction(async (transaction) => {
       transaction = options?.transaction ?? transaction;
 

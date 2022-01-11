@@ -1,11 +1,10 @@
 import fs from 'fs';
 import merge from 'lodash/merge';
 import { typeDefs as DateTypedefs, resolvers as DateResolvers } from 'graphql-scalars';
-import GraphQLJSON, { GraphQLJSONObject } from 'graphql-type-json';
 import { mergeTypeDefs } from '@graphql-tools/merge';
-import { buildRootTypedefs, getExports, validateInput, buildGql } from './core/util';
+import GraphQLJSON, { GraphQLJSONObject } from 'graphql-type-json';
+import { buildRootTypedefs, validateInput, buildGql } from './core/util';
 import { buildSchema } from './core';
-import { StateFactory } from './core/classes/state';
 import { Sequelize } from 'sequelize';
 import { InitializeInput, InitializeResponse, SchemaMap, SchemaMapOptions } from './types';
 import { newLine } from './core/graphql';
@@ -18,36 +17,21 @@ const JSONResolvers = {
 class SequelizeGraphql {
   private resolvers;
   private typedefs: string;
+  private sequelize: Sequelize;
 
   public async schema(input: InitializeInput): Promise<InitializeResponse> {
     validateInput(input);
 
+    this.sequelize = input.sequelize as Sequelize;
+
     const {
       sequelize = {} as Sequelize,
       modelMap = {} as SchemaMap,
-      rootSchemaMap = {} as SchemaMapOptions,
+      rootMap = {} as SchemaMapOptions,
       ...options
     } = input;
 
-    const modelMapPreExport = options.pathToSchemaMap
-      ? await getExports(options.pathToSchemaMap, options.modelMapExportMatcher)
-      : modelMap;
-    const sequelizePreExport = options.pathToSequelize
-      ? await getExports(options.pathToSequelize, options.sequelizeExportMatcher)
-      : sequelize;
-
-    const modelMapExport = modelMapPreExport.modelMap ?? modelMapPreExport;
-    const sequelizeExport = sequelizePreExport.sequelize ?? sequelizePreExport;
-
-    StateFactory({
-      sequelize: sequelizeExport,
-    });
-
-    const { typedefs, resolvers } = buildSchema(
-      sequelizeExport.models,
-      modelMapExport,
-      rootSchemaMap
-    );
+    const { typedefs, resolvers } = buildSchema(sequelize.models, modelMap, rootMap);
 
     this.typedefs = typedefs + buildRootTypedefs(options);
     this.resolvers = resolvers;
@@ -68,6 +52,20 @@ class SequelizeGraphql {
 
     fs.writeFileSync(filepath || `${__dirname}/generated-typedefs.js`, output, 'utf-8');
   }
+
+  public getSequelize() {
+    return this.sequelize;
+  }
 }
 
-export default SequelizeGraphql;
+let sequelizeGraphqlSingleton;
+
+export default () => {
+  if (sequelizeGraphqlSingleton) {
+    return sequelizeGraphqlSingleton;
+  }
+
+  sequelizeGraphqlSingleton = new SequelizeGraphql();
+
+  return sequelizeGraphqlSingleton;
+};

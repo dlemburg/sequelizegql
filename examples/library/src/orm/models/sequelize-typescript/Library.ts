@@ -57,7 +57,7 @@ export class Library extends Model<Library> {
 
   @DeletedAt
   @Column
-  removedAt: Date;
+  deletedAt: Date;
 
   // Associations
   @BelongsTo(() => City)

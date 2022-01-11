@@ -1,11 +1,11 @@
 import { GeneratedResolverField, SchemaMap } from '../../../../../src/types';
 
-export const rootSchemaMap = {
+export const rootMap = {
   resolvers: {
     findAll: { generate: false },
   },
   omitResolvers: [GeneratedResolverField.FIND_ONE],
-  omitInputAttributes: ['createdAt', 'updatedAt', 'removedAt'],
+  omitInputAttributes: ['createdAt', 'updatedAt', 'deletedAt'],
   whereInputAttributes: ['id'],
 };
 

@@ -3,7 +3,7 @@ import { BaseTestFactoryInput, GeneratedResolverField } from '../../types';
 import { BaseService } from '../services';
 import { buildTests } from '../util';
 
-export const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'removedAt'];
+export const OMIT_ATTRIBUTES = ['id', 'createdAt', 'updatedAt', 'deletedAt'];
 
 export const TestFactory = ({ model, resolvers, variables = {} }: BaseTestFactoryInput) => {
   const service = BaseService(model);

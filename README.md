@@ -14,9 +14,6 @@
     - [FILTERS](https://github.com/dlemburg/sequelize-graphql#filters)
 - [API](https://github.com/dlemburg/sequelize-graphql#api)
   - [Object Options](https://github.com/dlemburg/sequelize-graphql#options)
-  - [Filepath Options](https://github.com/dlemburg/sequelize-graphql#filepath-options)
-  - [Export Matcher Options](https://github.com/dlemburg/sequelize-graphql#export-matcher-options)
-  - [Required Options](https://github.com/dlemburg/sequelize-graphql#required-options)
 - [TODO](https://github.com/dlemburg/sequelize-graphql#todo)
 
 ## Installation
@@ -82,7 +79,7 @@ export class Author extends Model<Author> {
   @Column
   surname: String;
 
-  // ...timestamps: createdAt, updatedAt, removedAt, etc
+  // ...timestamps: createdAt, updatedAt, deletedAt, etc
 
   // Associations
   @BelongsToMany(() => Book, () => BookAuthor)
@@ -103,7 +100,7 @@ export class Book extends Model<Book> {
   @Column
   title: String;
 
-  // ...timestamps: createdAt, updatedAt, removedAt, etc
+  // ...timestamps: createdAt, updatedAt, deletedAt, etc
 
   // Associations
   @BelongsTo(() => Category)
@@ -131,7 +128,7 @@ export class BookAuthor extends Model<BookAuthor> {
   @ForeignKey(() => Book)
   bookId: number;
 
-  // ...timestamps: createdAt, updatedAt, removedAt, etc
+  // ...timestamps: createdAt, updatedAt, deletedAt, etc
 
   // ...associations
 }
@@ -162,7 +159,7 @@ export class Library extends Model<Library> {
   @Column(DataType.ENUM(...Object.values(LibraryStatus)))
   status: LibraryStatus;
 
-  // ...timestamps: createdAt, updatedAt, removedAt, etc
+  // ...timestamps: createdAt, updatedAt, deletedAt, etc
 
   // Associations
   @BelongsTo(() => City)
@@ -184,7 +181,7 @@ export class City extends Model<City> {
   @Column
   name: String;
 
-  // ...timestamps: createdAt, updatedAt, removedAt, etc
+  // ...timestamps: createdAt, updatedAt, deletedAt, etc
 }
 
 // sequelize.addModels[Author, Book, AuthorBook, City];
@@ -192,15 +189,15 @@ export class City extends Model<City> {
 /***
  * IMPORTANT
  *
- * `modelMap` config takes precedence over the `rootSchemaMap`;
- *  under the hood, psuedocode looks like `merge(rootSchemaMap, modelMap)`
+ * `modelMap` config takes precedence over the `rootMap`;
+ *  under the hood, psuedocode looks like `merge(rootMap, modelMap)`
  */
 
-// `rootSchemaMap` applies to *every* model's generated endpoints
-const rootSchemaMap = {
+// `rootMap` applies to *every* model's generated endpoints
+const rootMap = {
   directive: `@acl(role: ['ADMIN', 'USER'])`;      // added to every endpoint
   whereInputAttributes?: ['id'];                   // queries will only be able to filter on 'id'
-  omitInputAttributes?: ['id', 'createdAt', 'updatedAt', 'removedAt']; // applies to 'create', 'update' and 'upsert'
+  omitInputAttributes?: ['id', 'createdAt', 'updatedAt', 'deletedAt']; // applies to 'create', 'update' and 'upsert'
   omitResolvers: [GeneratedResolverField.DELETE_MUTATION]; // don't generate any delete endpoints
   onBeforeResolve?: (args) => { /* ...do some business logic */};
   onAfterResolve?: (args) => { /* ...notify some integration */};
@@ -220,7 +217,7 @@ const modelMap = {
   },
   Book: {
     resolvers: {
-      [GeneratedResolverField.DELETE]: { generate: true }, // i.e. override the `rootSchemaMap`
+      [GeneratedResolverField.DELETE]: { generate: true }, // i.e. override the `rootMap`
     },
     omitResolvers: [GeneratedResolverField.FIND_ALL], // i.e. `allBooks` endpoint not generated
   },
@@ -233,12 +230,12 @@ const modelMap = {
 };
 
 const options = {
-  rootSchemaMap,
+  rootMap,
   modelMap,
   sequelize: Sequelize,
 };
 
-const graphqlSequelize = new SequelizeGraphql();
+const graphqlSequelize = SequelizeGraphql();
 const schema = await graphqlSequelize.schema(options);
 
 console.log(schema); // { resolvers, typedefs, typedefsString }
@@ -403,48 +400,9 @@ Note: required options [here](https://github.com/dlemburg/sequelize-graphql#requ
 | ---------------------- | ------------------ | ---------------------------------------------------------------------- |
 | `sequelize`            | `Sequelize`        | Your Sequelize instance                                                |
 | `modelMap`             | `SchemaMap`        | Complex object that allows configuration and overrides for every model |
-| `rootSchemaMap`        | `SchemaMapOptions` | Same as above, but will be applied to _all_ models                     |
+| `rootMap`              | `SchemaMapOptions` | Same as above, but will be applied to _all_ models                     |
 | `deleteResponseGql`    | `string`           | Your own slimmed-down delete response; by default - `DeleteResponse`   |
 | `includeDeleteOptions` | `boolean`          | Allows for extra arg `options: DeleteOptions` on `delete<*>` endpoints |
-
-&nbsp;
-
-### Filepath `options`
-
-| Name              | Type   | Export Naming Rules                |
-| ----------------- | ------ | ---------------------------------- |
-| `pathToSequelize` | string | `default`, `sequelize`, everything |
-| `pathToSchemaMap` | string | `default`, `modelMap`, everything  |
-
-&nbsp;
-
-### Export Matcher `options`
-
-| Name                     | Type          | Export Rules |
-| ------------------------ | ------------- | ------------ |
-| `modelsExportMatcher`    | `fn(exports)` | ^ same       |
-| `sequelizeExportMatcher` | `fn(exports)` | ^ same       |
-| `modelMapExportMatcher`  | `fn(exports)` | ^ same       |
-
-### Notes on Filepath Export Matcher `options`
-
-- All filepaths should be from root working folder; values can be globs, i.e. `/path/to/dir/**/*`
-- For Filepath options export naming rules, you can export `default`, use a matcher function, or use the provided object property name listed below.
-- We will always use the provided export property name if present
-- We will always use `default` if no other properties are present
-- Matchers will always be called regardless of above (use this if you have files with multiple exports that you want ignored)
-- After all of the above have been respected, the entire object will be merged into the accumulated result (accumulated may mean one file's export or multiple files if a glob has been provided)
-
-&nbsp;
-
-### Required `options`
-
-Each set of properties is an _xor_ (one of each set of properties must be provided - validation will fail otherwise)
-&nbsp;
-
-| object      | filepath          |
-| ----------- | ----------------- |
-| `sequelize` | `pathToSequelize` |
 
 &nbsp;
 

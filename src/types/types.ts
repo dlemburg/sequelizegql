@@ -48,11 +48,7 @@ export type ExportMatcherFn = (exports: Record<any, any>) => Record<any, any>;
 export type InitializeInput = {
   sequelize?: Sequelize;
   modelMap?: SchemaMap;
-  rootSchemaMap?: SchemaMapOptions;
-  pathToSequelize?: string;
-  pathToSchemaMap?: string;
-  sequelizeExportMatcher?: ExportMatcherFn;
-  modelMapExportMatcher?: ExportMatcherFn;
+  rootMap?: SchemaMapOptions;
   deleteResponseGql?: string;
   includeDeleteOptions?: boolean;
 };

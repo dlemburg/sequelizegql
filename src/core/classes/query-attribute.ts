@@ -5,7 +5,7 @@ import {
 import { getAttributes } from '../services/base-service/util';
 import { ModelAttribute, SchemaMapOptions } from '../../types';
 import { parseWhere } from '../util';
-import { StateFactory } from './state';
+import SequelizeGraphql from '../..';
 
 type RecursiveInclude = {
   include: RecursiveInclude[];
@@ -22,7 +22,7 @@ const recurseQueryFields = (
   modelAttributes: ModelAttribute,
   modelMapOptions: SchemaMapOptions
 ): QueryAttributes => {
-  const models = StateFactory().getModels();
+  const models = SequelizeGraphql().getSequelize();
 
   const result = (fieldEntries ?? [])?.reduce(
     (acc, [key, value]: any) => {

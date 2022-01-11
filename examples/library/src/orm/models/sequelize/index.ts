@@ -3,14 +3,8 @@ import { Book } from './Book';
 import { Category } from './Category';
 import { City } from './City';
 import { Library } from './Library';
-
-export * from './Author';
-export * from './BookAuthor';
-export * from './BookLibrary';
-export * from './Book';
-export * from './Category';
-export * from './City';
-export * from './Library';
+import { BookAuthor } from './BookAuthor';
+import { BookLibrary } from './BookLibrary';
 
 Author.belongsToMany(Book, { through: 'BookAuthor' });
 Book.belongsToMany(Author, { through: 'BookAuthor' });
@@ -23,3 +17,5 @@ Category.hasMany(Book);
 
 Library.belongsTo(City);
 City.hasMany(Library);
+
+export { Author, Book, Category, City, Library, BookAuthor, BookLibrary };

@@ -37,5 +37,5 @@ export class City extends Model<City> {
 
   @DeletedAt
   @Column
-  removedAt: Date;
+  deletedAt: Date;
 }

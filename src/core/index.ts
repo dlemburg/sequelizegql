@@ -22,16 +22,15 @@ const findModelOverrides = (modelMap: SchemaMap, model): SchemaMapOptions => {
 export const buildSchema = (
   models: any,
   modelMap: SchemaMap = {},
-  rootSchemaMap: SchemaMapOptions
+  rootMap: SchemaMapOptions
 ): BuildSchemaResponse => {
-  const orderGql = optionsQueryGql();
   const modelsArr = Object.values(models as any).sort(
     (a: any, b: any) => a?.tableName - b?.tableName
   );
 
   const result: any = modelsArr.reduce(
     (acc: BuildSchemaResponse, model: any): BuildSchemaResponse => {
-      const root = cloneDeep(rootSchemaMap);
+      const root = cloneDeep(rootMap);
       const options = merge(root, findModelOverrides(modelMap, model));
 
       if (options?.generate === false) return acc;
@@ -50,7 +49,7 @@ export const buildSchema = (
     { typedefs: '', resolvers: {} }
   );
 
-  result.typedefs = result.typedefs + orderGql;
+  result.typedefs = result.typedefs + optionsQueryGql();
 
   return result;
 };

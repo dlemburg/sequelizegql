@@ -1,4 +1,4 @@
-import { EXAMPLE_INITIALIZATION_OPTIONS } from '../example-entities/example-initialization-input-options';
+import { EXAMPLE_INITIALIZATION_OPTIONS } from '../example-entities/options';
 import { getSchema } from '../graphql/schemas';
 import { setup } from './setup';
 import { typedefsString as importsTypedefsString } from './snapshots/imports-typedefs-string';

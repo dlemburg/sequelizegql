@@ -40,5 +40,5 @@ export class BookAuthor extends Model<BookAuthor> {
 
   @DeletedAt
   @Column
-  removedAt: Date;
+  deletedAt: Date;
 }

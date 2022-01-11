@@ -40,5 +40,5 @@ export class BookLibrary extends Model<BookLibrary> {
 
   @DeletedAt
   @Column
-  removedAt: Date;
+  deletedAt: Date;
 }

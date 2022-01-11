@@ -48,7 +48,7 @@ export class Book extends Model<Book> {
 
   @DeletedAt
   @Column
-  removedAt: Date;
+  deletedAt: Date;
 
   // Associations
   @BelongsTo(() => Category)

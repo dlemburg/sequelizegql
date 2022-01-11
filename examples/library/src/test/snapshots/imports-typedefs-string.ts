@@ -71,7 +71,7 @@ surname: String
 birthDate: DateTime
 createdAt: DateTime!
 updatedAt: DateTime!
-removedAt: DateTime
+deletedAt: DateTime
       books(where: AuthorWhereInput): [Book]
     }
   
@@ -83,7 +83,7 @@ surname: String
 birthDate: DateTime
 createdAt: DateTime
 updatedAt: DateTime
-removedAt: DateTime
+deletedAt: DateTime
       books: [BookInput]
     }
   
@@ -95,7 +95,7 @@ surname: String
 birthDate: DateTime
 createdAt: DateTime
 updatedAt: DateTime
-removedAt: DateTime
+deletedAt: DateTime
       
     }
   
@@ -114,7 +114,7 @@ removedAt: DateTime
 	bookId: Int
 	createdAt: DateTime
 	updatedAt: DateTime
-	removedAt: DateTime
+	deletedAt: DateTime
       
       AND: [BookLibraryWhereInput]
 OR: [BookLibraryWhereInput]
@@ -151,7 +151,7 @@ NOT_IN_STRING: String!
       }
 
       input BookLibraryWhereFilterInput {
-        id: BookLibraryWhereFilterOperatorMapInput,libraryId: BookLibraryWhereFilterOperatorMapInput,bookId: BookLibraryWhereFilterOperatorMapInput,createdAt: BookLibraryWhereFilterOperatorMapInput,updatedAt: BookLibraryWhereFilterOperatorMapInput,removedAt: BookLibraryWhereFilterOperatorMapInput
+        id: BookLibraryWhereFilterOperatorMapInput,libraryId: BookLibraryWhereFilterOperatorMapInput,bookId: BookLibraryWhereFilterOperatorMapInput,createdAt: BookLibraryWhereFilterOperatorMapInput,updatedAt: BookLibraryWhereFilterOperatorMapInput,deletedAt: BookLibraryWhereFilterOperatorMapInput
       }
     
   
@@ -181,7 +181,7 @@ libraryId: Int
 bookId: Int
 createdAt: DateTime!
 updatedAt: DateTime!
-removedAt: DateTime
+deletedAt: DateTime
       
     }
   
@@ -192,7 +192,7 @@ libraryId: Int
 bookId: Int
 createdAt: DateTime
 updatedAt: DateTime
-removedAt: DateTime
+deletedAt: DateTime
       
     }
   
@@ -203,7 +203,7 @@ libraryId: Int
 bookId: Int
 createdAt: DateTime
 updatedAt: DateTime
-removedAt: DateTime
+deletedAt: DateTime
       
     }
   
@@ -223,7 +223,7 @@ removedAt: DateTime
 	categoryId: Int
 	createdAt: DateTime
 	updatedAt: DateTime
-	removedAt: DateTime
+	deletedAt: DateTime
       
       AND: [BookWhereInput]
 OR: [BookWhereInput]
@@ -260,7 +260,7 @@ NOT_IN_STRING: String!
       }
 
       input BookWhereFilterInput {
-        id: BookWhereFilterOperatorMapInput,isbn: BookWhereFilterOperatorMapInput,title: BookWhereFilterOperatorMapInput,categoryId: BookWhereFilterOperatorMapInput,createdAt: BookWhereFilterOperatorMapInput,updatedAt: BookWhereFilterOperatorMapInput,removedAt: BookWhereFilterOperatorMapInput
+        id: BookWhereFilterOperatorMapInput,isbn: BookWhereFilterOperatorMapInput,title: BookWhereFilterOperatorMapInput,categoryId: BookWhereFilterOperatorMapInput,createdAt: BookWhereFilterOperatorMapInput,updatedAt: BookWhereFilterOperatorMapInput,deletedAt: BookWhereFilterOperatorMapInput
       }
     
   
@@ -290,7 +290,7 @@ title: String!
 categoryId: Int
 createdAt: DateTime!
 updatedAt: DateTime!
-removedAt: DateTime
+deletedAt: DateTime
       category(where: BookWhereInput): Category
 authors(where: BookWhereInput): [Author]
 libraries(where: BookWhereInput): [Library]
@@ -304,7 +304,7 @@ title: String
 categoryId: Int
 createdAt: DateTime
 updatedAt: DateTime
-removedAt: DateTime
+deletedAt: DateTime
       category: CategoryInput
 authors: [AuthorInput]
 libraries: [LibraryInput]
@@ -318,7 +318,7 @@ title: String
 categoryId: Int
 createdAt: DateTime
 updatedAt: DateTime
-removedAt: DateTime
+deletedAt: DateTime
       
     }
   
@@ -336,7 +336,7 @@ removedAt: DateTime
 	name: String
 	createdAt: DateTime
 	updatedAt: DateTime
-	removedAt: DateTime
+	deletedAt: DateTime
       
       AND: [CategoryWhereInput]
 OR: [CategoryWhereInput]
@@ -373,7 +373,7 @@ NOT_IN_STRING: String!
       }
 
       input CategoryWhereFilterInput {
-        id: CategoryWhereFilterOperatorMapInput,name: CategoryWhereFilterOperatorMapInput,createdAt: CategoryWhereFilterOperatorMapInput,updatedAt: CategoryWhereFilterOperatorMapInput,removedAt: CategoryWhereFilterOperatorMapInput
+        id: CategoryWhereFilterOperatorMapInput,name: CategoryWhereFilterOperatorMapInput,createdAt: CategoryWhereFilterOperatorMapInput,updatedAt: CategoryWhereFilterOperatorMapInput,deletedAt: CategoryWhereFilterOperatorMapInput
       }
     
   
@@ -402,7 +402,7 @@ allCategories: [Category]!
 name: String!
 createdAt: DateTime!
 updatedAt: DateTime!
-removedAt: DateTime
+deletedAt: DateTime
       
     }
   
@@ -412,7 +412,7 @@ removedAt: DateTime
 name: String
 createdAt: DateTime
 updatedAt: DateTime
-removedAt: DateTime
+deletedAt: DateTime
       
     }
   
@@ -422,7 +422,7 @@ removedAt: DateTime
 name: String
 createdAt: DateTime
 updatedAt: DateTime
-removedAt: DateTime
+deletedAt: DateTime
       
     }
   
@@ -441,7 +441,7 @@ removedAt: DateTime
 	name: String
 	createdAt: DateTime
 	updatedAt: DateTime
-	removedAt: DateTime
+	deletedAt: DateTime
       
       AND: [CityWhereInput]
 OR: [CityWhereInput]
@@ -478,7 +478,7 @@ NOT_IN_STRING: String!
       }
 
       input CityWhereFilterInput {
-        id: CityWhereFilterOperatorMapInput,postalCode: CityWhereFilterOperatorMapInput,name: CityWhereFilterOperatorMapInput,createdAt: CityWhereFilterOperatorMapInput,updatedAt: CityWhereFilterOperatorMapInput,removedAt: CityWhereFilterOperatorMapInput
+        id: CityWhereFilterOperatorMapInput,postalCode: CityWhereFilterOperatorMapInput,name: CityWhereFilterOperatorMapInput,createdAt: CityWhereFilterOperatorMapInput,updatedAt: CityWhereFilterOperatorMapInput,deletedAt: CityWhereFilterOperatorMapInput
       }
     
   
@@ -507,7 +507,7 @@ postalCode: String!
 name: String!
 createdAt: DateTime!
 updatedAt: DateTime!
-removedAt: DateTime
+deletedAt: DateTime
       
     }
   
@@ -518,7 +518,7 @@ postalCode: String
 name: String
 createdAt: DateTime
 updatedAt: DateTime
-removedAt: DateTime
+deletedAt: DateTime
       
     }
   
@@ -529,7 +529,7 @@ postalCode: String
 name: String
 createdAt: DateTime
 updatedAt: DateTime
-removedAt: DateTime
+deletedAt: DateTime
       
     }
   
@@ -551,7 +551,7 @@ removedAt: DateTime
 	status: StatusEnum
 	createdAt: DateTime
 	updatedAt: DateTime
-	removedAt: DateTime
+	deletedAt: DateTime
       
       AND: [LibraryWhereInput]
 OR: [LibraryWhereInput]
@@ -588,7 +588,7 @@ NOT_IN_STRING: String!
       }
 
       input LibraryWhereFilterInput {
-        id: LibraryWhereFilterOperatorMapInput,cityId: LibraryWhereFilterOperatorMapInput,name: LibraryWhereFilterOperatorMapInput,address: LibraryWhereFilterOperatorMapInput,description: LibraryWhereFilterOperatorMapInput,status: LibraryWhereFilterOperatorMapInput,createdAt: LibraryWhereFilterOperatorMapInput,updatedAt: LibraryWhereFilterOperatorMapInput,removedAt: LibraryWhereFilterOperatorMapInput
+        id: LibraryWhereFilterOperatorMapInput,cityId: LibraryWhereFilterOperatorMapInput,name: LibraryWhereFilterOperatorMapInput,address: LibraryWhereFilterOperatorMapInput,description: LibraryWhereFilterOperatorMapInput,status: LibraryWhereFilterOperatorMapInput,createdAt: LibraryWhereFilterOperatorMapInput,updatedAt: LibraryWhereFilterOperatorMapInput,deletedAt: LibraryWhereFilterOperatorMapInput
       }
     
   
@@ -621,7 +621,7 @@ description: String
 status: StatusEnum!
 createdAt: DateTime!
 updatedAt: DateTime!
-removedAt: DateTime
+deletedAt: DateTime
       city(where: LibraryWhereInput): City
 books(where: LibraryWhereInput): [Book]
     }
@@ -636,7 +636,7 @@ description: String
 status: StatusEnum
 createdAt: DateTime
 updatedAt: DateTime
-removedAt: DateTime
+deletedAt: DateTime
       city: CityInput
 books: [BookInput]
     }
@@ -651,7 +651,7 @@ description: String
 status: StatusEnum
 createdAt: DateTime
 updatedAt: DateTime
-removedAt: DateTime
+deletedAt: DateTime
       
     }
   

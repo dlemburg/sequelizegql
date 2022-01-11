@@ -2,7 +2,8 @@ import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-co
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { applyMiddleware } from 'graphql-middleware';
 import { getSchema } from './schemas';
-import { EXAMPLE_INITIALIZATION_OPTIONS } from '../example-entities/example-initialization-input-options';
+import { EXAMPLE_INITIALIZATION_OPTIONS } from '../example-entities/options';
+import { sequelize } from '../orm/sequelize';
 
 const context = async ({ req }): Promise<Record<string, any>> => {
   return {};
@@ -10,9 +11,10 @@ const context = async ({ req }): Promise<Record<string, any>> => {
 
 export const getGraphqlSchema = async (): Promise<any> => {
   const middlewares = [];
-  const { typedefs: typeDefs, resolvers } = await getSchema(
-    EXAMPLE_INITIALIZATION_OPTIONS.pathOnlyApplicationExample
-  );
+  const { typedefs: typeDefs, resolvers } = await getSchema({
+    sequelize,
+    ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
+  });
   const schema = makeExecutableSchema({ typeDefs, resolvers });
   const schemaWithMiddleware = applyMiddleware(schema, ...middlewares);
 

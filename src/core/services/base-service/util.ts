@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { StateFactory } from '../../classes/state';
+import SequelizeGraphql from '../../..';
 import { KeyedAttribute, ModelAttribute } from '../../../types';
 import { uppercaseFirstLetter } from '../../util';
 
@@ -70,7 +70,7 @@ export const getAttributes = (model) => (): ModelAttribute => {
 
 export const buildAssociationCreateOptions = (model) => (input) => {
   try {
-    const models = StateFactory().getModels();
+    const models = SequelizeGraphql().getSequelize().models;
     const attributes = getAttributes(model)();
     const associationOptions = Object.keys(input)?.reduce((acc, key) => {
       const value = attributes?.associations?.[key];
