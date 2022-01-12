@@ -32,6 +32,7 @@ const buildInclude = ({
   include,
   attributes = [],
   separate = false,
+  where = {},
 }: BuildIncludeInput) => {
   return [
     {
@@ -39,6 +40,7 @@ const buildInclude = ({
       attributes,
       ...(include?.length && { include }),
       ...(separate && { separate }),
+      ...(Object.keys(where).length && { where }),
     },
   ];
 };
@@ -89,8 +91,6 @@ const recurseQueryFields = (
             const { attributes: includeAttributes, include: associatedInclude } =
               recurseQueryFields(nextQueryFields, nextModelAttributes, modelMapOptions, fieldName);
 
-            // const foo = parseWhere(value?.fieldsByTypeName?.args?.where, modelMapOptions);
-
             const baseInclude = buildInclude({
               association: fieldName,
               include: associatedInclude,
@@ -107,10 +107,13 @@ const recurseQueryFields = (
           BASE_ACC()
         );
 
+        const where = parseWhere(value?.args?.where, modelMapOptions);
+
         const baseInclude = buildInclude({
           association: key,
           include: associationFields?.include,
           attributes: attributeFields,
+          where,
           ...(associationValue?.separate && { separate: associationValue?.separate }),
         });
         acc.include = acc?.include ? [...acc.include, ...baseInclude] : baseInclude;
