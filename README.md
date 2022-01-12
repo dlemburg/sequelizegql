@@ -21,7 +21,7 @@
 
 **_*This is in alpha - it is not yet stable*!_**
 
-Just a quick personal note - you can find the technical reasons for building this project [below](https://github.com/dlemburg/sequelize-graphql#why). Personally, I enjoy building these sorts of abstractions and find them useful. I do plan on continuing development and gain production-level stability. That said, I have family, hobbies, and plenty of things I enjoy doing away from screens, etc., so if you'd like to contribute, I'd love help! Please hit me up here or via email. Thanks!
+Just a quick personal note - you can find the technical reasons for building this project [below](https://github.com/dlemburg/sequelize-graphql#why). Personally, I enjoy building these sorts of abstractions and find them useful. I do plan on continued development to gain production-level stability. That said, I have family, hobbies, and plenty of things I enjoy doing away from screens, etc., so if you'd like to contribute, I'd love help! Please hit me up here or via email. Thanks!
 
 ### TODO
 
