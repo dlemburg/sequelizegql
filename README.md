@@ -26,9 +26,8 @@ Just a quick personal note - you can find the technical reasons for building thi
 ### TODO
 
 - unit test coverage, Integrations tests against database
-- include where
-- recursive creates (currently 1 level of associations deep)
 - recursive operators
+- recursive creates (currently 1 level of associations deep)
 
 ## Installation
 
@@ -53,7 +52,7 @@ Popular generation tools hit a ceiling very quickly when systems mature and busi
 - Generated schema is similar API to sequelize itself, including APIs for query filters (sequelize operators)
 - Database agnostic by leveraging sequelize
 - Performant (no benchmarks yet): generated resolvers do not over-fetch - the resolver layer introspects the query fields and dynamically generates one sequelize query w/ only the requested _includes_ and _attributes_ (note that the _1:many_ and _many:many_ queries get separated under the hood to boost performance [see sequelize docs here and search for 'separate: true'](https://sequelize.org/master/manual/eager-loading.html))
-- Configure precise generated endpoints via via `omitResolvers, generate` options
+- Configure precise generated endpoints via `omitResolvers, generate` options
 - Supply pre-built directives to individual endpoints via `directive` option
 - Limit which fields can be supplied in `input` in create/update mutations via `omitInputAttributes`
 - Execute business logic with middleware via `onBeforeResolve, onAfterResolve` - if complex business logic is needed, [graphql-middleware](https://www.npmjs.com/package/graphql-middleware) is a cleaner option, imo
