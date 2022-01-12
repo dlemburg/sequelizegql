@@ -33,28 +33,33 @@ export const buildModelAttributes = (rawAttributes): KeyedAttribute => {
       }
     }
 
-    return {
-      ...acc,
-      [property]: {
-        sequelizeType,
-        type,
-        isArray,
-        isEnum,
-        allowNull: value.allowNull === false ? false : true,
-        values,
-      },
+    acc[property] = {
+      sequelizeType,
+      type,
+      isArray,
+      isEnum,
+      allowNull: value.allowNull === false ? false : true,
+      values,
+      separate: false,
     };
+
+    return acc;
   }, {});
 };
 
 export const buildModelAssociations = (associations): KeyedAttribute => {
   return Object.entries(associations ?? []).reduce((acc, [property, value]: any) => {
+    const hasMany = value.associationType === 'HasMany';
+    const isArray = hasMany || value.associationType === 'BelongsToMany';
+
     acc[property] = {
       sequelizeType: 'ASSOCIATION',
       type: value.target.name,
-      isArray: value.associationType === 'HasMany' || value.associationType === 'BelongsToMany',
+      isArray,
+      isEnum: false,
       allowNull: true,
       values: [],
+      separate: isArray && hasMany,
     };
     return acc;
   }, {});
@@ -75,10 +80,10 @@ export const buildAssociationCreateOptions = (model) => (input) => {
     const associationOptions = Object.keys(input)?.reduce((acc, key) => {
       const value = attributes?.associations?.[key];
       const type = value?.type;
-      const Model = type ? models?.[type] : null;
+      const model = type ? models?.[type] : null;
 
-      if (Model) {
-        const include = [Model];
+      if (model) {
+        const include = [model];
         return acc?.include ? { include: [...acc.include, ...include] } : { ...acc, include };
       }
     }, {} as any);

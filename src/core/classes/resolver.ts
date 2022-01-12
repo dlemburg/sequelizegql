@@ -1,5 +1,5 @@
 import { BaseInput, GeneratedResolverField, SchemaMapOptions } from '../../types';
-import { QueryAttributeBuilder } from './query-builder';
+import { QueryBuilder } from './query-options-builder';
 import { BaseGql } from './base-gql';
 import { buildSort, parseWhere, maybeGenerate } from '../util';
 
@@ -12,7 +12,11 @@ const resolveQuery =
     const filter = parseWhere(where, modelMapOptions);
 
     if (resolveInfo) {
-      ({ include, attributes } = QueryAttributeBuilder.build(model, resolveInfo, modelMapOptions));
+      ({ include, attributes } = QueryBuilder.buildQueryOptions(
+        model,
+        resolveInfo,
+        modelMapOptions
+      ));
     }
 
     return serviceMethod(filter, {

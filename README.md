@@ -26,7 +26,7 @@ Just a quick personal note - you can find the technical reasons for building thi
 ### TODO
 
 - unit test coverage, Integrations tests against database
-- include (association) attributes not added
+- include where, separate
 - recursive creates (currently 1 level of associations deep)
 - recursive operators
 

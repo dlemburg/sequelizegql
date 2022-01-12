@@ -83,6 +83,7 @@ export type Attribute = {
   isEnum: boolean;
   allowNull: boolean;
   values: string[];
+  separate: boolean;
 };
 
 export type KeyedAttribute = {

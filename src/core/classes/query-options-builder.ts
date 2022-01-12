@@ -19,29 +19,36 @@ type QueryAttributes = {
 
 type BuildIncludeInput = {
   association: string;
+  separate?: boolean;
 } & QueryAttributes;
 
 type FieldIntrospectionTuple = [string, any];
 
-// type NestedFieldFieldIntrospectionTuple = [FieldIntrospectionTuple];
-
 const BASE_ACC = () => ({ attributes: [], include: undefined });
 
-const buildInclude = ({ association, include, attributes = [] }: BuildIncludeInput) => {
+const buildInclude = ({
+  association,
+  include,
+  attributes = [],
+  separate = false,
+}: BuildIncludeInput) => {
   return [
     {
       association,
       attributes,
       ...(include?.length && { include }),
+      ...(separate && { separate }),
     },
   ];
 };
+
+const getKey = (tuple) => tuple[0];
 
 const recurseQueryFields = (
   fieldEntries: any = [],
   modelAttributes: ModelAttribute,
   modelMapOptions: SchemaMapOptions,
-  entityName: string
+  entityName: string = ''
 ): QueryAttributes => {
   const models = SequelizeGraphql().getSequelize().models;
 
@@ -49,9 +56,6 @@ const recurseQueryFields = (
     const associationValue = modelAttributes?.associations?.[key];
     const attributeValue = modelAttributes?.[key];
     const where = parseWhere(value?.fieldsByTypeName?.args?.where, modelMapOptions);
-
-    console.log('entityName: ', entityName);
-    console.log('fieldEntries: ', fieldEntries);
 
     if (attributeValue) {
       acc.attributes.push(key);
@@ -63,14 +67,14 @@ const recurseQueryFields = (
       const attributeFields = Object.entries(fields)
         .filter(([xKey, xValue]: FieldIntrospectionTuple) => {
           const result = Object.keys(xValue?.fieldsByTypeName ?? {});
-          return !result?.length && !models?.[result[0]];
+          return !result?.length && !models?.[getKey(result)];
         })
-        .map((x) => x[0]);
+        .map((x) => getKey(x));
 
       if (model) {
         const nextAssociationFields = Object.entries(fields).filter(([xKey, xValue]: any) => {
           const result = Object.keys(xValue?.fieldsByTypeName ?? {});
-          return result?.length && models?.[result[0]];
+          return result?.length && models?.[getKey(result)];
         });
 
         const associationFields = nextAssociationFields.reduce(
@@ -88,6 +92,7 @@ const recurseQueryFields = (
               association: fieldName,
               include: associatedInclude,
               attributes: includeAttributes,
+              separate: false,
             });
 
             accInner.include = accInner?.include
@@ -103,6 +108,7 @@ const recurseQueryFields = (
           association: key,
           include: associationFields?.include,
           attributes: attributeFields,
+          ...(associationValue?.separate && { separate: associationValue?.separate }),
         });
         acc.include = acc?.include ? [...acc.include, ...baseInclude] : baseInclude;
       }
@@ -114,8 +120,12 @@ const recurseQueryFields = (
   return result;
 };
 
-export class QueryAttributeBuilder {
-  public static build(model, resolveInfo, schemaMapOptions: SchemaMapOptions): QueryAttributes {
+export class QueryBuilder {
+  public static buildQueryOptions(
+    model,
+    resolveInfo,
+    schemaMapOptions: SchemaMapOptions
+  ): QueryAttributes {
     try {
       const modelAttributes = getAttributes(model)();
       const parsedResolveInfoFragment = parseResolveInfo(resolveInfo) as any;
@@ -125,12 +135,7 @@ export class QueryAttributeBuilder {
       );
 
       const fields = Object.entries(info.fields);
-      const { attributes, include } = recurseQueryFields(
-        fields,
-        modelAttributes,
-        schemaMapOptions,
-        ''
-      );
+      const { attributes, include } = recurseQueryFields(fields, modelAttributes, schemaMapOptions);
 
       return { attributes, include };
     } catch (err) {
