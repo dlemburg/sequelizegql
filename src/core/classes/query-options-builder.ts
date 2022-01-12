@@ -126,7 +126,6 @@ const recurseQueryFields = (
 export class QueryBuilder {
   public static buildQueryOptions(
     model,
-    whereArgs,
     resolveInfo,
     modelMapOptions: SchemaMapOptions
   ): QueryAttributes {
@@ -138,7 +137,7 @@ export class QueryBuilder {
         resolveInfo.returnType
       );
 
-      const where = parseWhere(whereArgs, modelMapOptions);
+      const where = parseWhere(info.args.where, modelMapOptions);
       const fields = Object.entries(info.fields);
       const { attributes, include } = recurseQueryFields(fields, modelAttributes, modelMapOptions);
 

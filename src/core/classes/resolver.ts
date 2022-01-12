@@ -13,7 +13,6 @@ const resolveQuery =
     if (resolveInfo) {
       ({ include, attributes, where } = QueryBuilder.buildQueryOptions(
         model,
-        whereArgs,
         resolveInfo,
         modelMapOptions
       ));
