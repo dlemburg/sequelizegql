@@ -1,11 +1,11 @@
 const allBooks = [
   {
     query: `
-    query AllBooks {
-      allBooks {
-        id
-      }
-    }`,
+      query AllBooks {
+        allBooks {
+          id
+        }
+      }`,
     body: {},
     response: {
       allBooks: [],
@@ -16,11 +16,11 @@ const allBooks = [
 const book = [
   {
     query: `
-    query Book($where: BookWhereInput) {
-      book(where: $where) {
-        id
-      }
-    }`,
+      query Book($where: BookWhereInput) {
+        book(where: $where) {
+          id
+        }
+      }`,
     body: {
       where: {
         id: 1,
@@ -35,11 +35,11 @@ const book = [
 const books = [
   {
     query: `
-    query Book {
-      books {
-        id
-      }
-    }`,
+      query Book {
+        books {
+          id
+        }
+      }`,
     body: {
       where: {
         id: 1,
@@ -51,20 +51,20 @@ const books = [
   },
   {
     query: `
-    query Book {
-      books {
-        id
-        libraries {
+      query Book {
+        books {
           id
-          city {
+          libraries {
+            id
+            city {
+              id
+            }
+          }
+          authors {
             id
           }
         }
-        authors {
-          id
-        }
-      }
-    }`,
+      }`,
     body: {
       where: {},
     },
@@ -99,14 +99,14 @@ const books = [
 const booksPaged = [
   {
     query: `
-    query Book($where: BookWhereInput) {
-      booksPaged(where: $where) {
-        totalCount
-        entities {
-          id
+      query Book($where: BookWhereInput) {
+        booksPaged(where: $where) {
+          totalCount
+          entities {
+            id
+          }
         }
-      }
-    }`,
+      }`,
     body: {
       where: {
         id: 1,
