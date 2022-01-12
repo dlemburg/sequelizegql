@@ -72,6 +72,28 @@ const books = [
       books: [],
     },
   },
+  {
+    query: `
+      query Books($where: BookWhereInput) {
+        books(where: $where) {
+          id
+          libraries(where: { id: 1 }) {
+            name
+            city(where: { id: 1 }) {
+              id
+            }
+          }
+          authors {
+            surname
+          }
+        }
+      }
+    `,
+    body: {
+      where: {},
+    },
+    response: {},
+  },
 ];
 
 const booksPaged = [
