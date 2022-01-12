@@ -64,38 +64,42 @@ const recurseQueryFields = (
     }
 
     if (associationValue?.type) {
-      const model = associationValue?.type && models?.[associationValue?.type];
-      const fields = value?.fieldsByTypeName?.[associationValue?.type];
-      const attributeFields = Object.entries(fields)
-        .filter(([xKey, xValue]: FieldIntrospectionTuple) => {
-          const result = Object.keys(xValue?.fieldsByTypeName ?? {});
-          return !result?.length && !models?.[getKey(result)];
-        })
-        .map((x) => getKey(x));
+      const currentModel = associationValue?.type && models?.[associationValue?.type];
+      const currentModelAttributes = getAttributes(currentModel)();
+      const currentFields = value?.fieldsByTypeName?.[associationValue?.type];
 
-      if (model) {
-        const nextAssociationFields = Object.entries(fields).filter(([xKey, xValue]: any) => {
-          const result = Object.keys(xValue?.fieldsByTypeName ?? {});
-          return result?.length && models?.[getKey(result)];
-        });
+      if (currentModel) {
+        const nextAssociationFields = Object.entries(currentFields).filter(
+          ([xKey, xValue]: any) => {
+            const result = Object.keys(xValue?.fieldsByTypeName ?? {});
+            return result?.length && models?.[getKey(result)];
+          }
+        );
 
         const associationFields = nextAssociationFields.reduce(
           (accInner: any, x: FieldIntrospectionTuple) => {
-            const fieldName = x[1].name;
-            const fieldsByType = x[1].fieldsByTypeName;
-            const modelName = Object.keys(x[1]?.fieldsByTypeName ?? {})?.[0];
-            const nextQueryFields = Object.entries(fieldsByType[modelName]);
-            const nextModelAttributes = getAttributes(models[modelName])();
+            const nextFieldName = x[1].name;
+            const nextFieldsByType = x[1].fieldsByTypeName;
+            const nextModelName = Object.keys(x[1]?.fieldsByTypeName ?? {})?.[0];
+            const nextQueryFields = Object.entries(nextFieldsByType[nextModelName]);
+            const nextModelAttributes = getAttributes(models[nextModelName])();
+
             const where = parseWhere(x[1]?.args?.where, modelMapOptions);
+            const separate = currentModelAttributes?.associations?.[nextFieldName]?.separate;
 
             const { attributes: includeAttributes, include: associatedInclude } =
-              recurseQueryFields(nextQueryFields, nextModelAttributes, modelMapOptions, fieldName);
+              recurseQueryFields(
+                nextQueryFields,
+                nextModelAttributes,
+                modelMapOptions,
+                nextFieldName
+              );
 
             const baseInclude = buildInclude({
-              association: fieldName,
+              association: nextFieldName,
               include: associatedInclude,
               attributes: includeAttributes,
-              separate: false,
+              separate,
               where,
             });
 
@@ -109,6 +113,12 @@ const recurseQueryFields = (
         );
 
         const where = parseWhere(value?.args?.where, modelMapOptions);
+        const attributeFields = Object.entries(currentFields)
+          .filter(([xKey, xValue]: FieldIntrospectionTuple) => {
+            const result = Object.keys(xValue?.fieldsByTypeName ?? {});
+            return !result?.length && !models?.[getKey(result)];
+          })
+          .map((x) => getKey(x));
 
         const baseInclude = buildInclude({
           association: key,
