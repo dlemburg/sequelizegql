@@ -19,7 +19,7 @@ class SequelizeGraphql {
   private typedefs: string;
   private sequelize: Sequelize;
 
-  public async schema(input: InitializeInput): Promise<InitializeResponse> {
+  public async generateSchema(input: InitializeInput): Promise<InitializeResponse> {
     validateInput(input);
 
     this.sequelize = input.sequelize as Sequelize;

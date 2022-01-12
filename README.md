@@ -42,7 +42,7 @@ npm install sequelize-graphql
 
 ## Why?
 
-The inspiration for this library was simple: fantastic tools exist in the data-layer/graphql generation space for database-first [here](https://supabase.com/blog/2021/12/03/pg-graphql), postgres-first [here](https://www.npmjs.com/package/postgraphile), and prisma-first [here](https://typegraphql.com/), but missing for sequelize users or those who lean towards code-first data-layer design.
+The inspiration for this library was simple: fantastic tools exist in the data-layer/GraphQL generation space for database-first [here](https://supabase.com/blog/2021/12/03/pg-graphql), postgres-first [here](https://www.npmjs.com/package/postgraphile), and prisma-first [here](https://typegraphql.com/), but missing for sequelize users or those who lean towards code-first data-layer design.
 
 [Sequelize ORM](https://sequelize.org/) is battle-tested and mature. Greenfield graphql/sequelize projects are common and legacy REST/sequelize projects may want to bring GraphQL into their ecosystem.
 
@@ -68,8 +68,7 @@ Example here uses `sequelize-typescript` but this library works fine with `seque
 ## Basic
 
 ```typescript
-const graphqlSequelize = new SequelizeGraphql();
-const schema = await graphqlSequelize.schema(options);
+const schema = SequelizeGraphql().generateSchema(options);
 
 console.log(schema); // { resolvers, typedefs, typedefsString }
 
@@ -243,14 +242,11 @@ const modelMap = {
   },
 };
 
-const options = {
+const graphqlSequelize = SequelizeGraphql().generateSchema({
   rootMap,
   modelMap,
   sequelize, // your sequelize instance
-};
-
-const graphqlSequelize = SequelizeGraphql();
-const schema = await graphqlSequelize.schema(options);
+});
 
 console.log(schema); // { resolvers, typedefs, typedefsString }
 
