@@ -40,7 +40,7 @@ const buildInclude = ({
       attributes,
       ...(include?.length && { include }),
       ...(separate && { separate }),
-      ...(Object.keys(where).length && { where }),
+      ...(Object.keys(where).length ? { where } : {}),
     },
   ];
 };
@@ -58,7 +58,6 @@ const recurseQueryFields = (
   const result = fieldEntries?.reduce((acc, [key, value]: [string, any]) => {
     const associationValue = modelAttributes?.associations?.[key];
     const attributeValue = modelAttributes?.[key];
-    const where = parseWhere(value?.fieldsByTypeName?.args?.where, modelMapOptions);
 
     if (attributeValue) {
       acc.attributes.push(key);
@@ -87,6 +86,7 @@ const recurseQueryFields = (
             const modelName = Object.keys(x[1]?.fieldsByTypeName ?? {})?.[0];
             const nextQueryFields = Object.entries(fieldsByType[modelName]);
             const nextModelAttributes = getAttributes(models[modelName])();
+            const where = parseWhere(x[1]?.args?.where, modelMapOptions);
 
             const { attributes: includeAttributes, include: associatedInclude } =
               recurseQueryFields(nextQueryFields, nextModelAttributes, modelMapOptions, fieldName);
@@ -96,6 +96,7 @@ const recurseQueryFields = (
               include: associatedInclude,
               attributes: includeAttributes,
               separate: false,
+              where,
             });
 
             accInner.include = accInner?.include
@@ -114,7 +115,7 @@ const recurseQueryFields = (
           include: associationFields?.include,
           attributes: attributeFields,
           where,
-          ...(associationValue?.separate && { separate: associationValue?.separate }),
+          separate: associationValue?.separate,
         });
         acc.include = acc?.include ? [...acc.include, ...baseInclude] : baseInclude;
       }
