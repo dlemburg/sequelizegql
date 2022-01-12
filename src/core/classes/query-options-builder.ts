@@ -15,6 +15,7 @@ type RecursiveInclude = {
 type QueryAttributes = {
   include?: RecursiveInclude[];
   attributes?: string[];
+  where?: Record<any, any>;
 };
 
 type BuildIncludeInput = {
@@ -88,6 +89,8 @@ const recurseQueryFields = (
             const { attributes: includeAttributes, include: associatedInclude } =
               recurseQueryFields(nextQueryFields, nextModelAttributes, modelMapOptions, fieldName);
 
+            // const foo = parseWhere(value?.fieldsByTypeName?.args?.where, modelMapOptions);
+
             const baseInclude = buildInclude({
               association: fieldName,
               include: associatedInclude,
@@ -123,8 +126,9 @@ const recurseQueryFields = (
 export class QueryBuilder {
   public static buildQueryOptions(
     model,
+    whereArgs,
     resolveInfo,
-    schemaMapOptions: SchemaMapOptions
+    modelMapOptions: SchemaMapOptions
   ): QueryAttributes {
     try {
       const modelAttributes = getAttributes(model)();
@@ -134,10 +138,11 @@ export class QueryBuilder {
         resolveInfo.returnType
       );
 
+      const where = parseWhere(whereArgs, modelMapOptions);
       const fields = Object.entries(info.fields);
-      const { attributes, include } = recurseQueryFields(fields, modelAttributes, schemaMapOptions);
+      const { attributes, include } = recurseQueryFields(fields, modelAttributes, modelMapOptions);
 
-      return { attributes, include };
+      return { attributes, include, where };
     } catch (err) {
       return {};
     }

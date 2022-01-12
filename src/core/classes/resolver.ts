@@ -5,21 +5,21 @@ import { buildSort, parseWhere, maybeGenerate } from '../util';
 
 const resolveQuery =
   (model, serviceMethod, modelMapOptions: SchemaMapOptions) =>
-  (_, { where, options }, context, resolveInfo) => {
-    let include, attributes;
+  (_, { where: whereArgs, options }, context, resolveInfo) => {
+    let include, attributes, where;
     const order =
       options?.order?.length ?? options?.order.map(({ field, dir }) => buildSort(field, dir));
-    const filter = parseWhere(where, modelMapOptions);
 
     if (resolveInfo) {
-      ({ include, attributes } = QueryBuilder.buildQueryOptions(
+      ({ include, attributes, where } = QueryBuilder.buildQueryOptions(
         model,
+        whereArgs,
         resolveInfo,
         modelMapOptions
       ));
     }
 
-    return serviceMethod(filter, {
+    return serviceMethod(where, {
       attributes,
       include,
       ...(order && { order }),
