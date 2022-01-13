@@ -8,6 +8,7 @@
   "description": "",
   "scripts": {
     "test": "jest",
+    "test:file": "jest ./src/core/util/test/parse-where-util.test.ts",
     "start:examples:sequelize": "cd examples/library && npm run start:sequelize",
     "start:examples:sequelize-ts": "cd examples/library && npm run start:sequelize-ts"
   },
