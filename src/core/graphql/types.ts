@@ -1,4 +1,4 @@
-import { ModelAttribute } from '../../types';
+import { Attribute, ModelAttribute } from '../../types';
 import { mapSequelizeToGraphql } from '../mappers';
 import { lowercaseFirstLetter, stringBuilder } from '../util';
 import { newLine } from './new-line';
@@ -12,11 +12,11 @@ const mapFields = (attributes, options) =>
     })
     .join(`${newLine()}`);
 
-const mapAssociationTypes = (name, attributes, options) =>
+const mapAssociationTypes = (attributes, options) =>
   Object.entries(attributes)
-    .map(([key, value]) => {
+    .map(([key, value]: [string, Attribute]) => {
       return `${lowercaseFirstLetter(key)}(where: ${whereInputNameGql(
-        name
+        value.type
       )}): ${mapSequelizeToGraphql(value, options)}`;
     })
     .join(`${newLine()}`);
@@ -44,7 +44,7 @@ export const typesGql = (
           generateNullable,
           suffix: inputGqlUpper(),
         })
-      : mapAssociationTypes(name, associations, {
+      : mapAssociationTypes(associations, {
           generateNullable,
           suffix: '',
         });
