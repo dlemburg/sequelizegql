@@ -57,7 +57,6 @@ Popular generation tools hit a ceiling very quickly when systems mature and busi
 - Limit which fields can be supplied in `input` in create/update mutations via `omitInputAttributes`
 - Execute business logic with middleware via `onBeforeResolve, onAfterResolve` - if complex business logic is needed, [graphql-middleware](https://www.npmjs.com/package/graphql-middleware) is a cleaner option, imo
 - Works well with your own endpoints: take the output and merge into your own custom schema
-- Flexible discoverability via file reading
 - Works well with federated schemas
 
 # Examples
