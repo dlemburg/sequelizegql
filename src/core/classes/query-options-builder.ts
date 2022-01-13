@@ -40,7 +40,7 @@ const buildInclude = ({
       attributes,
       ...(include?.length && { include }),
       ...(separate && { separate }),
-      ...(Object.keys(where).length ? { where } : {}),
+      where,
     },
   ];
 };
