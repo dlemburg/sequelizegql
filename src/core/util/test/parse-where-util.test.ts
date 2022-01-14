@@ -12,11 +12,19 @@ const mockWhere = {
   FILTERS: { id: 1 },
 };
 
-// TODO: check equality
+const expectedParsedWhereResult = {
+  name: 'bar',
+  id: 1,
+  [Symbol('or')]: [
+    { id: 1 },
+    { id: { [Symbol('not')]: 2 } },
+    { [Symbol('and')]: [{ name: 'foo' }, { id: { [Symbol('not')]: 2 } }] },
+  ],
+};
 
 describe('[parse-where-util.test.ts] suite', () => {
   test('[parseWhere] should equal the correct object', () => {
     const where = parseWhere(mockWhere, {});
-    expect(1 + 1).toEqual(2);
+    expect(JSON.stringify(where)).toEqual(JSON.stringify(expectedParsedWhereResult));
   });
 });
