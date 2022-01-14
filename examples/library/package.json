@@ -1,5 +1,5 @@
 {
-  "name": "sequelize-graphql-examples",
+  "name": "sequelizegql-examples",
   "main": "lib/index.js",
   "version": "1.0.0",
   "description": "",

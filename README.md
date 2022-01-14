@@ -1,27 +1,27 @@
-# sequelize-graphql
+# sequelizegql
 
-- [Author Note](https://github.com/dlemburg/sequelize-graphql#author-note)
-  - [TODO](https://github.com/dlemburg/sequelize-graphql#todo)
-- [Installation](https://github.com/dlemburg/sequelize-graphql#installation)
-- [What is `sequelize-graphql`?](https://github.com/dlemburg/sequelize-graphql#what)
-- [Why use `sequelize-graphql`?](https://github.com/dlemburg/sequelize-graphql#why)
-- [Advantages](https://github.com/dlemburg/sequelize-graphql#advantages)
-- [Examples](https://github.com/dlemburg/sequelize-graphql#examples)
-  - [Basic Example](https://github.com/dlemburg/sequelize-graphql#basic)
-  - [In-Depth Example](https://github.com/dlemburg/sequelize-graphql#in-depth)
-  - [Generated Example](https://github.com/dlemburg/sequelize-graphql#generated-example)
-    - [Queries](https://github.com/dlemburg/sequelize-graphql#queries)
-    - [Mutations](https://github.com/dlemburg/sequelize-graphql#mutations)
-    - [Types and Inputs](https://github.com/dlemburg/sequelize-graphql#types-and-inputs)
-    - [FILTERS](https://github.com/dlemburg/sequelize-graphql#filters)
-- [API](https://github.com/dlemburg/sequelize-graphql#api)
-  - [Object Options](https://github.com/dlemburg/sequelize-graphql#options)
+- [Author Note](https://github.com/dlemburg/sequelizegql#author-note)
+  - [TODO](https://github.com/dlemburg/sequelizegql#todo)
+- [Installation](https://github.com/dlemburg/sequelizegql#installation)
+- [What is `sequelizegql`?](https://github.com/dlemburg/sequelizegql#what)
+- [Why use `sequelizegql`?](https://github.com/dlemburg/sequelizegql#why)
+- [Advantages](https://github.com/dlemburg/sequelizegql#advantages)
+- [Examples](https://github.com/dlemburg/sequelizegql#examples)
+  - [Basic Example](https://github.com/dlemburg/sequelizegql#basic)
+  - [In-Depth Example](https://github.com/dlemburg/sequelizegql#in-depth)
+  - [Generated Example](https://github.com/dlemburg/sequelizegql#generated-example)
+    - [Queries](https://github.com/dlemburg/sequelizegql#queries)
+    - [Mutations](https://github.com/dlemburg/sequelizegql#mutations)
+    - [Types and Inputs](https://github.com/dlemburg/sequelizegql#types-and-inputs)
+    - [FILTERS](https://github.com/dlemburg/sequelizegql#filters)
+- [API](https://github.com/dlemburg/sequelizegql#api)
+  - [Object Options](https://github.com/dlemburg/sequelizegql#options)
 
 ## Author Note
 
 **_*This is in alpha - it is not yet stable*!_**
 
-Just a quick personal note - you can find the technical reasons for building this project [below](https://github.com/dlemburg/sequelize-graphql#why). Personally, I enjoy building these sorts of abstractions and find them useful. I do plan on continued development to gain production-level stability. That said, I have family, hobbies, and plenty of things I enjoy doing away from screens, etc., so if you'd like to contribute, I'd love help! Please hit me up here or via email. Thanks!
+Just a quick personal note - you can find the technical reasons for building this project [below](https://github.com/dlemburg/sequelizegql#why). Personally, I enjoy building these sorts of abstractions and find them useful. I do plan on continued development to gain production-level stability. That said, I have family, hobbies, and plenty of things I enjoy doing away from screens, etc., so if you'd like to contribute, I'd love help! Please hit me up here or via email. Thanks!
 
 ### TODO
 
@@ -30,12 +30,12 @@ Just a quick personal note - you can find the technical reasons for building thi
 ## Installation
 
 ```terminal
-npm install sequelize-graphql
+npm install sequelizegql
 ```
 
 ## What?
 
-`sequelize-graphql` generates a full CRUD GraphQL API (types, inputs, enums, queries, mutations, and resolvers) based on the provided sequelize models.
+`sequelizegql` generates a full CRUD GraphQL API (types, inputs, enums, queries, mutations, and resolvers) based on the provided sequelize models.
 
 ## Why?
 
@@ -59,7 +59,7 @@ Popular generation tools hit a ceiling very quickly when systems mature and busi
 
 # Examples
 
-Example here uses `sequelize-typescript` but this library works fine with `sequelize` too. You can see [examples of both here](https://github.com/dlemburg/sequelize-graphql/tree/main/examples/library/src/orm/models)
+Example here uses `sequelize-typescript` but this library works fine with `sequelize` too. You can see [examples of both here](https://github.com/dlemburg/sequelizegql/tree/main/examples/library/src/orm/models)
 
 ## Basic
 
@@ -392,7 +392,7 @@ Author.findAll({
 ```
 
 &nbsp;
-See full application schema example [here](https://github.com/dlemburg/sequelize-graphql/blob/main/examples/library/src/index.ts)
+See full application schema example [here](https://github.com/dlemburg/sequelizegql/blob/main/examples/library/src/index.ts)
 
 &nbsp;
 
@@ -400,12 +400,12 @@ See full application schema example [here](https://github.com/dlemburg/sequelize
 
 ## Options
 
-| Name                   | Type                                                                                                      | Description                                                            |
-| ---------------------- | --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| `sequelize`            | `Sequelize`                                                                                               | Your Sequelize instance. **The only required option**                  |
-| `modelMap`             | `SchemaMap` [here](https://github.com/dlemburg/sequelize-graphql/blob/main/src/types/types.ts#L67)        | Complex object that allows configuration and overrides for every model |
-| `rootMap`              | `SchemaMapOptions` [here](https://github.com/dlemburg/sequelize-graphql/blob/main/src/types/types.ts#L61) | Same as above, but will be applied to _all_ models                     |
-| `deleteResponseGql`    | `string`                                                                                                  | Your own slimmed-down delete response; by default - `DeleteResponse`   |
-| `includeDeleteOptions` | `boolean`                                                                                                 | Allows for extra arg `options: DeleteOptions` on `delete<*>` endpoints |
+| Name                   | Type                                                                                                 | Description                                                            |
+| ---------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `sequelize`            | `Sequelize`                                                                                          | Your Sequelize instance. **The only required option**                  |
+| `modelMap`             | `SchemaMap` [here](https://github.com/dlemburg/sequelizegql/blob/main/src/types/types.ts#L67)        | Complex object that allows configuration and overrides for every model |
+| `rootMap`              | `SchemaMapOptions` [here](https://github.com/dlemburg/sequelizegql/blob/main/src/types/types.ts#L61) | Same as above, but will be applied to _all_ models                     |
+| `deleteResponseGql`    | `string`                                                                                             | Your own slimmed-down delete response; by default - `DeleteResponse`   |
+| `includeDeleteOptions` | `boolean`                                                                                            | Allows for extra arg `options: DeleteOptions` on `delete<*>` endpoints |
 
 &nbsp;
