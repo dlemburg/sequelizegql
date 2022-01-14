@@ -26,8 +26,6 @@ Just a quick personal note - you can find the technical reasons for building thi
 ### TODO
 
 - unit test coverage, Integrations tests against database
-- recursive operators
-- recursive creates (currently 1 level of associations deep)
 
 ## Installation
 
@@ -266,13 +264,13 @@ For the above example, the following `Author` Queries and Mutations are availabl
 
 ### Mutations
 
-| Name                | Args                                                 | Return Type                 |
-| ------------------- | ---------------------------------------------------- | --------------------------- |
-| `createAuthor`      | `input: AuthorInput!`                                | `Author!`                   |
-| `createManyAuthors` | `input: [AuthorInput!]!`                             | `[Author!]!`                |
-| `updateAuthor`      | `where: AuthorWhereInput, input: UpdateAuthorInput!` | `Author`                    |
-| `upsertAuthor`      | `where: AuthorWhereInput, input: AuthorInput!`       | `Author`                    |
-| `deleteAuthor`      | `where: AuthorWhereInput, options: DeleteOptions`    | `DeleteResponse` by default |
+| Name                | Args                                                                                                      | Return Type                 |
+| ------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------- |
+| `createAuthor`      | `input: AuthorInput!` **_note that `create` only allows one nested level of associations at the moment_** | `Author!`                   |
+| `createManyAuthors` | `input: [AuthorInput!]!`                                                                                  | `[Author!]!`                |
+| `updateAuthor`      | `where: AuthorWhereInput, input: UpdateAuthorInput!`                                                      | `Author`                    |
+| `upsertAuthor`      | `where: AuthorWhereInput, input: AuthorInput!`                                                            | `Author`                    |
+| `deleteAuthor`      | `where: AuthorWhereInput, options: DeleteOptions`                                                         | `DeleteResponse` by default |
 
 ### Types and Inputs
 
