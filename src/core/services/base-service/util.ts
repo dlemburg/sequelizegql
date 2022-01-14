@@ -83,6 +83,9 @@ export const buildAssociationCreateOptions = (model) => (input) => {
       const model = type ? models?.[type] : null;
 
       if (model) {
+        if (typeof input.key === 'object') {
+          // todo: recurse - haven't made much sense of api
+        }
         const include = [model];
         return acc?.include ? { include: [...acc.include, ...include] } : { ...acc, include };
       }
