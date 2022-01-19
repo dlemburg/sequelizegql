@@ -1,4 +1,4 @@
-import { parseWhere } from '..';
+import { parseWhere } from '../src/core/util';
 
 const mockWhere = {
   name: 'bar',

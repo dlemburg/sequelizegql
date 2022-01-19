@@ -1,4 +1,4 @@
-import { buildEnums, enumToArray } from '../enum-util';
+import { buildEnums, enumToArray } from '../src/core/util';
 
 enum Foo {
   BAR = 'BAR',

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import SequelizeGraphql from '../../..';
 import { KeyedAttribute, ModelAttribute } from '../../../types';
-import { uppercaseFirstLetter } from '../../util';
+import { lowercaseFirstLetter, uppercaseFirstLetter } from '../../util';
 
 const getEnumName = (value) => {
   const name = `${uppercaseFirstLetter(value.fieldName)}Enum`;
@@ -10,7 +10,11 @@ const getEnumName = (value) => {
 };
 
 export const buildModelAttributes = (rawAttributes): KeyedAttribute => {
-  return Object.entries(rawAttributes ?? {}).reduce((acc, [property, value]: any) => {
+  return Object.entries(rawAttributes ?? {}).reduce((acc, [property, value]: [string, any]) => {
+    if (acc[lowercaseFirstLetter(property)]) {
+      return acc;
+    }
+
     const values = value.values ?? [];
     let type = value.type.key ?? '';
     let sequelizeType = type;

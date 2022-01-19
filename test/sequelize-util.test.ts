@@ -1,5 +1,5 @@
-import { SortDirection } from '../../../types';
-import { buildSort, buildSortAsc, buildSortDesc } from '../sequelize-util';
+import { SortDirection } from '../src/types';
+import { buildSort, buildSortAsc, buildSortDesc } from '../src/core/util';
 
 describe('[sequelize-util.test.ts] suite', () => {
   test('[buildSort] should build a proper sort array', () => {

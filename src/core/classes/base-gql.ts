@@ -20,9 +20,9 @@ export class BaseGql {
 
   constructor(input: BaseInput) {
     this.model = input.model;
+    this.options = input.options ?? {};
     this.service = BaseService(input.model);
     this.name = this.service.getModelName();
-    this.options = input.options ?? {};
     this.resolverMap = getResolverFieldMap(this.name, this.options);
     this.queryResolverMap = getQueryResolverFieldMap(this.name, this.options);
     this.mutationResolverMap = getMutationResolverFieldMap(this.name, this.options);

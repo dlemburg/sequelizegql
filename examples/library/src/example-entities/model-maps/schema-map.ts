@@ -20,12 +20,11 @@ export const modelMap: SchemaMap = {
     resolvers: {
       findAll: { generate: true },
     },
-    omitResolvers: [GeneratedResolverField.UPSERT_MUTATION],
   },
   BookAuthor: {
     generate: false,
   },
   City: {
-    omitResolvers: [GeneratedResolverField.DELETE_MUTATION],
+    omitResolvers: [GeneratedResolverField.DELETE_MUTATION, GeneratedResolverField.UPSERT_MUTATION],
   },
 };

@@ -105,7 +105,7 @@ class Resolver extends BaseGql {
       ...(maybeGenerate(this.options, GeneratedResolverField.UPSERT_MUTATION) && {
         [this.resolverMap[GeneratedResolverField.UPSERT_MUTATION].name]: middleware(
           this.options,
-          (_, { where, input }) => this.service.upsert(where, input)
+          (_, { where, input }) => this.service.upsert(input, where)
         ),
       }),
       ...(maybeGenerate(this.options, GeneratedResolverField.DELETE_MUTATION) && {

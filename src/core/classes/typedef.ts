@@ -51,7 +51,9 @@ class Typedef extends BaseGql {
   }
 
   public inputGql() {
-    return typesGql(inputGql(), inputNameGql(this.name), this.inputAttributes());
+    const attributes = this.inputAttributes();
+
+    return typesGql(inputGql(), inputNameGql(this.name), attributes);
   }
 
   public pagedTypeGql() {
