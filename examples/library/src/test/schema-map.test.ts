@@ -54,17 +54,20 @@ describe('[graphql-sequelize.test.ts] suite', () => {
 
   test('[getSchema] validating modelMap `authors` query not generated', async () => {
     const sequelize = await setup();
+    const imports = EXAMPLE_INITIALIZATION_OPTIONS.imports;
 
     const result = await getSchema({
-      ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
+      ...imports,
       sequelize,
     });
 
     const hasAuthorsQuery = removeAllWhitespace(result.typedefsString)?.includes(
-      'authors(where:AuthorWhereInput)'
+      removeAllWhitespace(`extend type Query {
+        authorsPaged(where: AuthorWhereInput, options: OptionsInputPaged): AuthorPaged! 
+      }`)
     );
 
-    expect(hasAuthorsQuery).toBeFalsy();
+    expect(hasAuthorsQuery).toBeTruthy();
   });
 
   test('[getSchema] validating modelMap no BookAuthor queries generated', async () => {

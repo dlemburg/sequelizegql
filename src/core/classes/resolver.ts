@@ -46,7 +46,7 @@ class Resolver extends BaseGql {
   }
 
   public query() {
-    return {
+    const result = {
       ...(maybeGenerate(this.options, GeneratedResolverField.FIND_ONE) && {
         [this.resolverMap[GeneratedResolverField.FIND_ONE].name]: middleware(
           this.options,
@@ -80,10 +80,12 @@ class Resolver extends BaseGql {
         ),
       }),
     };
+
+    return result;
   }
 
   public mutation() {
-    return {
+    const result = {
       ...(maybeGenerate(this.options, GeneratedResolverField.CREATE_MUTATION) && {
         [this.resolverMap[GeneratedResolverField.CREATE_MUTATION].name]: middleware(
           this.options,
@@ -119,6 +121,8 @@ class Resolver extends BaseGql {
         ),
       }),
     };
+
+    return result;
   }
 
   public resolversMap() {
