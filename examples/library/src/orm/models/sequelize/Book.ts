@@ -9,6 +9,10 @@ export const Book = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     isbn: {
       type: DataTypes.STRING,
       allowNull: false,
