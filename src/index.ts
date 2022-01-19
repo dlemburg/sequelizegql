@@ -1,18 +1,9 @@
 import fs from 'fs';
-import merge from 'lodash/merge';
-import { typeDefs as DateTypedefs, resolvers as DateResolvers } from 'graphql-scalars';
-import { mergeTypeDefs } from '@graphql-tools/merge';
-import GraphQLJSON, { GraphQLJSONObject } from 'graphql-type-json';
 import { buildRootTypedefs, validateInput, buildGql } from './core/util';
 import { buildSchema } from './core';
 import { Sequelize } from 'sequelize';
 import { InitializeInput, InitializeResponse, SchemaMap, SchemaMapOptions } from './types';
 import { newLine } from './core/graphql';
-
-const JSONResolvers = {
-  JSON: GraphQLJSON,
-  JSONObject: GraphQLJSONObject,
-};
 
 class SequelizeGraphql {
   private resolvers;
@@ -60,7 +51,7 @@ class SequelizeGraphql {
 
 let sequelizeGraphqlSingleton;
 
-export default () => {
+export default (): SequelizeGraphql => {
   if (sequelizeGraphqlSingleton) {
     return sequelizeGraphqlSingleton;
   }
