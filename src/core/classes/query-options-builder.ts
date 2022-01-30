@@ -137,6 +137,12 @@ const recurseQueryFields = (
   return result;
 };
 
+const getEntitiesKey = (info) => Object.keys(info.fields.entities.fieldsByTypeName)[0];
+const getFields = (info) =>
+  info.fields?.entities?.fieldsByTypeName
+    ? Object.entries(info.fields.entities.fieldsByTypeName[getEntitiesKey(info)])
+    : Object.entries(info.fields);
+
 export class QueryBuilder {
   public static buildQueryOptions(
     model,
@@ -146,13 +152,14 @@ export class QueryBuilder {
     try {
       const modelAttributes = getAttributes(model)();
       const parsedResolveInfoFragment = parseResolveInfo(resolveInfo) as any;
-      const info = simplifyParsedResolveInfoFragmentWithType(
+      const info: any = simplifyParsedResolveInfoFragmentWithType(
         parsedResolveInfoFragment,
         resolveInfo.returnType
       );
 
       const where = parseWhere(info.args.where, modelMapOptions);
-      const fields = Object.entries(info.fields);
+
+      const fields = getFields(info);
       const { attributes, include } = recurseQueryFields(fields, modelAttributes, modelMapOptions);
 
       return { attributes, include, where };

@@ -1,11 +1,15 @@
 import { startApolloServer } from './apollo-server';
+import { EXAMPLE_INITIALIZATION_OPTIONS } from './example-entities/options';
 import { init as initDataLayer } from './orm/sequelize';
 
 export let app;
 
 async function main() {
-  await initDataLayer();
-  await startApolloServer();
+  const sequelize = await initDataLayer();
+  await startApolloServer({
+    sequelize,
+    ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
+  });
 }
 
 main().catch((e) => {

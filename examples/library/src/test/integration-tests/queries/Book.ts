@@ -1,5 +1,7 @@
-export const allBooks = [
-  {
+import { response } from 'express';
+
+export const allBooks = {
+  root: {
     query: `
       query AllBooks {
         allBooks {
@@ -10,11 +12,12 @@ export const allBooks = [
     response: {
       allBooks: [],
     },
+    responseTruthyAssertionFn: null,
   },
-];
+};
 
-export const book = [
-  {
+export const book = {
+  root: (id: number) => ({
     query: `
       query Book($where: BookWhereInput) {
         book(where: $where) {
@@ -23,17 +26,18 @@ export const book = [
       }`,
     body: {
       where: {
-        id: 1,
+        id,
       },
     },
     response: {
-      book: { id: null },
+      book: { id },
     },
-  },
-];
+    responseTruthyAssertionFn: null,
+  }),
+};
 
-export const books = [
-  {
+export const books = {
+  root: (id: number) => ({
     query: `
       query Book {
         books {
@@ -42,14 +46,13 @@ export const books = [
       }`,
     body: {
       where: {
-        id: 1,
+        id,
       },
     },
-    response: {
-      books: [],
-    },
-  },
-  {
+    response: null,
+    responseTruthyAssertionFn: (response) => response.find((x) => x.id === id),
+  }),
+  withAssociations: {
     query: `
       query Book {
         books {
@@ -71,15 +74,16 @@ export const books = [
     response: {
       books: [],
     },
+    responseTruthyAssertionFn: null,
   },
-  {
-    query: `
+  withFilters: {
+    query: ({ libraryId, cityId }) => `
       query Books($where: BookWhereInput) {
         books(where: $where) {
           id
-          libraries(where: { id: 1 }) {
+          libraries(where: { id: ${libraryId} }) {
             name
-            city(where: { id: 1 }) {
+            city(where: { id: ${cityId} }) {
               id
             }
           }
@@ -93,13 +97,14 @@ export const books = [
       where: {},
     },
     response: {},
+    responseTruthyAssertionFn: null,
   },
-];
+};
 
-export const booksPaged = [
-  {
+export const booksPaged = {
+  root: () => ({
     query: `
-      query Book($where: BookWhereInput) {
+      query BooksPaged($where: BookWhereInput) {
         booksPaged(where: $where) {
           totalCount
           entities {
@@ -107,11 +112,7 @@ export const booksPaged = [
           }
         }
       }`,
-    body: {
-      where: {
-        id: 1,
-      },
-    },
+    body: {},
     response: {
       data: {
         booksPaged: {
@@ -120,5 +121,7 @@ export const booksPaged = [
         },
       },
     },
-  },
-];
+    responseTruthyAssertionFn: (response) =>
+      response.entities.length > 0 && response.totalCount > 0,
+  }),
+};

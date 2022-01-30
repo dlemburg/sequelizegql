@@ -1,35 +1,37 @@
-const createBook = [
-  {
+export const createBook = {
+  root: {
     query: `
       mutation Mutation($input: BookInput!) {
         createBook(input: $input) {
           id
           isbn
+          title
         }
       }
     `,
     body: {
       input: {
         isbn: '1234-66789',
+        title: 'Book Title 1',
       },
     },
     response: {
       data: {
         createBook: {
-          id: 1,
           isbn: '1234-66789',
+          title: 'Book Title 1',
         },
       },
     },
+    responseTruthyAssertionFn: null,
   },
-];
+};
 
-const updateBook = [
-  {
+export const updateBook = {
+  root: {
     query: `
       mutation Mutation($input: UpdateBookInput!) {
         updateBook(input: $input) {
-          id
           isbn
         }
       }
@@ -42,20 +44,19 @@ const updateBook = [
     response: {
       data: {
         updateBook: {
-          id: 1,
           isbn: '1234-6678910',
         },
       },
     },
+    responseTruthyAssertionFn: null,
   },
-];
+};
 
-const upsertBook = [
-  {
+export const upsertBook = {
+  root: {
     query: `
       mutation Mutation($input: BookInput!) {
         upsertBook(input: $input) {
-          id
           isbn
         }
       }
@@ -68,16 +69,16 @@ const upsertBook = [
     response: {
       data: {
         upsertBook: {
-          id: 1,
           isbn: '1234-56789',
         },
       },
     },
+    responseTruthyAssertionFn: null,
   },
-];
+};
 
-const deleteBook = [
-  {
+export const deleteBook = {
+  root: (id: number) => ({
     query: `
       mutation Mutation($where: BookWhereInput) {
         deleteBook(where: $where) {
@@ -88,16 +89,17 @@ const deleteBook = [
     `,
     body: {
       where: {
-        id: 1,
+        id,
       },
     },
     response: {
       data: {
         deleteBook: {
-          id: 1,
+          id,
           deletedCount: 1,
         },
       },
     },
-  },
-];
+    responseTruthyAssertionFn: null,
+  }),
+};

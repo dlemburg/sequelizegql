@@ -9,12 +9,9 @@ const context = async ({ req }): Promise<Record<string, any>> => {
   return {};
 };
 
-export const getGraphqlSchema = async (): Promise<any> => {
+export const getGraphqlSchema = async (options): Promise<any> => {
   const middlewares = [];
-  const { typedefs: typeDefs, resolvers } = await getSchema({
-    sequelize,
-    ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
-  });
+  const { typedefs: typeDefs, resolvers } = await getSchema(options);
   const schema = makeExecutableSchema({ typeDefs, resolvers } as any);
   const schemaWithMiddleware = applyMiddleware(schema, ...middlewares);
 
