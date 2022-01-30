@@ -59,20 +59,52 @@ export const findMany = {
       }`,
     body: {
       where: {
-        title: 'Sports 101',
+        isbn: '2849812949',
+        FILTERS: {
+          title: {
+            NOT_LIKE: 'zzzz',
+          },
+          id: {
+            NE_INT: 1111111,
+          },
+        },
         OR: [
-          { id: 124124 },
-          { id: 999 },
-          // { FILTERS: { id: { NOT_INT: 2 } } },
-          // {
-          //   AND: [{ name: 'foo' }, { FILTERS: { id: { NOT_INT: 2 } } }],
-          // },
+          {
+            id: 124124,
+          },
+          {
+            id: 999,
+          },
+          {
+            FILTERS: {
+              title: {
+                LIKE: '101',
+              },
+            },
+          },
+          {
+            AND: [
+              {
+                FILTERS: {
+                  title: {
+                    LIKE: 'Sports',
+                  },
+                },
+              },
+              {
+                FILTERS: {
+                  id: {
+                    EQ_INT: 999,
+                  },
+                },
+              },
+            ],
+          },
         ],
-        // FILTERS: { id: 1 },
       },
     },
     response: null,
-    responseTruthyAssertionFn: (response) => response.books.length === 1,
+    responseTruthyAssertionFn: (response) => response.books.length > 0,
   }),
   withAssociations: () => ({
     query: `

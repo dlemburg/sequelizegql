@@ -107,7 +107,9 @@ describe('[index.test.ts] integration tests suite', () => {
       const findManyWithFiltersResult: any = await testClient.query(findManyWithFilters.query, {
         variables: findManyWithFilters.body,
       });
-      expect(findManyWithFiltersResult.data).toBeTruthy();
+      expect(
+        findManyEntities.withFilters().responseTruthyAssertionFn(findManyWithFiltersResult.data)
+      ).toBeTruthy();
 
       // findManyWithAssociations
       const findManyWithAssociations = findManyEntities.withAssociations();
