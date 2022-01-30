@@ -50,6 +50,30 @@ export const findMany = {
     response: null,
     responseTruthyAssertionFn: (response) => response.find((x) => x.id === id),
   }),
+  withFilters: () => ({
+    query: `
+      query Books($where: BookWhereInput) {
+        books(where: $where) {
+          id
+        }
+      }`,
+    body: {
+      where: {
+        title: 'Sports 101',
+        OR: [
+          { id: 124124 },
+          { id: 999 },
+          // { FILTERS: { id: { NOT_INT: 2 } } },
+          // {
+          //   AND: [{ name: 'foo' }, { FILTERS: { id: { NOT_INT: 2 } } }],
+          // },
+        ],
+        // FILTERS: { id: 1 },
+      },
+    },
+    response: null,
+    responseTruthyAssertionFn: (response) => response.books.length === 1,
+  }),
   withAssociations: () => ({
     query: `
       query Books {

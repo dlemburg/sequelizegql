@@ -8,7 +8,7 @@ async function main() {
   const sequelize = await initDataLayer();
   await startApolloServer({
     sequelize,
-    ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
+    // ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
   });
 }
 

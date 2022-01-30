@@ -32,7 +32,6 @@ describe('[index.test.ts] integration tests suite', () => {
   for (let {
     name,
     pluralizedLowerName,
-    pluralizedUpperName,
     queryEntities: QueryEntities,
     mutationEntities: MutationEntities,
   } of testEntities) {
@@ -102,6 +101,13 @@ describe('[index.test.ts] integration tests suite', () => {
         entitiesResultAfterCreate.data[`${pluralizedLowerName}`]
       );
       expect(entitiesTruthy).toBeTruthy();
+
+      // findManyWithFilters
+      const findManyWithFilters = findManyEntities.withFilters();
+      const findManyWithFiltersResult: any = await testClient.query(findManyWithFilters.query, {
+        variables: findManyWithFilters.body,
+      });
+      expect(findManyWithFiltersResult.data).toBeTruthy();
 
       // findManyWithAssociations
       const findManyWithAssociations = findManyEntities.withAssociations();
