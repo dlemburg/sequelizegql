@@ -9,7 +9,7 @@ beforeAll(async () => {
 });
 
 describe('[index.test.ts] integration tests suite', () => {
-  test('[getSchema] Book mutations', async () => {
+  test('[getSchema] Book model testing module', async () => {
     // create
     const createBookResult: any = await testClient.mutate(createBook.root.query, {
       variables: createBook.root.body,
