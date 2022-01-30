@@ -21,11 +21,12 @@ const testEntities = [
 
 beforeAll(async () => {
   ({ testClient, sequelize } = await setup());
+  await cleanup(sequelize);
   await seed(sequelize);
 });
 
 afterAll(async () => {
-  await cleanup(sequelize);
+  // await cleanup(sequelize);
 });
 
 describe('[index.test.ts] integration tests suite', () => {

@@ -17,12 +17,12 @@ export const OPERATORS_FILTERS_MAP = {
   LIKE: () => ({
     gql: () => 'String',
     op: Op.like,
-    getValue: (value) => `%${value}`,
+    getValue: (value) => `%${value}%`,
   }),
   NOT_LIKE: () => ({
     gql: () => 'String',
     op: Op.notLike,
-    getValue: (value) => `%${value}`,
+    getValue: (value) => `%${value}%`,
   }),
   STARTS_WITH: () => ({
     gql: () => 'String',
@@ -95,22 +95,22 @@ export const OPERATORS_FILTERS_MAP = {
     getValue: (value) => value,
   }),
   BETWEEN_INT: () => ({
-    gql: () => 'Int',
+    gql: () => '[Int]',
     op: Op.between,
     getValue: (value) => value,
   }),
   BETWEEN_DATE: () => ({
-    gql: () => 'DateTime',
+    gql: () => '[DateTime]',
     op: Op.between,
     getValue: (value) => value,
   }),
   NOT_BETWEEN_INT: () => ({
-    gql: () => 'Int',
+    gql: () => '[Int]',
     op: Op.notBetween,
     getValue: (value) => value,
   }),
   NOT_BETWEEN_DATE: () => ({
-    gql: () => 'DateTime',
+    gql: () => '[DateTime]',
     op: Op.notBetween,
     getValue: (value) => value,
   }),

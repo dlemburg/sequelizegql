@@ -61,13 +61,21 @@ export const findMany = {
       where: {
         isbn: '2849812949',
         FILTERS: {
+          createdAt: {
+            BETWEEN_DATE: ['01-01-2019', '01-01-2023'],
+          },
           title: {
             NOT_LIKE: 'zzzz',
           },
           id: {
             NE_INT: 1111111,
           },
+          isbn: {
+            EQ_STRING: '2849812949',
+            LIKE: '284981294',
+          },
         },
+        AND: [{ id: 999 }, { isbn: '2849812949' }],
         OR: [
           {
             id: 124124,
