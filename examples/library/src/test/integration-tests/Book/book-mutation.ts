@@ -1,7 +1,7 @@
 const create = {
   root: () => ({
     query: `
-      mutation Mutation($input: BookInput!) {
+      mutation CreateBook($input: BookInput!) {
         createBook(input: $input) {
           id
           isbn
@@ -21,6 +21,46 @@ const create = {
           isbn: '1234-66789',
           title: 'Book Title 1',
         },
+      },
+    },
+    responseTruthyAssertionFn: () => false,
+  }),
+};
+
+const createMany = {
+  root: () => ({
+    query: `
+      mutation CreateManyBooks($input: [BookInput!]!) {
+        createManyBooks(input: $input) {
+          isbn
+          title
+        }
+      }
+    `,
+    body: {
+      input: [
+        {
+          isbn: '1111111111',
+          title: 'Book Title 1111111111',
+        },
+        {
+          isbn: '2222222222',
+          title: 'Book Title 2222222222',
+        },
+      ],
+    },
+    response: {
+      data: {
+        createManyBooks: [
+          {
+            isbn: '1111111111',
+            title: 'Book Title 1111111111',
+          },
+          {
+            isbn: '2222222222',
+            title: 'Book Title 2222222222',
+          },
+        ],
       },
     },
     responseTruthyAssertionFn: () => false,
@@ -104,4 +144,4 @@ const destroy = {
   }),
 };
 
-export { create, update, upsert, destroy };
+export { create, createMany, update, upsert, destroy };

@@ -38,6 +38,7 @@ describe('[index.test.ts] integration tests suite', () => {
   } of testEntities) {
     test('Model testing module', async () => {
       const createEntity = MutationEntities[GeneratedResolverField.CREATE_MUTATION];
+      const createManyEntities = MutationEntities[GeneratedResolverField.CREATE_MANY_MUTATION];
       const updateEntity = MutationEntities[GeneratedResolverField.UPDATE_MUTATION];
       const upsertEntity = MutationEntities[GeneratedResolverField.UPSERT_MUTATION];
       const deleteEntity = MutationEntities.destroy;
@@ -59,6 +60,17 @@ describe('[index.test.ts] integration tests suite', () => {
       const createEntityId = createEntityResult.data[`create${name}`].id;
       delete createEntityResult.data[`create${name}`].id;
       expect(createEntityResult).toEqual(createEntityResponse);
+
+      // create
+      const {
+        query: createManyEntitiesQuery,
+        body: createManyEntitiesBody,
+        response: createManyEntitiesResponse,
+      } = createManyEntities.root();
+      const createManyEntitiesResult: any = await testClient.mutate(createManyEntitiesQuery, {
+        variables: createManyEntitiesBody,
+      });
+      expect(createManyEntitiesResult).toEqual(createManyEntitiesResponse);
 
       // allEntities
       const allEntitiesResultAfterCreate: any = await testClient.query(allEntities.root().query, {

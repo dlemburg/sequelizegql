@@ -37,7 +37,8 @@ const bulkCreate =
   (input, options = {}) => {
     const associationOptions = buildAssociationCreateOptions(model)(input);
 
-    return model.bulkCreate(input, { ...options, ...associationOptions, validate: true });
+    // TODO: removed ...{ validate: true } b/c was failing date validation; should explore alternative validations
+    return model.bulkCreate(input, { ...options, ...associationOptions });
   };
 
 const update =
