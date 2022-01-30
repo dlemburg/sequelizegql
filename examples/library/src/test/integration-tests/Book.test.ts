@@ -1,22 +1,21 @@
-import { setup } from '../setup';
+import { setup } from '../config/setup';
 import { allBooks, book, books, booksPaged } from './queries/Book';
 import { createBook, updateBook, upsertBook, deleteBook } from './mutation/Book';
-import { BaseService } from '../../../../../src/core/services';
+import { cleanup } from '../config/cleanup';
 
 let testClient;
 let sequelize;
-let ALL_FILTER = {};
 
 beforeAll(async () => {
   ({ testClient, sequelize } = await setup());
 });
 
 afterAll(async () => {
-  await BaseService(sequelize.models.Book).destroy(ALL_FILTER, { force: true });
+  await cleanup(sequelize);
 });
 
 describe('[index.test.ts] integration tests suite', () => {
-  test('[getSchema] Book model testing module', async () => {
+  test('Book model testing module', async () => {
     // create
     const {
       query: createBookQuery,

@@ -1,6 +1,6 @@
 import { EXAMPLE_INITIALIZATION_OPTIONS } from '../example-entities/options';
 import { getSchema } from '../graphql/schemas';
-import { setup } from './setup';
+import { setup } from './config/setup';
 import { typedefsString as importsTypedefsString } from './snapshots/imports-typedefs-string';
 import { removeAllWhitespace } from './util/remove-whitespace';
 

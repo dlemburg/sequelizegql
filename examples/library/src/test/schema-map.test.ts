@@ -1,6 +1,6 @@
 import { EXAMPLE_INITIALIZATION_OPTIONS } from '../example-entities/options';
 import { getSchema } from '../graphql/schemas';
-import { setup } from './setup';
+import { setup } from './config/setup';
 import { removeAllWhitespace } from './util/remove-whitespace';
 
 describe('[graphql-sequelize.test.ts] suite', () => {
