@@ -91,6 +91,13 @@ describe('[index.test.ts] integration tests suite', () => {
       );
       expect(entitiesTruthy).toBeTruthy();
 
+      // findMany withAssociations
+      const findManyWithAssociations = findManyEntities.withAssociations();
+      const result: any = await testClient.query(findManyWithAssociations.query, {
+        variables: findManyWithAssociations.body,
+      });
+      expect(result).toEqual(findManyWithAssociations.response);
+
       // entitiesPaged
       const {
         query: entitiesPagedQuery,

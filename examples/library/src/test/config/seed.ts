@@ -30,7 +30,7 @@ export const seed = async (sequelize) => {
   const bookLibrary = await BaseService(sequelize.models.BookLibrary).create({
     id: DEFAULT_ID,
     bookId: book.id,
-    library: library.id,
+    libraryId: library.id,
   });
   const author = (await BaseService(sequelize.models.Author).create({
     id: DEFAULT_ID,

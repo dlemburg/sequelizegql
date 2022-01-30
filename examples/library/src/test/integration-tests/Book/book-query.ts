@@ -52,8 +52,8 @@ export const findMany = {
   }),
   withAssociations: () => ({
     query: `
-      query Books($where: BookWhereInput) {
-        books(where: $where) {
+      query Books {
+        books {
           id
           libraries {
             id
@@ -66,10 +66,29 @@ export const findMany = {
           }
         }
       }`,
-    body: {
-      where: {},
+    body: {},
+    response: {
+      data: {
+        books: [
+          {
+            id: 999,
+            libraries: [
+              {
+                id: 999,
+                city: {
+                  id: 999,
+                },
+              },
+            ],
+            authors: [
+              {
+                id: 999,
+              },
+            ],
+          },
+        ],
+      },
     },
-    response: null,
     responseTruthyAssertionFn: () => false,
   }),
   withAssociationFilters: () => ({
