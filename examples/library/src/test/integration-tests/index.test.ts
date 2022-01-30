@@ -61,7 +61,7 @@ describe('[index.test.ts] integration tests suite', () => {
       delete createEntityResult.data[`create${name}`].id;
       expect(createEntityResult).toEqual(createEntityResponse);
 
-      // create
+      // createMany
       const {
         query: createManyEntitiesQuery,
         body: createManyEntitiesBody,
@@ -103,12 +103,25 @@ describe('[index.test.ts] integration tests suite', () => {
       );
       expect(entitiesTruthy).toBeTruthy();
 
-      // findMany withAssociations
+      // findManyWithAssociations
       const findManyWithAssociations = findManyEntities.withAssociations();
-      const result: any = await testClient.query(findManyWithAssociations.query, {
-        variables: findManyWithAssociations.body,
-      });
-      expect(result).toEqual(findManyWithAssociations.response);
+      const findManyWithAssociationsResult: any = await testClient.query(
+        findManyWithAssociations.query,
+        {
+          variables: findManyWithAssociations.body,
+        }
+      );
+      expect(findManyWithAssociationsResult).toEqual(findManyWithAssociations.response);
+
+      // findManyWithAssociationFilters
+      const findManyWithAssociationFilters = findManyEntities.withAssociationFilters();
+      const findManyithAssociationFiltersResult: any = await testClient.query(
+        findManyWithAssociationFilters.query(),
+        {
+          variables: findManyWithAssociationFilters.body,
+        }
+      );
+      expect(findManyithAssociationFiltersResult).toEqual(findManyWithAssociationFilters.response);
 
       // entitiesPaged
       const {

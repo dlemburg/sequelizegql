@@ -98,26 +98,51 @@ export const findMany = {
     responseTruthyAssertionFn: () => false,
   }),
   withAssociationFilters: () => ({
-    query: ({ libraryId, cityId }) => `
+    query: ({ libraryId, cityId } = { libraryId: 999, cityId: 999 }) => `
       query Books($where: BookWhereInput) {
         books(where: $where) {
           id
+          category {
+            id
+          }
           libraries(where: { id: ${libraryId} }) {
-            name
+            id
             city(where: { id: ${cityId} }) {
               id
             }
           }
           authors {
-            surname
+            id
           }
         }
       }
     `,
-    body: {
-      where: {},
+    body: {},
+    response: {
+      data: {
+        books: [
+          {
+            id: 999,
+            category: {
+              id: 999,
+            },
+            libraries: [
+              {
+                id: 999,
+                city: {
+                  id: 999,
+                },
+              },
+            ],
+            authors: [
+              {
+                id: 999,
+              },
+            ],
+          },
+        ],
+      },
     },
-    response: {},
     responseTruthyAssertionFn: () => false,
   }),
 };
