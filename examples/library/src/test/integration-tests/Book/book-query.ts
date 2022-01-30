@@ -55,6 +55,9 @@ export const findMany = {
       query Books {
         books {
           id
+          category {
+            id
+          }
           libraries {
             id
             city {
@@ -72,6 +75,9 @@ export const findMany = {
         books: [
           {
             id: 999,
+            category: {
+              id: 999,
+            },
             libraries: [
               {
                 id: 999,
