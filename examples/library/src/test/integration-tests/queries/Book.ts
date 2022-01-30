@@ -10,7 +10,7 @@ export const allBooks = {
     response: {
       allBooks: [],
     },
-    responseTruthyAssertionFn: null,
+    responseTruthyAssertionFn: () => false,
   }),
 };
 
@@ -30,7 +30,7 @@ export const book = {
     response: {
       book: { id },
     },
-    responseTruthyAssertionFn: null,
+    responseTruthyAssertionFn: () => false,
   }),
 };
 
@@ -72,7 +72,7 @@ export const books = {
     response: {
       books: [],
     },
-    responseTruthyAssertionFn: null,
+    responseTruthyAssertionFn: () => false,
   }),
   withFilters: {
     query: ({ libraryId, cityId }) => `
@@ -95,7 +95,7 @@ export const books = {
       where: {},
     },
     response: {},
-    responseTruthyAssertionFn: null,
+    responseTruthyAssertionFn: () => false,
   },
 };
 

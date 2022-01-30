@@ -1,11 +1,18 @@
 import { setup } from '../setup';
 import { allBooks, book, books, booksPaged } from './queries/Book';
 import { createBook, updateBook, upsertBook, deleteBook } from './mutation/Book';
+import { BaseService } from '../../../../../src/core/services';
 
 let testClient;
+let sequelize;
+let ALL_FILTER = {};
 
 beforeAll(async () => {
-  ({ testClient } = await setup());
+  ({ testClient, sequelize } = await setup());
+});
+
+afterAll(async () => {
+  await BaseService(sequelize.models.Book).destroy(ALL_FILTER, { force: true });
 });
 
 describe('[index.test.ts] integration tests suite', () => {
@@ -27,7 +34,7 @@ describe('[index.test.ts] integration tests suite', () => {
     const allBooksResultAfterCreate: any = await testClient.query(allBooks.root().query, {
       variables: allBooks.root().body,
     });
-    expect(allBooksResultAfterCreate.data.allBooks.length).toBeGreaterThan(1);
+    expect(allBooksResultAfterCreate.data.allBooks.length).toBeGreaterThan(0);
 
     // book
     const { query: bookQuery, body: bookBody, response: bookResponse } = book.root(createBookId);
