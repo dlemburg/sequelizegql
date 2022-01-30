@@ -1,20 +1,13 @@
 import { setup } from '../config/setup';
 import { cleanup } from '../config/cleanup';
 import { maybePluralize } from '../../../../../src/core/util';
+import { GeneratedResolverField } from '../../../../../src/types';
+import { seed } from '../config/seed';
 import * as BookQueryEntities from './Book/book-query';
 import * as BookMutationEntities from './Book/book-mutation';
-import { GeneratedResolverField } from '../../../../../src/types';
 
 let testClient;
 let sequelize;
-
-beforeAll(async () => {
-  ({ testClient, sequelize } = await setup());
-});
-
-afterAll(async () => {
-  await cleanup(sequelize);
-});
 
 const testEntities = [
   {
@@ -25,6 +18,15 @@ const testEntities = [
     mutationEntities: BookMutationEntities,
   },
 ];
+
+beforeAll(async () => {
+  ({ testClient, sequelize } = await setup());
+  await seed(sequelize);
+});
+
+afterAll(async () => {
+  await cleanup(sequelize);
+});
 
 describe('[index.test.ts] integration tests suite', () => {
   for (let {
@@ -62,7 +64,7 @@ describe('[index.test.ts] integration tests suite', () => {
       const allEntitiesResultAfterCreate: any = await testClient.query(allEntities.root().query, {
         variables: allEntities.root().body,
       });
-      expect(allEntitiesResultAfterCreate.data[`all${pluralizedUpperName}`].length).toEqual(1);
+      expect(allEntitiesResultAfterCreate.data[`all${pluralizedUpperName}`].length).toEqual(2);
 
       // findOne
       const {
