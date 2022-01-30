@@ -43,6 +43,7 @@ describe('[index.test.ts] integration tests suite', () => {
     const booksTruthy = booksresponseTruthyAssertionFn?.(booksResultAfterCreate.data.books);
     expect(booksTruthy).toBeTruthy();
 
+    // booksPaged
     const {
       query: booksPagedQuery,
       body: booksPagedBody,
