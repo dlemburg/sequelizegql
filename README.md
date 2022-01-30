@@ -25,7 +25,7 @@ Just a quick personal note - you can find the technical reasons for building thi
 
 ### TODO
 
-- unit test coverage, Integrations tests against database
+- better unit test coverage, Integrations tests against database
 
 ## Installation
 
@@ -64,7 +64,7 @@ Example here uses `sequelize-typescript` but this library works fine with `seque
 ## Basic
 
 ```typescript
-const schema = SequelizeGraphql().generateSchema(options);
+const schema = SequelizeGraphql().generateSchema({ sequelize });
 
 console.log(schema); // { resolvers, typedefs, typedefsString }
 
