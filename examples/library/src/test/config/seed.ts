@@ -35,6 +35,7 @@ export const seed = async (sequelize) => {
   const author = (await BaseService(sequelize.models.Author).create({
     id: DEFAULT_ID,
     name: 'I was never given a name',
+    surname: 'I was never given a surname',
     birthDate: '01-01-1975',
   })) as Author;
   const bookAuthor = await BaseService(sequelize.models.BookAuthor).create({

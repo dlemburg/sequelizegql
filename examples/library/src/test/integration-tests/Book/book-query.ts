@@ -10,7 +10,7 @@ export const findAll = {
     response: {
       allBooks: [],
     },
-    responseTruthyAssertionFn: () => false,
+    responseTruthyAssertionFn: (response) => response.data.allBooks.length > 1,
   }),
 };
 
@@ -37,8 +37,8 @@ export const findOne = {
 export const findMany = {
   root: (id: number) => ({
     query: `
-      query Book {
-        books {
+      query Books($where: BookWhereInput) {
+        books(where: $where) {
           id
         }
       }`,
@@ -52,8 +52,8 @@ export const findMany = {
   }),
   withAssociations: () => ({
     query: `
-      query Book {
-        books {
+      query Books($where: BookWhereInput) {
+        books(where: $where) {
           id
           libraries {
             id
@@ -69,12 +69,10 @@ export const findMany = {
     body: {
       where: {},
     },
-    response: {
-      books: [],
-    },
+    response: null,
     responseTruthyAssertionFn: () => false,
   }),
-  withFilters: {
+  withAssociationFilters: () => ({
     query: ({ libraryId, cityId }) => `
       query Books($where: BookWhereInput) {
         books(where: $where) {
@@ -96,7 +94,7 @@ export const findMany = {
     },
     response: {},
     responseTruthyAssertionFn: () => false,
-  },
+  }),
 };
 
 export const findManyPaged = {
@@ -111,14 +109,7 @@ export const findManyPaged = {
         }
       }`,
     body: {},
-    response: {
-      data: {
-        booksPaged: {
-          totalCount: 0,
-          entities: [],
-        },
-      },
-    },
+    response: null,
     responseTruthyAssertionFn: (response) =>
       response.entities.length > 0 && response.totalCount > 0,
   }),

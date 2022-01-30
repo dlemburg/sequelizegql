@@ -64,7 +64,7 @@ describe('[index.test.ts] integration tests suite', () => {
       const allEntitiesResultAfterCreate: any = await testClient.query(allEntities.root().query, {
         variables: allEntities.root().body,
       });
-      expect(allEntitiesResultAfterCreate.data[`all${pluralizedUpperName}`].length).toEqual(2);
+      expect(allEntities.root().responseTruthyAssertionFn(allEntitiesResultAfterCreate)).toBeTruthy;
 
       // findOne
       const {
