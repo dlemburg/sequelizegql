@@ -5,7 +5,7 @@ import { removeAllWhitespace } from './util/remove-whitespace';
 
 describe('[graphql-sequelize.test.ts] suite', () => {
   test('[getSchema] validating modelMap.whereInputAttributes result', async () => {
-    const sequelize = await setup();
+    const { sequelize } = await setup();
 
     const result = await getSchema({
       ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
@@ -27,7 +27,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
   });
 
   test('[getSchema] validating modelMap `all` queries generated result to be 1', async () => {
-    const sequelize = await setup();
+    const { sequelize } = await setup();
 
     const result = await getSchema({
       ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
@@ -40,7 +40,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
   });
 
   test('[getSchema] validating modelMap `allBooks` query not generated', async () => {
-    const sequelize = await setup();
+    const { sequelize } = await setup();
 
     const result = await getSchema({
       ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
@@ -53,7 +53,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
   });
 
   test('[getSchema] validating modelMap `authors` query not generated', async () => {
-    const sequelize = await setup();
+    const { sequelize } = await setup();
     const imports = EXAMPLE_INITIALIZATION_OPTIONS.imports;
 
     const result = await getSchema({
@@ -71,7 +71,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
   });
 
   test('[getSchema] validating modelMap no BookAuthor queries generated', async () => {
-    const sequelize = await setup();
+    const { sequelize } = await setup();
 
     const result = await getSchema({
       ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
@@ -99,7 +99,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
   });
 
   test('[getSchema] validating modelMap no BookAuthor mutations generated', async () => {
-    const sequelize = await setup();
+    const { sequelize } = await setup();
 
     const result = await getSchema({
       ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
@@ -129,7 +129,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
   });
 
   test('[getSchema] validating modelMap `upsertBook` mutation not generated', async () => {
-    const sequelize = await setup();
+    const { sequelize } = await setup();
 
     const result = await getSchema({
       ...EXAMPLE_INITIALIZATION_OPTIONS.imports,
@@ -142,7 +142,7 @@ describe('[graphql-sequelize.test.ts] suite', () => {
   });
 
   test('[getSchema] validating modelMap `deleteCity` mutation not generated', async () => {
-    const sequelize = await setup();
+    const { sequelize } = await setup();
 
     const result = await getSchema({
       ...EXAMPLE_INITIALIZATION_OPTIONS.imports,

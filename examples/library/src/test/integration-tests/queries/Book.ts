@@ -1,4 +1,4 @@
-const allBooks = [
+export const allBooks = [
   {
     query: `
       query AllBooks {
@@ -13,7 +13,7 @@ const allBooks = [
   },
 ];
 
-const book = [
+export const book = [
   {
     query: `
       query Book($where: BookWhereInput) {
@@ -32,7 +32,7 @@ const book = [
   },
 ];
 
-const books = [
+export const books = [
   {
     query: `
       query Book {
@@ -96,7 +96,7 @@ const books = [
   },
 ];
 
-const booksPaged = [
+export const booksPaged = [
   {
     query: `
       query Book($where: BookWhereInput) {

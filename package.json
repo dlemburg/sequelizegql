@@ -8,7 +8,7 @@
   "description": "- [Author Note](https://github.com/dlemburg/sequelizegql#author-note)   - [TODO](https://github.com/dlemburg/sequelizegql#todo) - [Installation](https://github.com/dlemburg/sequelizegql#installation) - [What is `sequelizegql`?](https://github.com/dlemburg/sequelizegql#what) - [Why use `sequelizegql`?](https://github.com/dlemburg/sequelizegql#why) - [Advantages](https://github.com/dlemburg/sequelizegql#advantages) - [Examples](https://github.com/dlemburg/sequelizegql#examples)   - [Basic Example](https://github.com/dlemburg/sequelizegql#basic)   - [In-Depth Example](https://github.com/dlemburg/sequelizegql#in-depth)   - [Generated Example](https://github.com/dlemburg/sequelizegql#generated-example)     - [Queries](https://github.com/dlemburg/sequelizegql#queries)     - [Mutations](https://github.com/dlemburg/sequelizegql#mutations)     - [Types and Inputs](https://github.com/dlemburg/sequelizegql#types-and-inputs)     - [FILTERS](https://github.com/dlemburg/sequelizegql#filters) - [API](https://github.com/dlemburg/sequelizegql#api)   - [Object Options](https://github.com/dlemburg/sequelizegql#options)",
   "scripts": {
     "test": "jest",
-    "test:file": "jest ./src/core/util/test/parse-where-util.test.ts",
+    "test:file": "jest ./examples/library/src/test/integration-tests/index.test.ts",
     "start:examples:sequelize": "cd examples/library && npm run start:sequelize",
     "start:examples:sequelize-ts": "cd examples/library && npm run start:sequelize-ts"
   },
@@ -16,6 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "@graphql-tools/merge": "^8.2.1",
+    "apollo-server-integration-testing": "^3.0.0",
     "glob": "^7.2.0",
     "graphql-parse-resolve-info": "^4.12.0",
     "graphql-scalars": "^1.13.6",
@@ -30,16 +31,16 @@
     "@types/jest": "^27.0.3",
     "@types/node": "^15.6.0",
     "@types/pg": "^7.14.7",
-    "jest": "^27.4.3",
-    "ts-jest": "^27.1.0",
-    "typescript": "^4.1.3",
     "apollo-server-core": "^3.5.0",
     "apollo-server-express": "^3.5.0",
     "body-parser": "^1.19.1",
     "express": "^4.17.2",
     "graphql-middleware": "^6.1.13",
+    "jest": "^27.4.3",
     "pg": "^8.7.1",
-    "ts-node": "^10.4.0"
+    "ts-jest": "^27.1.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.1.3"
   },
   "resolutions": {
     "graphql": "16.2.0"
