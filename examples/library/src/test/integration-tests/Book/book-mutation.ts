@@ -1,4 +1,4 @@
-export const createBook = {
+const create = {
   root: () => ({
     query: `
       mutation Mutation($input: BookInput!) {
@@ -23,11 +23,11 @@ export const createBook = {
         },
       },
     },
-    responseTruthyAssertionFn: null,
+    responseTruthyAssertionFn: () => false,
   }),
 };
 
-export const updateBook = {
+const update = {
   root: () => ({
     query: `
       mutation Mutation($input: UpdateBookInput!) {
@@ -48,11 +48,11 @@ export const updateBook = {
         },
       },
     },
-    responseTruthyAssertionFn: null,
+    responseTruthyAssertionFn: () => false,
   }),
 };
 
-export const upsertBook = {
+const upsert = {
   root: () => ({
     query: `
       mutation Mutation($input: BookInput!) {
@@ -73,11 +73,11 @@ export const upsertBook = {
         },
       },
     },
-    responseTruthyAssertionFn: null,
+    responseTruthyAssertionFn: () => false,
   }),
 };
 
-export const deleteBook = {
+const destroy = {
   root: (id: number) => ({
     query: `
       mutation Mutation($where: BookWhereInput) {
@@ -100,6 +100,8 @@ export const deleteBook = {
         },
       },
     },
-    responseTruthyAssertionFn: null,
+    responseTruthyAssertionFn: () => false,
   }),
 };
+
+export { create, update, upsert, destroy };

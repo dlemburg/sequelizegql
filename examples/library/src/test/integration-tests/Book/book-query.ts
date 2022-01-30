@@ -1,4 +1,4 @@
-export const allBooks = {
+export const findAll = {
   root: () => ({
     query: `
       query AllBooks {
@@ -14,7 +14,7 @@ export const allBooks = {
   }),
 };
 
-export const book = {
+export const findOne = {
   root: (id: number) => ({
     query: `
       query Book($where: BookWhereInput) {
@@ -34,7 +34,7 @@ export const book = {
   }),
 };
 
-export const books = {
+export const findMany = {
   root: (id: number) => ({
     query: `
       query Book {
@@ -99,7 +99,7 @@ export const books = {
   },
 };
 
-export const booksPaged = {
+export const findManyPaged = {
   root: () => ({
     query: `
       query BooksPaged($where: BookWhereInput) {

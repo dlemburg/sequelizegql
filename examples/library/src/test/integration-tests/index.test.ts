@@ -3,6 +3,7 @@ import { cleanup } from '../config/cleanup';
 import { maybePluralize } from '../../../../../src/core/util';
 import * as BookQueryEntities from './Book/book-query';
 import * as BookMutationEntities from './Book/book-mutation';
+import { GeneratedResolverField } from '../../../../../src/types';
 
 let testClient;
 let sequelize;
@@ -18,7 +19,6 @@ afterAll(async () => {
 const testEntities = [
   {
     name: 'Book',
-    loweredName: 'book',
     pluralizedUpperName: maybePluralize('Book'),
     pluralizedLowerName: maybePluralize('book'),
     queryEntities: BookQueryEntities,
@@ -29,22 +29,21 @@ const testEntities = [
 describe('[index.test.ts] integration tests suite', () => {
   for (let {
     name,
-    loweredName,
     pluralizedLowerName,
     pluralizedUpperName,
     queryEntities: QueryEntities,
     mutationEntities: MutationEntities,
   } of testEntities) {
     test('Model testing module', async () => {
-      const createEntity = MutationEntities[`create${name}`];
-      const updateEntity = MutationEntities[`update${name}`];
-      const upsertEntity = MutationEntities[`upsert${name}`];
-      const deleteEntity = MutationEntities[`delete${name}`];
+      const createEntity = MutationEntities[GeneratedResolverField.CREATE_MUTATION];
+      const updateEntity = MutationEntities[GeneratedResolverField.UPDATE_MUTATION];
+      const upsertEntity = MutationEntities[GeneratedResolverField.UPSERT_MUTATION];
+      const deleteEntity = MutationEntities.destroy;
 
-      const allEntities = QueryEntities[`all${pluralizedUpperName}`];
-      const findOneEntity = QueryEntities[loweredName];
-      const findManyEntities = QueryEntities[`${pluralizedLowerName}`];
-      const entitiesPaged = QueryEntities[`${pluralizedLowerName}Paged`];
+      const allEntities = QueryEntities[GeneratedResolverField.FIND_ALL];
+      const findOneEntity = QueryEntities[GeneratedResolverField.FIND_ONE];
+      const findManyEntities = QueryEntities[GeneratedResolverField.FIND_MANY];
+      const entitiesPaged = QueryEntities[GeneratedResolverField.FIND_MANY_PAGED];
 
       // create
       const {
