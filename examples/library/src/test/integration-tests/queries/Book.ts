@@ -1,7 +1,5 @@
-import { response } from 'express';
-
 export const allBooks = {
-  root: {
+  root: () => ({
     query: `
       query AllBooks {
         allBooks {
@@ -13,7 +11,7 @@ export const allBooks = {
       allBooks: [],
     },
     responseTruthyAssertionFn: null,
-  },
+  }),
 };
 
 export const book = {
@@ -52,7 +50,7 @@ export const books = {
     response: null,
     responseTruthyAssertionFn: (response) => response.find((x) => x.id === id),
   }),
-  withAssociations: {
+  withAssociations: () => ({
     query: `
       query Book {
         books {
@@ -75,7 +73,7 @@ export const books = {
       books: [],
     },
     responseTruthyAssertionFn: null,
-  },
+  }),
   withFilters: {
     query: ({ libraryId, cityId }) => `
       query Books($where: BookWhereInput) {

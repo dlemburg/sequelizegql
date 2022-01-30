@@ -1,5 +1,5 @@
 export const createBook = {
-  root: {
+  root: () => ({
     query: `
       mutation Mutation($input: BookInput!) {
         createBook(input: $input) {
@@ -24,11 +24,11 @@ export const createBook = {
       },
     },
     responseTruthyAssertionFn: null,
-  },
+  }),
 };
 
 export const updateBook = {
-  root: {
+  root: () => ({
     query: `
       mutation Mutation($input: UpdateBookInput!) {
         updateBook(input: $input) {
@@ -49,11 +49,11 @@ export const updateBook = {
       },
     },
     responseTruthyAssertionFn: null,
-  },
+  }),
 };
 
 export const upsertBook = {
-  root: {
+  root: () => ({
     query: `
       mutation Mutation($input: BookInput!) {
         upsertBook(input: $input) {
@@ -74,7 +74,7 @@ export const upsertBook = {
       },
     },
     responseTruthyAssertionFn: null,
-  },
+  }),
 };
 
 export const deleteBook = {

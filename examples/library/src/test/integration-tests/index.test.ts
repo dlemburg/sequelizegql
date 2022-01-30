@@ -11,16 +11,21 @@ beforeAll(async () => {
 describe('[index.test.ts] integration tests suite', () => {
   test('[getSchema] Book model testing module', async () => {
     // create
-    const createBookResult: any = await testClient.mutate(createBook.root.query, {
-      variables: createBook.root.body,
+    const {
+      query: createBookQuery,
+      body: createBookBody,
+      response: createBookResponse,
+    } = createBook.root();
+    const createBookResult: any = await testClient.mutate(createBookQuery, {
+      variables: createBookBody,
     });
     const createBookId = createBookResult.data.createBook.id;
     delete createBookResult.data.createBook.id;
-    expect(createBookResult).toEqual(createBook.root.response);
+    expect(createBookResult).toEqual(createBookResponse);
 
     // allBooks
-    const allBooksResultAfterCreate: any = await testClient.query(allBooks.root.query, {
-      variables: allBooks.root.body,
+    const allBooksResultAfterCreate: any = await testClient.query(allBooks.root().query, {
+      variables: allBooks.root().body,
     });
     expect(allBooksResultAfterCreate.data.allBooks.length).toBeGreaterThan(1);
 
@@ -58,16 +63,26 @@ describe('[index.test.ts] integration tests suite', () => {
     expect(booksPagedTruthy).toBeTruthy();
 
     // update
-    const updateBookResult: any = await testClient.mutate(updateBook.root.query, {
-      variables: updateBook.root.body,
+    const {
+      query: updateBookQuery,
+      body: updateBookBody,
+      response: updateBookResponse,
+    } = updateBook.root();
+    const updateBookResult: any = await testClient.mutate(updateBookQuery, {
+      variables: updateBookBody,
     });
-    expect(updateBookResult).toEqual(updateBook.root.response);
+    expect(updateBookResult).toEqual(updateBookResponse);
 
     // upsert
-    const upsertBookResult: any = await testClient.mutate(upsertBook.root.query, {
-      variables: upsertBook.root.body,
+    const {
+      query: upsertBookQuery,
+      body: upsertBookBody,
+      response: upsertBookResponse,
+    } = upsertBook.root();
+    const upsertBookResult: any = await testClient.mutate(upsertBookQuery, {
+      variables: upsertBookBody,
     });
-    expect(upsertBookResult).toEqual(upsertBook.root.response);
+    expect(upsertBookResult).toEqual(upsertBookResponse);
 
     // delete
     const { query, body, response } = deleteBook.root(createBookId);
