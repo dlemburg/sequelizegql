@@ -35,13 +35,13 @@ npm install sequelizegql
 
 ## What?
 
-`sequelizegql` generates a full CRUD GraphQL API (types, inputs, enums, queries, mutations, and resolvers) based on the provided sequelize models.
+`sequelizegql` generates a full CRUD GraphQL API (types, inputs, enums, queries, mutations, resolvers, as well as near parity - there are some slight differences - with Sequelize Operators) based on the provided sequelize models.
 
 ## Why?
 
 The inspiration for this library was simple: fantastic tools exist in the data-layer/GraphQL generation space for database-first [here](https://supabase.com/blog/2021/12/03/pg-graphql), postgres-first [here](https://www.npmjs.com/package/postgraphile), and prisma-first [here](https://typegraphql.com/), but missing for sequelize users or those who lean towards code-first data-layer design.
 
-[Sequelize ORM](https://sequelize.org/) is battle-tested and mature. Greenfield graphql/sequelize projects are common and legacy REST/sequelize projects may want to bring GraphQL into their ecosystem.
+[Sequelize ORM](https://sequelize.org/) is battle-tested and mature. Greenfield graphqlQL/sequelize projects are common and legacy REST/sequelize projects may want to bring GraphQL into their ecosystem.
 
 Popular generation tools hit a ceiling very quickly when systems mature and business logic becomes more complex. The allowable configuration options (on root and model level) are an attempt to remove that barrier and scale well long-term.
 
@@ -49,7 +49,7 @@ Popular generation tools hit a ceiling very quickly when systems mature and busi
 
 - Generated schema is similar API to sequelize itself, including APIs for query filters (sequelize operators)
 - Database agnostic by leveraging sequelize
-- Performant (no benchmarks yet): generated resolvers do not over-fetch - the resolver layer introspects the query fields and dynamically generates one sequelize query w/ only the requested _includes_ and _attributes_ (note that the _1:many_ and _many:many_ queries get separated under the hood to boost performance [see sequelize docs here and search for 'separate: true'](https://sequelize.org/master/manual/eager-loading.html))
+- Performant (no benchmarks yet): generated resolvers do not over-fetch - the resolver layer introspects the query fields and dynamically generates one sequelize query w/ only the requested _includes_ and _attributes_ (note that the _1:many_ get separated under the hood to boost performance [see sequelize docs here and search for 'separate: true'](https://sequelize.org/master/manual/eager-loading.html))
 - Configure precise generated endpoints via `omitResolvers, generate` options
 - Supply pre-built directives to individual endpoints via `directive` option
 - Limit which fields can be supplied in `input` in create/update mutations via `omitInputAttributes`
