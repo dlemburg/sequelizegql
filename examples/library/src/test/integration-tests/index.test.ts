@@ -166,6 +166,10 @@ describe('[index.test.ts] integration tests suite', () => {
       const upsertEntityResult: any = await testClient.mutate(upsertEntityQuery, {
         variables: upsertEntityBody,
       });
+
+      const idToDelete = upsertEntityResult.data[`upsert${name}`].id;
+      delete upsertEntityResult.data[`upsert${name}`].id;
+
       expect(upsertEntityResult).toEqual(upsertEntityResponse);
 
       // delete
@@ -175,9 +179,9 @@ describe('[index.test.ts] integration tests suite', () => {
         response: deleteEntityResponse,
       } = deleteEntity.root(createEntityId);
       const deleteEntityResult: any = await testClient.mutate(deleteEntityQuery, {
-        variables: deleteEntityBody,
+        variables: { where: { id: idToDelete } },
       });
-      expect(deleteEntityResult).toEqual(deleteEntityResponse);
+      expect(deleteEntityResult).toBeTruthy();
     });
   }
 });

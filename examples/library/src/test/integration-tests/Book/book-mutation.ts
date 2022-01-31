@@ -70,21 +70,24 @@ const createMany = {
 const update = {
   root: () => ({
     query: `
-      mutation Mutation($input: UpdateBookInput!) {
-        updateBook(input: $input) {
-          isbn
+      mutation Mutation($input: UpdateBookInput!, $where: BookWhereInput) {
+        updateBook(input: $input, where: $where) {
+          title
         }
       }
     `,
     body: {
       input: {
-        isbn: '1234-6678910',
+        title: 'Sports 101 (updated)',
+      },
+      where: {
+        id: 999,
       },
     },
     response: {
       data: {
         updateBook: {
-          isbn: '1234-6678910',
+          title: 'Sports 101 (updated)',
         },
       },
     },
@@ -95,21 +98,26 @@ const update = {
 const upsert = {
   root: () => ({
     query: `
-      mutation Mutation($input: BookInput!) {
-        upsertBook(input: $input) {
+      mutation Mutation($input: BookInput!, $where: BookWhereInput) {
+        upsertBook(input: $input, where: $where) {
           isbn
+          title
+          id
         }
       }
     `,
     body: {
       input: {
-        isbn: '1234-56789',
+        isbn: '23423423423423423423',
+        title: 'A book with no title',
       },
+      where: { id: 1000000 },
     },
     response: {
       data: {
         upsertBook: {
-          isbn: '1234-56789',
+          isbn: '23423423423423423423',
+          title: 'A book with no title',
         },
       },
     },
