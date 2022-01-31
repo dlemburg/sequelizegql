@@ -63,7 +63,7 @@ export const buildModelAssociations = (associations): KeyedAttribute => {
       isEnum: false,
       allowNull: true,
       values: [],
-      separate: isArray && hasMany,
+      separate: hasMany,
     };
     return acc;
   }, {});
