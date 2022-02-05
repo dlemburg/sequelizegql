@@ -2,11 +2,10 @@ import bodyParser from 'body-parser';
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import http from 'http';
-import { getGraphqlSchema } from './graphql';
 
 export let app;
 
-export async function startApolloServer(options): Promise<any> {
+export async function startApolloServer(schema): Promise<any> {
   const app = express();
 
   app.use(bodyParser.json());
@@ -17,7 +16,6 @@ export async function startApolloServer(options): Promise<any> {
   });
 
   const httpServer = http.createServer(app);
-  const { schema } = await getGraphqlSchema(options);
   const server = new ApolloServer({
     schema,
   });

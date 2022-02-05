@@ -1,5 +1,5 @@
+import { getSchema } from '..';
 import { EXAMPLE_INITIALIZATION_OPTIONS } from '../example-entities/options';
-import { getSchema } from '../graphql/schemas';
 import { setup } from './config/setup';
 import { removeAllWhitespace } from './util/remove-whitespace';
 
