@@ -1,18 +1,11 @@
-import { startApolloServer } from './apollo-server';
-import { init as initDataLayer } from './orm/sequelize';
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import SequelizeGraphql from '../../../src';
-import { InitializeInput, InitializeResponse } from '../../../src/types';
+import SequelizeGraphql from 'sequelizegql';
+import { startApolloServer } from './apollo-server';
+import { init as initDataLayer } from './orm/sequelize';
 
-export const getSchema = async (options: InitializeInput): Promise<InitializeResponse> => {
-  const graphqlSequelize = SequelizeGraphql();
-  const schema = await graphqlSequelize.generateSchema(options);
-
-  // graphqlSequelize.printConsole();
-  // graphqlSequelize.outputTypedefs();
-
-  return schema;
+export const getSchema = async (options) => {
+  return SequelizeGraphql().generateSchema(options);
 };
 
 export const getGraphqlSchema = async (options): Promise<any> => {
