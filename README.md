@@ -1,7 +1,6 @@
 # sequelizegql
 
 - [Author Note](https://github.com/dlemburg/sequelizegql#author-note)
-  - [TODO](https://github.com/dlemburg/sequelizegql#todo)
 - [Installation](https://github.com/dlemburg/sequelizegql#installation)
 - [What is `sequelizegql`?](https://github.com/dlemburg/sequelizegql#what)
 - [Why use `sequelizegql`?](https://github.com/dlemburg/sequelizegql#why)
