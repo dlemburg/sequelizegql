@@ -1,5 +1,6 @@
 # sequelizegql
 
+- [Quick Start](https://github.com/dlemburg/sequelizegql#basic)
 - [Author Note](https://github.com/dlemburg/sequelizegql#author-note)
 - [Installation](https://github.com/dlemburg/sequelizegql#installation)
 - [What is `sequelizegql`?](https://github.com/dlemburg/sequelizegql#what)
@@ -15,6 +16,12 @@
     - [FILTERS](https://github.com/dlemburg/sequelizegql#filters)
 - [API](https://github.com/dlemburg/sequelizegql#api)
   - [Object Options](https://github.com/dlemburg/sequelizegql#options)
+
+
+## Quick Start
+
+If you just want to see the minimum example to get up and running quickly - [go here](https://github.com/dlemburg/sequelizegql#basic)!
+
 
 ## Author Note
 
