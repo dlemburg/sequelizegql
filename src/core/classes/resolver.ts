@@ -7,8 +7,9 @@ const resolveQuery =
   (model, serviceMethod, modelMapOptions: SchemaMapOptions) =>
   (_, { where: whereArgs, options }, context, resolveInfo) => {
     let include, attributes, where;
-    const order =
-      options?.order?.length ?? options?.order.map(({ field, dir }) => buildSort(field, dir));
+    const order = options?.order?.length
+      ? options?.order?.map(({ field, dir }) => buildSort(field, dir))
+      : undefined;
 
     if (resolveInfo) {
       ({ include, attributes, where } = QueryBuilder.buildQueryOptions(
@@ -21,8 +22,8 @@ const resolveQuery =
     return serviceMethod(where, {
       attributes,
       include,
-      ...(order && { order }),
       ...options,
+      ...(order && { order }),
     });
   };
 

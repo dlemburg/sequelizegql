@@ -14,6 +14,7 @@ export const SEQUELIZE_GRAPHQL_TYPE_MAP = {
   TEXT: () => 'String',
   CITEXT: () => 'String',
   UUID: () => 'String',
+  UUIDV4: () => 'String',
   DATE: () => 'DateTime',
   DATEONLY: () => 'DateTime',
   JSON: () => 'JSON',
