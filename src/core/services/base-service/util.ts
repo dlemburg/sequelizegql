@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import SequelizeGraphql from '../../..';
 import { KeyedAttribute, ModelAttribute } from '../../../types';
-import { lowercaseFirstLetter, uppercaseFirstLetter } from '../../util';
+import { findValueCaseInsensitive, lowercaseFirstLetter, uppercaseFirstLetter } from '../../util';
 
 const getEnumName = (value) => {
   const name = `${uppercaseFirstLetter(value.fieldName)}Enum`;
@@ -82,7 +82,7 @@ export const buildAssociationCreateOptions = (model) => (input) => {
     const models = SequelizeGraphql().getSequelize().models;
     const attributes = getAttributes(model)();
     const associationOptions = Object.keys(input)?.reduce((acc, key) => {
-      const value = attributes?.associations?.[key];
+      const value = findValueCaseInsensitive(attributes?.associations, key);
       const type = value?.type;
       const model = type ? models?.[type] : null;
 

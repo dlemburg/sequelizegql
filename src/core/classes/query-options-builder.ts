@@ -4,7 +4,7 @@ import {
 } from 'graphql-parse-resolve-info';
 import { getAttributes } from '../services/base-service/util';
 import { ModelAttribute, SchemaMapOptions } from '../../types';
-import { parseWhere } from '../util';
+import { findValueCaseInsensitive, parseWhere } from '../util';
 import SequelizeGraphql from '../..';
 
 type RecursiveInclude = {
@@ -56,8 +56,8 @@ const recurseQueryFields = (
   const models = SequelizeGraphql().getSequelize().models;
 
   const result = fieldEntries?.reduce((acc, [key, value]: [string, any]) => {
-    const associationValue = modelAttributes?.associations?.[key];
-    const attributeValue = modelAttributes?.[key];
+    const associationValue = findValueCaseInsensitive(modelAttributes?.associations, key);
+    const attributeValue = findValueCaseInsensitive(modelAttributes, key);
 
     if (attributeValue) {
       acc.attributes.push(key);
