@@ -15,9 +15,10 @@ const mapFields = (attributes, options) =>
 const mapAssociationTypes = (attributes, options) =>
   Object.entries(attributes)
     .map(([key, value]: [string, Attribute]) => {
-      return `${lowercaseFirstLetter(key)}(where: ${whereInputNameGql(
-        value.type
-      )}): ${mapSequelizeToGraphql(value, options)}`;
+      return `${key}(where: ${whereInputNameGql(value.type)}): ${mapSequelizeToGraphql(
+        value,
+        options
+      )}`;
     })
     .join(`${newLine()}`);
 
