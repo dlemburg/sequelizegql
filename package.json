@@ -4,14 +4,14 @@
   "files": [
     "lib/**/*"
   ],
-  "version": "0.0.19",
+  "version": "0.0.21",
   "description": "- [Author Note](https://github.com/dlemburg/sequelizegql#author-note)   - [TODO](https://github.com/dlemburg/sequelizegql#todo) - [Installation](https://github.com/dlemburg/sequelizegql#installation) - [What is `sequelizegql`?](https://github.com/dlemburg/sequelizegql#what) - [Why use `sequelizegql`?](https://github.com/dlemburg/sequelizegql#why) - [Advantages](https://github.com/dlemburg/sequelizegql#advantages) - [Examples](https://github.com/dlemburg/sequelizegql#examples)   - [Basic Example](https://github.com/dlemburg/sequelizegql#basic)   - [In-Depth Example](https://github.com/dlemburg/sequelizegql#in-depth)   - [Generated Example](https://github.com/dlemburg/sequelizegql#generated-example)     - [Queries](https://github.com/dlemburg/sequelizegql#queries)     - [Mutations](https://github.com/dlemburg/sequelizegql#mutations)     - [Types and Inputs](https://github.com/dlemburg/sequelizegql#types-and-inputs)     - [FILTERS](https://github.com/dlemburg/sequelizegql#filters) - [API](https://github.com/dlemburg/sequelizegql#api)   - [Object Options](https://github.com/dlemburg/sequelizegql#options)",
   "scripts": {
     "test": "jest",
     "test:file": "jest ./examples/library/src/test/integration-tests/index.test.ts",
     "start:examples:sequelize": "cd examples/library && npm run start:sequelize",
     "start:examples:sequelize-ts": "cd examples/library && npm run start:sequelize-ts",
-    "prepublish": "tsc"
+    "compile": "tsc"
   },
   "author": "Daniel Lemburg",
   "license": "MIT",
