@@ -15,6 +15,7 @@ const resolveQuery =
       ({ include, attributes, where } = QueryBuilder.buildQueryOptions(
         model,
         resolveInfo,
+        options,
         modelMapOptions
       ));
     }

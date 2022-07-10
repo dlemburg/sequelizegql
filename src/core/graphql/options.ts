@@ -25,5 +25,9 @@ export const optionsQueryGql = () => `
     ${baseOptiongsGql}
     offset: Int
     limit: Int
+    """
+    Required only applies to nested includes that should act as 'inner joins'
+    """
+    required: Boolean
   }
 `;

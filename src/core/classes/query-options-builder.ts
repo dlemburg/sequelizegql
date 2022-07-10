@@ -21,6 +21,7 @@ type QueryAttributes = {
 type BuildIncludeInput = {
   association: string;
   separate?: boolean;
+  required?: boolean;
 } & QueryAttributes;
 
 type FieldIntrospectionTuple = [string, any];
@@ -32,6 +33,7 @@ const buildInclude = ({
   include,
   attributes = [],
   separate = false,
+  required = false,
   where = {},
 }: BuildIncludeInput) => {
   return [
@@ -40,6 +42,7 @@ const buildInclude = ({
       attributes,
       ...(include?.length && { include }),
       ...(separate && { separate }),
+      ...(required && { required }),
       where,
     },
   ];
@@ -85,6 +88,7 @@ const recurseQueryFields = (
             const nextModelAttributes = getAttributes(models[nextModelName])();
 
             const where = parseWhere(x[1]?.args?.where, modelMapOptions);
+            const options = x[1]?.args?.options;
             const separate = currentModelAttributes?.associations?.[nextFieldName]?.separate;
 
             const { attributes: includeAttributes, include: associatedInclude } =
@@ -101,6 +105,7 @@ const recurseQueryFields = (
               attributes: includeAttributes,
               separate,
               where,
+              required: options?.required === true ? true : false,
             });
 
             accInner.include = accInner?.include
@@ -127,6 +132,7 @@ const recurseQueryFields = (
           where,
           separate: associationValue?.separate,
         });
+
         acc.include = acc?.include ? [...acc.include, ...baseInclude] : baseInclude;
       }
     }
@@ -147,6 +153,7 @@ export class QueryBuilder {
   public static buildQueryOptions(
     model,
     resolveInfo,
+    options,
     modelMapOptions: SchemaMapOptions
   ): QueryAttributes {
     try {
