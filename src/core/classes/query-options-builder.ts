@@ -103,9 +103,9 @@ const recurseQueryFields = (
               association: nextFieldName,
               include: associatedInclude,
               attributes: includeAttributes,
-              separate,
               where,
-              required: options?.required === true ? true : false,
+              separate: options?.required ? false : associationValue?.separate,
+              required: options?.required ?? false,
             });
 
             accInner.include = accInner?.include
@@ -118,6 +118,7 @@ const recurseQueryFields = (
         );
 
         const where = parseWhere(value?.args?.where, modelMapOptions);
+        const options = value?.args?.options;
         const attributeFields = Object.entries(currentFields)
           .filter(([xKey, xValue]: FieldIntrospectionTuple) => {
             const result = Object.keys(xValue?.fieldsByTypeName ?? {});
@@ -130,7 +131,8 @@ const recurseQueryFields = (
           include: associationFields?.include,
           attributes: attributeFields,
           where,
-          separate: associationValue?.separate,
+          separate: options?.required ? false : associationValue?.separate,
+          required: options?.required ?? false,
         });
 
         acc.include = acc?.include ? [...acc.include, ...baseInclude] : baseInclude;
