@@ -115,22 +115,22 @@ export const OPERATORS_FILTERS_MAP = {
     getValue: (value) => value,
   }),
   IN_INT: () => ({
-    gql: () => 'Int',
+    gql: () => '[Int!]!',
     op: Op.in,
     getValue: (value) => value,
   }),
   IN_STRING: () => ({
-    gql: () => 'String',
+    gql: () => '[String!]!',
     op: Op.in,
     getValue: (value) => value,
   }),
   NOT_IN_INT: () => ({
-    gql: () => 'Int',
+    gql: () => '[Int!]!',
     op: Op.notIn,
     getValue: (value) => value,
   }),
   NOT_IN_STRING: () => ({
-    gql: () => 'String',
+    gql: () => '[String!]!',
     op: Op.notIn,
     getValue: (value) => value,
   }),

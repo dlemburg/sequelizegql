@@ -17,11 +17,9 @@
 - [API](https://github.com/dlemburg/sequelizegql#api)
   - [Object Options](https://github.com/dlemburg/sequelizegql#options)
 
-
 ## Quick Start
 
 If you just want to see the minimum example to get up and running quickly - [go here](https://github.com/dlemburg/sequelizegql#basic)!
-
 
 ## Author Note
 
@@ -302,32 +300,32 @@ For the above example, the following `Author` Queries and Mutations are availabl
 
 ### FILTERS
 
-| Name               | Fields      |
-| ------------------ | ----------- |
-| `NOT_LIKE`         | `String!`   |
-| `STARTS_WITH`      | `String!`   |
-| `ENDS_WITH`        | `String!`   |
-| `SUBSTRING`        | `String!`   |
-| `EQ_STRING`        | `String!`   |
-| `NE_STRING`        | `String!`   |
-| `EQ_INT`           | `Int!`      |
-| `NE_INT`           | `Int!`      |
-| `NE_INT`           | `Int!`      |
-| `IS_NULL`          | `String!`   |
-| `NOT_STRING`       | `String!`   |
-| `NOT_INT`          | `Int!`      |
-| `GT`               | `Int!`      |
-| `GTE`              | `Int!`      |
-| `LT`               | `Int!`      |
-| `LTE`              | `Int!`      |
-| `BETWEEN_INT`      | `Int!`      |
-| `BETWEEN_DATE`     | `Int!`      |
-| `NOT_BETWEEN_INT`  | `Int!`      |
-| `NOT_BETWEEN_DATE` | `DateTime!` |
-| `IN_INT`           | `Int!`      |
-| `IN_STRING`        | `String!`   |
-| `NOT_IN_INT`       | `Int!`      |
-| `NOT_IN_STRING`    | `String!`   |
+| Name               | Fields         |
+| ------------------ | -------------- |
+| `NOT_LIKE`         | `String!`      |
+| `STARTS_WITH`      | `String!`      |
+| `ENDS_WITH`        | `String!`      |
+| `SUBSTRING`        | `String!`      |
+| `EQ_STRING`        | `String!`      |
+| `NE_STRING`        | `String!`      |
+| `EQ_INT`           | `Int!`         |
+| `NE_INT`           | `Int!`         |
+| `NE_INT`           | `Int!`         |
+| `IS_NULL`          | `String!`      |
+| `NOT_STRING`       | `String!`      |
+| `NOT_INT`          | `Int!`         |
+| `GT`               | `Int!`         |
+| `GTE`              | `Int!`         |
+| `LT`               | `Int!`         |
+| `LTE`              | `Int!`         |
+| `BETWEEN_INT`      | `[Int!]!`      |
+| `BETWEEN_DATE`     | `[Int!]!`      |
+| `NOT_BETWEEN_INT`  | `[Int!]!`      |
+| `NOT_BETWEEN_DATE` | `[DateTime!]1` |
+| `IN_INT`           | `[Int!]!`      |
+| `IN_STRING`        | `[String!]!`   |
+| `NOT_IN_INT`       | `[Int!]!`      |
+| `NOT_IN_STRING`    | `[String!]!`   |
 
 &nbsp;
 A query (pseudocode) like this:
