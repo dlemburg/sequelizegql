@@ -4,6 +4,10 @@ export const optionsPagedQueryInputNameGql = () => `${optionsQueryInputNameGql()
 const baseOptiongsGql = `
   order: [OrderInput]
   group: String
+  """
+  Required only applies to nested includes that should act as 'inner joins'
+  """
+  required: Boolean
 `;
 
 export const optionsQueryGql = () => `
@@ -25,9 +29,5 @@ export const optionsQueryGql = () => `
     ${baseOptiongsGql}
     offset: Int
     limit: Int
-    """
-    Required only applies to nested includes that should act as 'inner joins'
-    """
-    required: Boolean
   }
 `;
