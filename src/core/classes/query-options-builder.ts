@@ -42,7 +42,7 @@ const buildInclude = ({
       attributes,
       ...(include?.length && { include }),
       ...(separate && { separate }),
-      ...(required && { required }),
+      required,
       where,
     },
   ];
