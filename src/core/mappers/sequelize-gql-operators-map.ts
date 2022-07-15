@@ -19,6 +19,11 @@ export const OPERATORS_FILTERS_MAP = {
     op: Op.like,
     getValue: (value) => `%${value}%`,
   }),
+  ILIKE: () => ({
+    gql: () => 'String',
+    op: Op.iLike,
+    getValue: (value) => `%${value}%`,
+  }),
   NOT_LIKE: () => ({
     gql: () => 'String',
     op: Op.notLike,
