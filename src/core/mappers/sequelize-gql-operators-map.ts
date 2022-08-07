@@ -64,8 +64,13 @@ export const OPERATORS_FILTERS_MAP = {
     op: Op.ne,
     getValue: (value) => value,
   }),
+  NOT_NULL: () => ({
+    gql: () => 'Boolean',
+    op: Op.not,
+    getValue: (value) => null,
+  }),
   IS_NULL: () => ({
-    gql: () => 'String',
+    gql: () => 'Boolean',
     op: Op.is,
     getValue: (value) => null,
   }),
