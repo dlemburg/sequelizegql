@@ -89,7 +89,8 @@ const recurseQueryFields = (
 
             const where = parseWhere(x[1]?.args?.where, modelMapOptions);
             const options = x[1]?.args?.options;
-            const separate = currentModelAttributes?.associations?.[nextFieldName]?.separate;
+            const currentAssociation = getAttributes(models[associationValue.type])()
+              ?.associations?.[nextFieldName];
 
             const { attributes: includeAttributes, include: associatedInclude } =
               recurseQueryFields(
@@ -104,7 +105,7 @@ const recurseQueryFields = (
               include: associatedInclude,
               attributes: includeAttributes,
               where,
-              separate: options?.required ? false : associationValue?.separate,
+              separate: options?.required ? false : currentAssociation?.separate,
               required: options?.required ?? false,
             });
 
