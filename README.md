@@ -39,7 +39,7 @@ npm install sequelizegql
 
 ## What?
 
-`sequelizegql` generates a full CRUD GraphQL API (types, inputs, enums, queries, mutations, resolvers, as well as near parity - there are some slight differences - with Sequelize Operators) based on the provided sequelize models.
+`sequelizegql` generates a full CRUD GraphQL API (types, inputs, enums, queries, mutations, resolvers, as well as near parity with queryable Sequelize Operators by simply passing your sequelize instance.
 
 ## Why?
 
