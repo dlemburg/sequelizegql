@@ -164,9 +164,6 @@ export class Library extends Model<Library> {
   @Column
   address: String;
 
-  @Column
-  description: String;
-
   @AllowNull(false)
   @Default(LibraryStatus.ACTIVE)
   @Column(DataType.ENUM(...Object.values(LibraryStatus)))
