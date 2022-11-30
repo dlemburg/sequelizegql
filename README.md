@@ -370,7 +370,7 @@ Will generate and execute a sequelize query like this:
 ```typescript
 Author.findAll({
   where: { ...authorsWhereInput, name: { [Op.like]: '%daniel%' } },
-  attributes: ['id', 'name', 'books'],
+  attributes: ['id', 'name'],
   include: [
     {
       association: 'books',
@@ -381,6 +381,7 @@ Author.findAll({
         {
           association: 'libraries',
           attributes: ['id'],
+          separate: true,
           include: [
             {
               association: 'city',
