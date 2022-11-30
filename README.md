@@ -331,11 +331,11 @@ For the above example, the following `Author` Queries and Mutations are availabl
 A query (pseudocode) like this:
 
 ```graphql
-Query GetAuthors($authorsWhereInput: AuthorWhereInput!, $booksWhereInput: BookWhereInput!) {
+Query GetAuthors($authorsWhereInput: AuthorWhereInput!, $booksWhereInput: BookWhereInput!, $booksOptions: BookOptions) {
   authors(where: $authorsWhereInput) {
     id
     name
-    books(where: $booksWhereInput) {
+    books(where: $booksWhereInput, options: $booksOptions) {
       id
       libraries {
         id
@@ -360,6 +360,9 @@ and payload like:
   "booksWhereInput": {
     "createdAt": "01-01-2020",
     "OR": [{ "name": "Foo" }, { "name": "Bar" }]
+  },
+  "booksOptions": {
+    "required": true
   }
 }
 ```
@@ -377,9 +380,10 @@ Author.findAll({
       attributes: ['id'],
       where: { ...booksWhereInput, [Op.or]: [{ name: 'Foo' }, { name: 'Bar' }] },
       separate: true,
+      required: true, // INNER JOIN!
       include: [
         {
-          association: 'libraries',
+          association: 'libraries', // LEFT JOIN!
           attributes: ['id'],
           separate: true,
           include: [
