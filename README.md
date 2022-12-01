@@ -328,7 +328,7 @@ For the above example, the following `Author` Queries and Mutations are availabl
 A query (pseudocode) like this:
 
 ```graphql
-Query GetAuthors($authorsWhereInput: AuthorWhereInput!, $booksWhereInput: BookWhereInput!, $booksOptions: BookOptions) {
+Query GetAuthors($authorsWhereInput: AuthorWhereInput!, $booksWhereInput: BookWhereInput!, $booksOptions: OptionsInput) {
   authors(where: $authorsWhereInput) {
     id
     name
