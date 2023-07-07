@@ -70,7 +70,7 @@ Example here uses `sequelize-typescript` but this library works fine with `seque
 ```typescript
 const schema = SequelizeGraphql().generateSchema({ sequelize });
 
-console.log(schema); // { resolvers, typedefs, typedefsString }
+console.log(schema); // { resolvers, typedefs, typedefsstring }
 
 // ... load returned schema into your graphql client
 ```
@@ -87,10 +87,10 @@ export class Author extends Model<Author> {
 
   @AllowNull(false)
   @Column
-  name: String;
+  name: string;
 
   @Column
-  surname: String;
+  username: string;
 
   // ...timestamps: createdAt, updatedAt, deletedAt, etc
 
@@ -107,11 +107,11 @@ export class Book extends Model<Book> {
   id: number;
 
   @Column
-  isbn: String;
+  isbn: string;
 
   @AllowNull(false)
   @Column
-  title: String;
+  title: string;
 
   // ...timestamps: createdAt, updatedAt, deletedAt, etc
 
@@ -159,10 +159,10 @@ export class Library extends Model<Library> {
 
   @AllowNull(false)
   @Column
-  name: String;
+  name: string;
 
   @Column
-  address: String;
+  address: string;
 
   @AllowNull(false)
   @Default(LibraryStatus.ACTIVE)
@@ -189,7 +189,7 @@ export class City extends Model<City> {
 
   @AllowNull(false)
   @Column
-  name: String;
+  name: string;
 
   // ...timestamps: createdAt, updatedAt, deletedAt, etc
 }
@@ -245,7 +245,7 @@ const graphqlSequelize = SequelizeGraphql().generateSchema({
   sequelize, // your sequelize instance
 });
 
-console.log(schema); // { resolvers, typedefs, typedefsString }
+console.log(schema); // { resolvers, typedefs, typedefsstring }
 
 // ... load returned schema into your graphql client
 ```
@@ -299,17 +299,17 @@ For the above example, the following `Author` Queries and Mutations are availabl
 
 | Name               | Fields         |
 | ------------------ | -------------- |
-| `NOT_LIKE`         | `String!`      |
-| `STARTS_WITH`      | `String!`      |
-| `ENDS_WITH`        | `String!`      |
-| `SUBSTRING`        | `String!`      |
-| `EQ_STRING`        | `String!`      |
-| `NE_STRING`        | `String!`      |
+| `NOT_LIKE`         | `string!`      |
+| `STARTS_WITH`      | `string!`      |
+| `ENDS_WITH`        | `string!`      |
+| `SUBSTRING`        | `string!`      |
+| `EQ_STRING`        | `string!`      |
+| `NE_STRING`        | `string!`      |
 | `EQ_INT`           | `Int!`         |
 | `NE_INT`           | `Int!`         |
 | `NE_INT`           | `Int!`         |
-| `IS_NULL`          | `String!`      |
-| `NOT_STRING`       | `String!`      |
+| `IS_NULL`          | `string!`      |
+| `NOT_STRING`       | `string!`      |
 | `NOT_INT`          | `Int!`         |
 | `GT`               | `Int!`         |
 | `GTE`              | `Int!`         |
@@ -320,9 +320,9 @@ For the above example, the following `Author` Queries and Mutations are availabl
 | `NOT_BETWEEN_INT`  | `[Int!]!`      |
 | `NOT_BETWEEN_DATE` | `[DateTime!]1` |
 | `IN_INT`           | `[Int!]!`      |
-| `IN_STRING`        | `[String!]!`   |
+| `IN_STRING`        | `[string!]!`   |
 | `NOT_IN_INT`       | `[Int!]!`      |
-| `NOT_IN_STRING`    | `[String!]!`   |
+| `NOT_IN_STRING`    | `[string!]!`   |
 
 &nbsp;
 A query (pseudocode) like this:
